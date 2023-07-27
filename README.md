@@ -1,6 +1,4 @@
-# WillT-BnB
-
-# `<name of application here>`
+# `Will-T BnB`
 
 ## Database Schema Design
 
