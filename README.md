@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+![Will-T-BnB-Schema-FirstDraft](https://github.com/wtorresjr/WillT-BnB/assets/114450647/e3f4e472-b8db-4332-9aae-87a0461ca1f0)
 
 ## API Documentation
 
