@@ -327,7 +327,7 @@ Returns the details of a spot specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: / spots / :spotId / details
+  * URL: / spots / :spotId
   * Body: none
 
 * Successful Response
@@ -466,7 +466,7 @@ Create and return a new image for a spot specified by id.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: POST
-  * URL: / spots / current-user / :spotId / new-image
+  * URL: / spots / :spotId / spot-images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -512,7 +512,7 @@ Updates and returns an existing spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: PUT
-  * URL: / spots / current-user / :spotId
+  * URL: / spots / :spotId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -598,7 +598,7 @@ Deletes an existing spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / spots / current-user / :spotId
+  * URL: / spots / :spotId
   * Body: none
 
 * Successful Response
@@ -745,7 +745,7 @@ Create and return a new review for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: / spots / :spotId / review
+  * URL: / spots / :spotId / reviews
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -823,7 +823,7 @@ Create and return a new image for a review specified by id.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: POST
-  * URL: / spots / :spotId / reviews / :reviewId / new-image
+  * URL: / spots / :spotId / reviews / :reviewId / review-images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1317,7 +1317,7 @@ Delete an existing image for a Spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / spots / :spotId / images / :imageId
+  * URL: / spots / :spotId / spot-images / :imageId
   * Body: none
 
 * Successful Response
@@ -1352,7 +1352,7 @@ Delete an existing image for a Review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / user / :userId / spots / :spotId / reviews
+  * URL: / spots / :spotId / reviews / :reviewId / review-images / :reviewImgId
   * Body: none
 
 * Successful Response
