@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![Will-T-BnB-Schema-FirstDraft](https://github.com/wtorresjr/WillT-BnB/assets/114450647/6b0fe442-7d19-432f-bbcc-4c4c7d2824be)
+![Untitled (1)](https://github.com/wtorresjr/WillT-BnB/assets/114450647/9ee5e5b4-e3b5-4314-bf79-03a9ccbc6485)
 
 ## API Documentation
 
@@ -50,7 +50,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: / user / :userId / userInfo
+  * URL: / current-user
   * Body: none
 
 * Successful Response when there is a logged in user
@@ -91,7 +91,7 @@ information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: / auth
+  * URL: / login
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -287,7 +287,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: / user / :userId / user-spots
+  * URL: / spots / current-user
   * Body: none
 
 * Successful Response
@@ -392,7 +392,7 @@ Creates and returns a new spot.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: / user / :userId / user-spots 
+  * URL: / spots  
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -465,8 +465,8 @@ Create and return a new image for a spot specified by id.
 * Require Authentication: true
 * Require proper authorization: Spot must belong to the current user
 * Request
-  * Method: PUT
-  * URL: / user / :userId / user-spots / :spotId
+  * Method: POST
+  * URL: / spots / :spotId / spot-images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -512,7 +512,7 @@ Updates and returns an existing spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: PUT
-  * URL: / user / :userId / user-spots / :spotId
+  * URL: / spots / :spotId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -598,7 +598,7 @@ Deletes an existing spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / user / :userId / user-spots / :spotId
+  * URL: / spots / :spotId
   * Body: none
 
 * Successful Response
@@ -634,7 +634,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: / user / :userId / reviews
+  * URL: / current-user / reviews
   * Body: none
 
 * Successful Response
@@ -745,7 +745,7 @@ Create and return a new review for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: / spots / :spotId / review
+  * URL: / spots / :spotId / reviews
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -822,8 +822,8 @@ Create and return a new image for a review specified by id.
 * Require Authentication: true
 * Require proper authorization: Review must belong to the current user
 * Request
-  * Method: PUT
-  * URL: / user / :userId / review / :reviewId
+  * Method: POST
+  * URL: / reviews / :reviewId / review-images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -880,7 +880,7 @@ Update and return an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: PUT
-  * URL: / user / :userId / review / :reviewId
+  * URL: / reviews / :reviewId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -946,7 +946,7 @@ Delete an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / user / :userId / review / :reviewId
+  * URL: / reviews / :reviewId
   * Body: none
 
 * Successful Response
@@ -982,7 +982,7 @@ Return all the bookings that the current user has made.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: ? / user / :userId / bookings
+  * URL: / current-user / bookings
   * Body: none
 
 * Successful Response
@@ -1027,7 +1027,7 @@ Return all the bookings for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: / user / :userId / user-spots / :spotId / bookings
+  * URL: / spots / :spotId / bookings
   * Body: none
 
 * Successful Response: If you ARE NOT the owner of the spot.
@@ -1095,7 +1095,7 @@ Create and return a new booking from a spot specified by id.
 * Require proper authorization: Spot must NOT belong to the current user
 * Request
   * Method: POST
-  * URL: / user / :userId / spots / :spotId / bookings
+  * URL: / spots / :spotId / bookings
   * Body:
 
     ```json
@@ -1174,7 +1174,7 @@ Update and return an existing booking.
 * Require proper authorization: Booking must belong to the current user
 * Request
   * Method: PUT
-  * URL: / user / :userId / spots / :spotId / bookings
+  * URL: / bookings / :bookingId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1268,7 +1268,7 @@ Delete an existing booking.
   Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / user / :userId / spots / :spotId / bookings
+  * URL: / bookings / :bookingId
   * Body: none
 
 * Successful Response
@@ -1317,7 +1317,7 @@ Delete an existing image for a Spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / user / :userId / user-spots / :spotId
+  * URL: / spots / :spotId / spot-images / :imageId
   * Body: none
 
 * Successful Response
@@ -1352,7 +1352,7 @@ Delete an existing image for a Review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / user / :userId / spots / :spotId / reviews
+  * URL: / reviews / :reviewId / review-images / :reviewImgId
   * Body: none
 
 * Successful Response
@@ -1386,7 +1386,7 @@ Return spots filtered by query parameters.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: ?page=XX&size=XX&minLat=XXXX&maxLat=XXXX&minLng=XXXX&maxLng=XXXX&minPrice=XXXX&maxPrice=XXXX
+  * URL: / spots
   * Query Parameters
     * page: integer, minimum: 1, maximum: 10, default: 1
     * size: integer, minimum: 1, maximum: 20, default: 20
