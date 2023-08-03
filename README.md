@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![SchemaUpdate](https://github.com/wtorresjr/WillT-BnB/assets/114450647/9ca87aab-0974-49eb-898a-b234b7f124a0)
+![Untitled (1)](https://github.com/wtorresjr/WillT-BnB/assets/114450647/9ee5e5b4-e3b5-4314-bf79-03a9ccbc6485)
 
 ## API Documentation
 
@@ -392,7 +392,7 @@ Creates and returns a new spot.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: / spots / current-user 
+  * URL: / spots  
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -823,7 +823,7 @@ Create and return a new image for a review specified by id.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: POST
-  * URL: / spots / :spotId / reviews / :reviewId / review-images
+  * URL: / reviews / :reviewId / review-images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -880,7 +880,7 @@ Update and return an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: PUT
-  * URL: / spots / :spotId / reviews / :reviewId
+  * URL: / reviews / :reviewId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -946,7 +946,7 @@ Delete an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / spots / :spotId / reviews / :reviewId
+  * URL: / reviews / :reviewId
   * Body: none
 
 * Successful Response
@@ -1174,7 +1174,7 @@ Update and return an existing booking.
 * Require proper authorization: Booking must belong to the current user
 * Request
   * Method: PUT
-  * URL: / spots / :spotId / bookings / :bookingId
+  * URL: / bookings / :bookingId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1268,7 +1268,7 @@ Delete an existing booking.
   Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / spots / :spotId / bookings / :bookingId
+  * URL: / bookings / :bookingId
   * Body: none
 
 * Successful Response
@@ -1352,7 +1352,7 @@ Delete an existing image for a Review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: / spots / :spotId / reviews / :reviewId / review-images / :reviewImgId
+  * URL: / reviews / :reviewId / review-images / :reviewImgId
   * Body: none
 
 * Successful Response
@@ -1386,7 +1386,7 @@ Return spots filtered by query parameters.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: ?page=XX&size=XX&minLat=XXXX&maxLat=XXXX&minLng=XXXX&maxLng=XXXX&minPrice=XXXX&maxPrice=XXXX
+  * URL: page=XX&size=XX&minLat=XXXX&maxLat=XXXX&minLng=XXXX&maxLng=XXXX&minPrice=XXXX&maxPrice=XXXX
   * Query Parameters
     * page: integer, minimum: 1, maximum: 10, default: 1
     * size: integer, minimum: 1, maximum: 20, default: 20
