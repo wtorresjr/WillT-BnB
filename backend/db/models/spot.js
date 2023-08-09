@@ -15,9 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       Spot.hasMany(models.Review, {
         foreignKey: "spotId",
       });
-      Spot.belongsTo(models.User, {
-        foreignKey: "id",
-      });
+      Spot.belongsTo(
+        models.User,
+        { as: "Owner" },
+        {
+          foreignKey: "id",
+        }
+      );
       Spot.hasMany(models.Booking, {
         foreignKey: "spotId",
       });
@@ -36,10 +40,23 @@ module.exports = (sequelize, DataTypes) => {
       city: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isAlpha: true,
+        },
+      },
+      state: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isAlpha: true,
+        },
       },
       country: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isAlpha: true,
+        },
       },
       lat: {
         type: DataTypes.DECIMAL,
@@ -52,6 +69,9 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isAlpha: true,
+        },
       },
       description: {
         type: DataTypes.STRING(500),
@@ -65,11 +85,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Spot",
-      defaultScope: {
-        attributes: {
-          exclude: [],
-        },
-      },
+      // defaultScope: {
+      //   attributes: {
+      //     exclude: [],
+      //   },
+      // },
     }
   );
   return Spot;

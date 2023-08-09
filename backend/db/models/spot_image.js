@@ -33,11 +33,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Spot_Image",
-      defaultScope: {
-        attributes: {
-          exclude: ["createdAt", "updatedAt", "id", "spotId", "preview"],
-        },
-      },
+      // defaultScope: {
+      //   attributes: {
+      //     exclude: ["createdAt", "updatedAt", "id", "spotId", "preview"],
+      //   },
+      // },
     }
   );
   return Spot_Image;
