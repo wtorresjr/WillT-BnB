@@ -1,17 +1,19 @@
 const router = require("express").Router();
-const sessionRouter = require("./session");
-const usersRouter = require("./users");
+const loginRouter = require("./login");
+const signupRouter = require("./signup");
 const { restoreUser } = require("../../utils/auth");
+const currentUser = require("./current-user");
+const spotRouter = require("./spot");
 
 router.use(restoreUser);
 
-router.use("/session", sessionRouter);
+router.use("/login", loginRouter);
 
-router.use("/users", usersRouter);
+router.use("/signup", signupRouter);
 
-router.post("/test", (req, res) => {
-  res.json({ requestBody: req.body });
-});
+router.use("/current-user", currentUser);
+
+router.use("/spots", spotRouter);
 
 router.get("/csrf/restore", (req, res) => {
   const csrfToken = req.csrfToken();

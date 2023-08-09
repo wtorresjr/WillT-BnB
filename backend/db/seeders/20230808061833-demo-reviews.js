@@ -2,31 +2,12 @@
 
 const { Op } = require("sequelize");
 
+const { seedReviews } = require("./seederVars/seederVars");
+
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; // define your schema in options object
 }
-
-const seedReviews = [
-  {
-    userId: 3,
-    spotId: 1,
-    review: "Cool spot had a blast.",
-    stars: 5,
-  },
-  {
-    userId: 2,
-    spotId: 3,
-    review: "Dirty bathroom everything else ok.",
-    stars: 3,
-  },
-  {
-    userId: 1,
-    spotId: 2,
-    review: "Great views, huge TV",
-    stars: 5,
-  },
-];
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -40,7 +21,7 @@ module.exports = {
     return await queryInterface.bulkDelete(
       options,
       {
-        spotId: { [Op.in]: [1, 2, 3] },
+        spotId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
       },
       {}
     );

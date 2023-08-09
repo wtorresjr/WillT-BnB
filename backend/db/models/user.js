@@ -43,6 +43,16 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           len: [3, 256],
           isEmail: true,
+          async checkIfUnique(emailAddy) {
+            const existingUsers = await User.findOne({
+              where: { email: emailAddy },
+            });
+            if (existingUsers) {
+              throw new Error(
+                "Email already exists, please login with your account or contact admin for help."
+              );
+            }
+          },
         },
       },
       hashedPassword: {
@@ -55,10 +65,16 @@ module.exports = (sequelize, DataTypes) => {
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isAlpha: true,
+        },
       },
       lastName: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isAlpha: true,
+        },
       },
     },
     {
