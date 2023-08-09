@@ -7,11 +7,11 @@ const spotRouter = require("./spot");
 
 router.use(restoreUser);
 
-router.use("/login", loginRouter);
+router.use("/session", loginRouter);
 
-router.use("/signup", signupRouter);
+router.use("/users", signupRouter);
 
-router.use("/current-user", currentUser);
+// router.use("/current-user", currentUser);
 
 router.use("/spots", spotRouter);
 
