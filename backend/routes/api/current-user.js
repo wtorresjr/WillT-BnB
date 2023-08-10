@@ -57,12 +57,45 @@ router.get("/bookings", async (req, res) => {
   if (req.user) {
     const thisUser = req.user.id;
 
-    const userBookings = await Booking.findAll({
-      where: { userId: thisUser },
-      include: { model: Spot },
+    const userBookings = await User.findByPk(thisUser, {
+      include: {
+        model: Booking,
+        include: {
+          model: Spot,
+          include: {
+            model: Spot_Image,
+            where: { preview: true },
+            attributes: ["url"],
+          },
+        },
+      },
+      attributes: [],
     });
 
-    res.json(userBookings);
+    const formatBookings = userBookings.Bookings.map((booking) => ({
+      id: booking.id,
+      spotId: booking.spotId,
+      userId: booking.userId,
+      startDate: booking.startDate,
+      endDate: booking.endDate,
+      Spot: {
+        id: booking.Spot.id,
+        ownerId: booking.Spot.ownerId,
+        address: booking.Spot.address,
+        city: booking.Spot.city,
+        state: booking.Spot.state,
+        country: booking.Spot.country,
+        lat: booking.Spot.lat,
+        lng: booking.Spot.lng,
+        name: booking.Spot.name,
+        price: booking.Spot.price,
+        previewImage: booking.Spot.Spot_Images[0].url, 
+      },
+      createdAt: booking.createdAt,
+      updatedAt: booking.updatedAt,
+    }));
+
+    res.json({ Bookings: formatBookings });
   }
 });
 
