@@ -25,7 +25,6 @@ router.get("/", async (req, res) => {
       },
     ],
     group: "Spot.id",
-    // raw: true,
   });
   res.json(allSpots);
 });
@@ -50,11 +49,30 @@ router.get("/current-user", async (req, res) => {
           attributes: ["url"],
         },
       ],
-      // nest: true,
       raw: true,
     });
 
     res.json(ownedSpots);
+  }
+});
+
+router.get("/:spotId/reviews", async (req, res) => {
+  const { spotId } = req.params;
+  const spotReview = await Spot.findByPk(spotId, {
+    include: {
+      model: Review,
+      include: [
+        { model: User },
+        { model: Review_Image, attributes: ["id", "url"] },
+      ],
+    },
+    attributes: [],
+  });
+
+  if (spotReview) {
+    res.json(spotReview);
+  } else {
+    res.status(404).json({ message: "Spot couldn't be found" });
   }
 });
 
@@ -82,18 +100,8 @@ router.get("/:spotId", async (req, res) => {
       },
     ],
   });
-
   if (chosenSpot.id !== null) {
-    const modifiedSpot = {
-      ...chosenSpot.toJSON(),
-      Owner: chosenSpot.Owner,
-    };
-
-    delete modifiedSpot.Owner;
-
-    modifiedSpot.Owner = chosenSpot.Owner;
-
-    res.json(modifiedSpot);
+    res.json(chosenSpot);
   } else {
     res.status(404).json({ message: "Spot couldn't be found" });
   }

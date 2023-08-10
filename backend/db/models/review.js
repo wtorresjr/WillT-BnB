@@ -1,5 +1,8 @@
 "use strict";
 const { Model } = require("sequelize");
+
+const { Spot, User } = require("../models");
+
 module.exports = (sequelize, DataTypes) => {
   class Review extends Model {
     /**
@@ -13,10 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "reviewId",
       });
       Review.belongsTo(models.User, {
-        foreignKey: "id",
+        foreignKey: "userId",
       });
       Review.belongsTo(models.Spot, {
-        foreignKey: "id",
+        foreignKey: "spotId",
       });
     }
   }
@@ -48,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Review",
       defaultScope: {
         attributes: {
-          exclude: ["createdAt", "updatedAt", "id", "spotId"],
+          exclude: [],
         },
       },
     }
