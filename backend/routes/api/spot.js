@@ -77,7 +77,6 @@ router.get("/:spotId/reviews", async (req, res) => {
   }
 });
 
-
 //Get bookings by spotId with permissions based on user ownership
 router.get("/:spotId/bookings", async (req, res) => {
   if (req.user) {
@@ -89,11 +88,15 @@ router.get("/:spotId/bookings", async (req, res) => {
       attributes: ["ownerId"],
     });
 
+    if (!spotBookings) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+
     const bookingsResult = spotBookings.toJSON();
 
     if (spotBookings.ownerId === loggedInUserId) {
       delete bookingsResult.ownerId;
-      res.json(bookingsResult);
+      return res.json(bookingsResult);
     } else {
       delete bookingsResult.ownerId;
       bookingsResult.Bookings.map((ele) => {
@@ -101,7 +104,7 @@ router.get("/:spotId/bookings", async (req, res) => {
         delete ele.User;
       });
 
-      res.json(bookingsResult);
+      return res.json(bookingsResult);
     }
   }
 });
