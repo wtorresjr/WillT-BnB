@@ -17,14 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       });
       Spot.belongsTo(
         models.User,
-        { as: "Owner" },
+        // { as: "Owner" },
         {
           foreignKey: "id",
         }
       );
-      Spot.hasMany(models.Booking, {
-        foreignKey: "spotId",
-      });
     }
   }
   Spot.init(

@@ -12,7 +12,6 @@ const {
   Spot_Image,
 } = require("../../db/models");
 
-
 //Get current-user data
 router.get("/", (req, res) => {
   const { user } = req;
@@ -29,7 +28,6 @@ router.get("/", (req, res) => {
     });
   } else return res.json({ user: null });
 });
-
 
 //Get current-user reviews
 router.get("/reviews", async (req, res) => {
@@ -53,6 +51,20 @@ router.get("/reviews", async (req, res) => {
   }
 });
 
+//Get current-users bookings
+
+router.get("/bookings", async (req, res) => {
+  if (req.user) {
+    const thisUser = req.user.id;
+
+    const userBookings = await Booking.findAll({
+      where: { userId: thisUser },
+      include: { model: Spot },
+    });
+
+    res.json(userBookings);
+  }
+});
 
 //Sign out the current-user
 router.delete("/", (_req, res) => {
