@@ -12,6 +12,7 @@ const {
   Spot_Image,
 } = require("../../db/models");
 
+//Get all spots
 router.get("/", async (req, res) => {
   const allSpots = await Spot.findAll({
     include: [
@@ -29,6 +30,35 @@ router.get("/", async (req, res) => {
   res.json(allSpots);
 });
 
+//Get spots owned by current-user
+
+router.get("/current-user", async (req, res) => {
+  if (req.user) {
+    const userId = req.user.id;
+    const ownedSpots = await Spot.findAll({
+      where: { ownerId: userId },
+      include: [
+        {
+          model: Review,
+          attributes: [
+            [Sequelize.fn("AVG", Sequelize.col("stars")), "avgRating"],
+          ],
+        },
+        {
+          model: Spot_Image,
+          where: { preview: true },
+          attributes: ["url"],
+        },
+      ],
+      // nest: true,
+      raw: true,
+    });
+
+    res.json(ownedSpots);
+  }
+});
+
+//Get spot by id
 router.get("/:spotId", async (req, res) => {
   const { spotId } = req.params;
   const chosenSpot = await Spot.findByPk(spotId, {
@@ -42,7 +72,7 @@ router.get("/:spotId", async (req, res) => {
       },
       {
         model: Spot_Image,
-        limit: 25,
+        separate: true,
         attributes: ["id", "url", "preview"],
       },
       {
