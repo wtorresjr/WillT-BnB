@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "spotId",
       });
       Booking.belongsTo(models.User, {
-        foreignKey: "id",
+        foreignKey: "userId",
       });
     }
   }

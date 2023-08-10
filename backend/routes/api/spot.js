@@ -11,6 +11,7 @@ const {
   Review_Image,
   Spot_Image,
 } = require("../../db/models");
+const spot = require("../../db/models/spot");
 
 //Get all spots
 router.get("/", async (req, res) => {
@@ -30,7 +31,6 @@ router.get("/", async (req, res) => {
 });
 
 //Get spots owned by current-user
-
 router.get("/current-user", async (req, res) => {
   if (req.user) {
     const userId = req.user.id;
@@ -56,6 +56,7 @@ router.get("/current-user", async (req, res) => {
   }
 });
 
+//Get reviews by spotId
 router.get("/:spotId/reviews", async (req, res) => {
   const { spotId } = req.params;
   const spotReview = await Spot.findByPk(spotId, {
@@ -73,6 +74,35 @@ router.get("/:spotId/reviews", async (req, res) => {
     res.json(spotReview);
   } else {
     res.status(404).json({ message: "Spot couldn't be found" });
+  }
+});
+
+
+//Get bookings by spotId with permissions based on user ownership
+router.get("/:spotId/bookings", async (req, res) => {
+  if (req.user) {
+    const { spotId } = req.params;
+    const loggedInUserId = req.user.id;
+
+    const spotBookings = await Spot.findByPk(spotId, {
+      include: { model: Booking, include: { model: User } },
+      attributes: ["ownerId"],
+    });
+
+    const bookingsResult = spotBookings.toJSON();
+
+    if (spotBookings.ownerId === loggedInUserId) {
+      delete bookingsResult.ownerId;
+      res.json(bookingsResult);
+    } else {
+      delete bookingsResult.ownerId;
+      bookingsResult.Bookings.map((ele) => {
+        delete ele.userId;
+        delete ele.User;
+      });
+
+      res.json(bookingsResult);
+    }
   }
 });
 
