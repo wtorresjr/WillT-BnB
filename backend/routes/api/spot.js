@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { Sequelize, Op } = require("sequelize");
+const { Sequelize } = require("sequelize");
 
 const {
   Spot,
@@ -11,7 +11,6 @@ const {
   Review_Image,
   Spot_Image,
 } = require("../../db/models");
-const spot = require("../../db/models/spot");
 
 //Get all spots
 router.get("/", async (req, res) => {
@@ -150,10 +149,11 @@ router.post("/:spotId/bookings", async (req, res, next) => {
       include: { model: Booking, attributes: ["startDate", "endDate"] },
       attributes: ["ownerId"],
     });
-    const owner = spotToBook.ownerId;
+
+    // const owner = spotToBook.ownerId;
 
     if (spotToBook) {
-      if (thisUser !== owner) {
+      if (thisUser !== spotToBook.ownerId) {
         let hasConflict = false;
 
         spotToBook.Bookings.forEach((booking) => {
@@ -167,6 +167,7 @@ router.post("/:spotId/bookings", async (req, res, next) => {
 
         if (hasConflict) {
           const errors = {};
+
           if (startDate === endDate) {
             errors.startDate =
               "Selected date conflicts with an existing booking";
@@ -181,6 +182,7 @@ router.post("/:spotId/bookings", async (req, res, next) => {
               errors.endDate = "End date conflicts with an existing booking";
             }
           }
+
           res.status(403);
           return next({
             message:
@@ -190,17 +192,21 @@ router.post("/:spotId/bookings", async (req, res, next) => {
         }
 
         const newBooking = await Booking.create({
-          spotId: spotId,
+          spotId: spotId, 
           userId: thisUser,
           startDate: startDate,
           endDate: endDate,
         });
+
         res.json(newBooking);
       } else {
-        res.json({ message: "This is the users spot" });
+        res.status(403);
+        next({ message: "This is the users spot" });
       }
     } else {
-      res.status(404).json({ message: "Spot couldn't be found" });
+      console.log("not found");
+      res.status(404);
+      next({ message: "Spot couldn't be found" });
     }
   }
 });

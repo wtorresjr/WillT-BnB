@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { Op } = require("sequelize");
+// const { Op } = require("sequelize");
 
 const {
   Review,
