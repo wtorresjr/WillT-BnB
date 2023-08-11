@@ -30,28 +30,40 @@ router.get("/", async (req, res) => {
 });
 
 //Get spots owned by current-user
+
 router.get("/current-user", async (req, res) => {
   if (req.user) {
     const userId = req.user.id;
-    const ownedSpots = await Spot.findAll({
+    const Spots = await Spot.findAll({
       where: { ownerId: userId },
       include: [
         {
           model: Review,
-          attributes: [
-            [Sequelize.fn("AVG", Sequelize.col("stars")), "avgRating"],
-          ],
+          required: false,
         },
         {
           model: Spot_Image,
+          required: false,
           where: { preview: true },
           attributes: ["url"],
         },
       ],
-      raw: true,
     });
 
-    res.json(ownedSpots);
+    Spots.forEach((spot) => {
+      const reviews = spot.Reviews;
+      if (reviews && reviews.length > 0) {
+        const totalStars = reviews.reduce(
+          (sum, review) => sum + review.stars,
+          0
+        );
+        spot.setDataValue("avgRating", totalStars / reviews.length);
+      } else {
+        spot.setDataValue("avgRating", []);
+      }
+    });
+
+    res.json(Spots);
   }
 });
 
@@ -150,8 +162,6 @@ router.post("/:spotId/bookings", async (req, res, next) => {
       attributes: ["ownerId"],
     });
 
-    // const owner = spotToBook.ownerId;
-
     if (spotToBook) {
       if (thisUser !== spotToBook.ownerId) {
         let hasConflict = false;
@@ -192,7 +202,7 @@ router.post("/:spotId/bookings", async (req, res, next) => {
         }
 
         const newBooking = await Booking.create({
-          spotId: spotId, 
+          spotId: spotId,
           userId: thisUser,
           startDate: startDate,
           endDate: endDate,
@@ -213,6 +223,29 @@ router.post("/:spotId/bookings", async (req, res, next) => {
 
 router.use((err, req, res, next) => {
   return res.send(err);
+});
+
+//Create a spot
+router.post("/", async (req, res) => {
+  const { address, city, state, country, lat, lng, name, description, price } =
+    req.body;
+
+  if (req.user) {
+    const newSpot = await Spot.create({
+      ownerId: req.user.id,
+      address: address,
+      city: city,
+      state: state,
+      country: country,
+      lat: lat,
+      lng: lng,
+      name: name,
+      description: description,
+      price: price,
+    });
+
+    res.json(newSpot);
+  }
 });
 
 module.exports = router;

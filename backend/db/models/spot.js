@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, Op } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     /**
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "spotId",
       });
       Spot.belongsTo(models.User, {
-        foreignKey: "id",
+        foreignKey: "ownerId",
       });
       Spot.hasMany(models.Booking, {
         foreignKey: "spotId",
@@ -37,36 +37,43 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isAlpha: true,
+          is: /^[a-z ]+$/i,
         },
       },
       state: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isAlpha: true,
+          is: /^[a-z ]+$/i,
         },
       },
       country: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isAlpha: true,
+          is: /^[a-z ]+$/i,
         },
       },
       lat: {
         type: DataTypes.DECIMAL,
         allowNull: false,
+        validate: {
+          isDecimal: true,
+        },
       },
       lng: {
         type: DataTypes.DECIMAL,
         allowNull: false,
+        validate: {
+          isDecimal: true,
+        },
       },
       name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false,
         validate: {
-          isAlpha: true,
+          is: /^[a-z ]+$/i,
+          len: [1, 50],
         },
       },
       description: {
@@ -76,6 +83,14 @@ module.exports = (sequelize, DataTypes) => {
       price: {
         type: DataTypes.DECIMAL,
         allowNull: false,
+        validate: {
+          isDecimal: true,
+          checkValue(val) {
+            if (val <= 0) {
+              throw new Error("Must be a number greater than zero");
+            }
+          },
+        },
       },
     },
     {
