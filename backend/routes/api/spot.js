@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { Sequelize } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 
 const {
   Spot,
@@ -256,30 +256,52 @@ router.post("/", async (req, res) => {
 
 //CREATE REVIEW FOR SPOT BY ID
 router.post("/:spotId/reviews", async (req, res) => {
+  const { review, stars } = req.body;
+  const { spotId } = req.params;
+  const thisUser = req.user.id;
+
   try {
     if (req.user) {
-      const { review, stars } = req.body;
-      const { spotId } = req.params;
-      const thisUser = req.user.id;
+      const getSpot = await Spot.findByPk(spotId);
 
-      const newReview = await Review.create({
-        spotId: spotId,
-        userId: thisUser,
-        review: review,
-        stars: stars,
-      });
+      if (getSpot) {
+        const getReviews = await Review.findOne({
+          where: {
+            [Op.and]: {
+              userId: thisUser,
+              spotId: spotId,
+            },
+          },
+        });
 
-      res.status(201).json({
-        newReview,
-      });
+        if (getReviews) {
+          return res
+            .status(500)
+            .json({ message: "User already has a review for this spot" });
+        }
+
+        const newReview = await Review.create({
+          spotId: spotId,
+          userId: thisUser,
+          review: review,
+          stars: stars,
+        });
+
+        return res.status(201).json({
+          newReview,
+        });
+      } else {
+        return res.status(404).json({ message: "Spot couldn't be found" });
+      }
     } else {
-      res.json({ message: "Must be logged in to write a review" });
+      return res.json({ message: "Must be logged in to write a review" });
     }
   } catch (err) {
     const errors = {};
     err.errors.map((err) => {
       errors[err.path] = err.message;
     });
+
     return res.status(400).json({ message: "Bad Request", errors });
   }
 });
