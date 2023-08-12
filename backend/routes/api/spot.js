@@ -12,7 +12,7 @@ const {
   Spot_Image,
 } = require("../../db/models");
 
-//Get all spots
+//GET ALL SPOTS
 router.get("/", async (req, res) => {
   const allSpots = await Spot.findAll({
     include: [
@@ -29,8 +29,7 @@ router.get("/", async (req, res) => {
   res.json(allSpots);
 });
 
-//Get spots owned by current-user
-
+//GET SPOTS OWNED BY CURRENT-USER
 router.get("/current-user", async (req, res) => {
   if (req.user) {
     const userId = req.user.id;
@@ -67,7 +66,7 @@ router.get("/current-user", async (req, res) => {
   }
 });
 
-//Get reviews by spotId
+//GET REVIEWS BY SPOT ID
 router.get("/:spotId/reviews", async (req, res) => {
   const { spotId } = req.params;
   const spotReview = await Spot.findByPk(spotId, {
@@ -88,7 +87,7 @@ router.get("/:spotId/reviews", async (req, res) => {
   }
 });
 
-//Get bookings by spotId with permissions based on user ownership
+//GET BOOKINGS FOR SPOT BY ID WITH OWNERSHIP VIEWS
 router.get("/:spotId/bookings", async (req, res) => {
   if (req.user) {
     const { spotId } = req.params;
@@ -120,7 +119,7 @@ router.get("/:spotId/bookings", async (req, res) => {
   }
 });
 
-//Get spot by id
+//GET A SPOT BY ID
 router.get("/:spotId", async (req, res) => {
   const { spotId } = req.params;
   const chosenSpot = await Spot.findByPk(spotId, {
@@ -150,7 +149,7 @@ router.get("/:spotId", async (req, res) => {
   }
 });
 
-//Create a new booking for a spot
+//CREATE A NEW BOOKING FOR SPOT BY ID
 router.post("/:spotId/bookings", async (req, res, next) => {
   if (req.user) {
     const { startDate, endDate } = req.body;
@@ -214,7 +213,6 @@ router.post("/:spotId/bookings", async (req, res, next) => {
         next({ message: "This is the users spot" });
       }
     } else {
-      console.log("not found");
       res.status(404);
       next({ message: "Spot couldn't be found" });
     }
@@ -225,7 +223,7 @@ router.use((err, req, res, next) => {
   return res.send(err);
 });
 
-//Create a spot
+//CREATE A SPOT
 router.post("/", async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
@@ -271,14 +269,18 @@ router.post("/:spotId/reviews", async (req, res) => {
         stars: stars,
       });
 
-      res.json({
+      res.status(201).json({
         newReview,
       });
     } else {
       res.json({ message: "Must be logged in to write a review" });
     }
   } catch (err) {
-    res.json(err);
+    const errors = {};
+    err.errors.map((err) => {
+      errors[err.path] = err.message;
+    });
+    return res.status(400).json({ message: "Bad Request", errors });
   }
 });
 

@@ -95,7 +95,10 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING(50),
         validate: {
-          is: /^[a-z- ]+$/i,
+          is: {
+            args: /^[a-z ]+$/i,
+            msg: "Only alphanumeric characters allowed",
+          },
           len: {
             args: [1, 50],
             msg: "Name must be less than 50 characters",
