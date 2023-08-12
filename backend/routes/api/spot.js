@@ -230,21 +230,25 @@ router.post("/", async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
 
-  if (req.user) {
-    const newSpot = await Spot.create({
-      ownerId: req.user.id,
-      address: address,
-      city: city,
-      state: state,
-      country: country,
-      lat: lat,
-      lng: lng,
-      name: name,
-      description: description,
-      price: price,
-    });
-
-    res.json(newSpot);
+  try {
+    if (req.user) {
+      const newSpot = await Spot.create({
+        ownerId: req.user.id,
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        lat: lat,
+        lng: lng,
+        name: name,
+        description: description,
+        price: price,
+      });
+      return res.status(201).json(newSpot);
+    }
+  } catch {
+    // res.json();
+    res.status(400).json({ message: "Bad Request", ValidationError });
   }
 });
 
