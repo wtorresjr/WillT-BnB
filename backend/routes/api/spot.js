@@ -256,4 +256,30 @@ router.post("/", async (req, res) => {
   }
 });
 
+//CREATE REVIEW FOR SPOT BY ID
+router.post("/:spotId/reviews", async (req, res) => {
+  try {
+    if (req.user) {
+      const { review, stars } = req.body;
+      const { spotId } = req.params;
+      const thisUser = req.user.id;
+
+      const newReview = await Review.create({
+        spotId: spotId,
+        userId: thisUser,
+        review: review,
+        stars: stars,
+      });
+
+      res.json({
+        newReview,
+      });
+    } else {
+      res.json({ message: "Must be logged in to write a review" });
+    }
+  } catch (err) {
+    res.json(err);
+  }
+});
+
 module.exports = router;
