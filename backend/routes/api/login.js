@@ -19,7 +19,7 @@ const validateLogin = [
   handleValidationErrors,
 ];
 
-// Log in
+//LOG IN
 router.post("/", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
 
@@ -56,24 +56,7 @@ router.post("/", validateLogin, async (req, res, next) => {
 });
 
 
-//Get current user
-router.get("/", (req, res) => {
-  const { user } = req;
-  if (user) {
-    const safeUser = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-      firstName: user.firstName,
-      lastName: user.lastName,
-    };
-    return res.json({
-      user: safeUser,
-    });
-  } else return res.json({ user: null });
-});
-
-//Sign out current user
+//SIGN-OUT CURRENT-USER
 router.delete("/", (_req, res) => {
   res.clearCookie("token");
   return res.json({ message: "success" });

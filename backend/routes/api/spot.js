@@ -276,7 +276,7 @@ router.post("/:spotId/reviews", async (req, res) => {
 
         if (getReviews) {
           return res
-            .status(500)
+            .status(403)
             .json({ message: "User already has a review for this spot" });
         }
 
