@@ -246,9 +246,13 @@ router.post("/", async (req, res) => {
       });
       return res.status(201).json(newSpot);
     }
-  } catch {
-    // res.json();
-    res.status(400).json({ message: "Bad Request", ValidationError });
+  } catch (err) {
+    const errors = {};
+
+    err.errors.map((err) => {
+      errors[err.path] = err.message;
+    });
+    return res.status(400).json({ message: "Bad Request", errors });
   }
 });
 

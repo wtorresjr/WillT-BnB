@@ -31,63 +31,101 @@ module.exports = (sequelize, DataTypes) => {
       },
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Street address is required",
+          },
+        },
       },
       city: {
         type: DataTypes.STRING,
-        allowNull: false,
+
         validate: {
-          is: /^[a-z ]+$/i,
+          is: {
+            args: /^[a-z- ]+$/i,
+            msg: "Only alphanumeric characters allowed",
+          },
+          notEmpty: { args: true, msg: "City is required" },
         },
       },
       state: {
         type: DataTypes.STRING,
-        allowNull: false,
         validate: {
-          is: /^[a-z ]+$/i,
+          is: {
+            args: /^[a-z ]+$/i,
+            msg: "Only alphanumeric characters allowed",
+          },
+          notEmpty: { args: true, msg: "State is required" },
         },
       },
       country: {
         type: DataTypes.STRING,
-        allowNull: false,
         validate: {
-          is: /^[a-z ]+$/i,
+          is: {
+            args: /^[a-z ]+$/i,
+            msg: "Only alphanumeric characters allowed",
+          },
+          notEmpty: { args: true, msg: "Country is required" },
         },
       },
       lat: {
         type: DataTypes.DECIMAL,
-        allowNull: false,
         validate: {
-          isDecimal: true,
+          isDecimal: {
+            args: true,
+            msg: "Only numeric values allowed",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Latitude is required",
+          },
         },
       },
       lng: {
         type: DataTypes.DECIMAL,
-        allowNull: false,
         validate: {
-          isDecimal: true,
+          isDecimal: {
+            args: true,
+            msg: "Only numeric values allowed",
+          },
+          notEmpty: { args: true, msg: "Longitude is required" },
         },
       },
       name: {
         type: DataTypes.STRING(50),
-        allowNull: false,
         validate: {
-          is: /^[a-z ]+$/i,
-          len: [1, 50],
+          is: /^[a-z- ]+$/i,
+          len: {
+            args: [1, 50],
+            msg: "Name must be less than 50 characters",
+          },
+          notEmpty: { args: true, msg: "Name is required" },
         },
       },
       description: {
-        type: DataTypes.STRING(500),
-        allowNull: false,
+        type: DataTypes.STRING(),
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Description is required",
+          },
+        },
       },
       price: {
         type: DataTypes.DECIMAL,
-        allowNull: false,
         validate: {
-          isDecimal: true,
+          isDecimal: {
+            args: true,
+            msg: "Only numeric values allowed",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Price per day is required",
+          },
           checkValue(val) {
-            if (val <= 0) {
-              throw new Error("Must be a number greater than zero");
+            if (val < 0) {
+              throw new Error("Price must be greater than $0");
             }
           },
         },
