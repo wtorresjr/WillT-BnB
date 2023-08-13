@@ -324,7 +324,11 @@ router.post("/:spotId/spot-images", async (req, res) => {
             url: url,
             preview: preview,
           });
-          res.status(200).json(newImage);
+          res.status(200).json({
+            id: newImage.id,
+            url: newImage.url,
+            preview: newImage.preview,
+          });
         } catch (err) {
           const errors = {};
           err.errors.map((err) => {
@@ -343,6 +347,7 @@ router.post("/:spotId/spot-images", async (req, res) => {
     res.status(403).json({ message: "Must be logged in" });
   }
 });
+
 
 //DELETE A SPOT
 router.delete("/:spotId", async (req, res) => {

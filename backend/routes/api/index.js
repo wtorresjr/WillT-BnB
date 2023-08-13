@@ -4,6 +4,7 @@ const signupRouter = require("./signup");
 const { restoreUser } = require("../../utils/auth");
 const currentUser = require("./current-user");
 const spotRouter = require("./spot");
+const reviewsRouter = require("./reviews");
 
 router.use(restoreUser);
 
@@ -14,6 +15,8 @@ router.use("/signup", signupRouter);
 router.use("/current-user", currentUser);
 
 router.use("/spots", spotRouter);
+
+router.use("/reviews", reviewsRouter);
 
 router.get("/csrf/restore", (req, res) => {
   const csrfToken = req.csrfToken();
