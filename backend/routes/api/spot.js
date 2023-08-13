@@ -16,9 +16,10 @@ const {
 router.get("/", async (req, res) => {
   const allSpots = await Spot.findAll({
     include: [
-      { model: Spot_Image, where: { preview: true } },
+      { model: Spot_Image, required: false, where: { preview: true } },
       {
         model: Review,
+        required: false,
         attributes: [
           [Sequelize.fn("AVG", Sequelize.col("stars")), "avgRating"],
         ],
@@ -306,6 +307,63 @@ router.post("/:spotId/reviews", async (req, res) => {
   }
 });
 
+//ADD AN IMAGE TO A SPOT BY ID
+router.post("/:spotId/spot-images", async (req, res) => {
+  const { spotId } = req.params;
+  const { url, preview } = req.body;
+  if (req.user) {
+    const thisUser = req.user.id;
 
+    const getSpot = await Spot.findOne({ where: { id: spotId } });
+
+    if (getSpot) {
+      if (getSpot.ownerId === thisUser) {
+        try {
+          const newImage = await Spot_Image.create({
+            spotId: spotId,
+            url: url,
+            preview: preview,
+          });
+          res.status(200).json(newImage);
+        } catch (err) {
+          const errors = {};
+          err.errors.map((err) => {
+            errors[err.path] = err.message;
+          });
+
+          return res.status(400).json({ message: "Bad Request", errors });
+        }
+      } else {
+        res.status(403).json({ message: "Must own spot to add images" });
+      }
+    } else {
+      res.status(404).json({ message: "Spot couldn't be found" });
+    }
+  } else {
+    res.status(403).json({ message: "Must be logged in" });
+  }
+});
+
+//DELETE A SPOT
+router.delete("/:spotId", async (req, res) => {
+  const { spotId } = req.params;
+  if (req.user) {
+    const thisUser = req.user.id;
+    const getSpot = await Spot.findOne({ where: { id: spotId } });
+
+    if (getSpot) {
+      if (getSpot.ownerId === thisUser) {
+        await getSpot.destroy();
+        return res.status(200).json({ message: "Successfully Deleted" });
+      } else {
+        return res
+          .status(403)
+          .json({ message: "Must own this spot to delete" });
+      }
+    } else {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+  }
+});
 
 module.exports = router;
