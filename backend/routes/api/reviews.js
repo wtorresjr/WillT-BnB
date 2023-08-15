@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const { Sequelize, Op } = require("sequelize");
-
 const {
   Review,
   User,
@@ -66,6 +64,63 @@ router.post("/:reviewId/review-images", async (req, res) => {
   }
 });
 
+//  An authenticated user is required for a successful response
+
+//  Only the owner of the review is authorized to delete
+
+//  Image record is removed from the database after request
+
+//  Success response includes a message indicating a successful deletion
+
+//  Error response with status 404 is given when a review image does not exist
+// with the provided id
+
+//DELETE A REVIEW-IMAGE BY REVIEW-ID
+router.delete("/:reviewId/review-images/:reviewImgId", async (req, res) => {
+  const { reviewId, reviewImgId } = req.params;
+  if (req.user) {
+    const thisUser = req.user.id;
+    const thisReview = await Review.findByPk(reviewId, {
+      include: { model: Review_Image },
+    });
+    if (thisReview) {
+      if (thisReview.userId === thisUser) {
+        const reviewImage = await Review_Image.findByPk(reviewImgId);
+        if (reviewImage) {
+          if (reviewImage.reviewId == reviewId) {
+            await reviewImage.destroy();
+            res.status(200).json({ message: "Successfully deleted" });
+          } else {
+            res
+              .status(403)
+              .json({
+                message: "Review image id does not belong to this review",
+              });
+          }
+        } else {
+          res.status(404).json({ message: "Review image couldn't be found" });
+        }
+      } else {
+        res
+          .status(403)
+          .json({ message: "User is not the Author of this review" });
+      }
+    } else {
+      res.status(404).json({ message: "Review Id couldn't be found" });
+    }
+  } else {
+    return res.status(403).json({ message: "Authentication Required " });
+  }
+});
+
+router.use((error, req, res, next) => {
+  error.statusCode = error.statusCode || 500;
+  res.status(error.statusCode).json({
+    message: error.message,
+  });
+});
+
+//DELETE A REVIEW BY REVIEW-ID
 router.delete("/:reviewId", async (req, res) => {
   const { reviewId } = req.params;
   if (req.user) {
