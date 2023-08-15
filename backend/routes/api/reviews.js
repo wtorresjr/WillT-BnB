@@ -37,11 +37,9 @@ router.post("/:reviewId/review-images", async (req, res) => {
               url: url,
             });
             return res.status(200).json({
-
               id: newRevImage.id,
               url: newRevImage.url,
-            }
-            );
+            });
           } catch (err) {
             const errors = {};
             err.errors.map((err) => {
@@ -65,6 +63,38 @@ router.post("/:reviewId/review-images", async (req, res) => {
     }
   } else {
     return res.status(403).json({ message: "Authentication required" });
+  }
+});
+
+router.delete("/:reviewId", async (req, res) => {
+  const { reviewId } = req.params;
+  if (req.user) {
+    const thisUser = req.user.id;
+    try {
+      const reviewToDelete = await Review.findByPk(reviewId);
+      if (reviewToDelete) {
+        if (reviewToDelete.userId === thisUser) {
+          await reviewToDelete.destroy();
+          res.json({ message: "Successfully deleted" });
+        } else {
+          res.status(403).json({
+            message: "Access Denied: Current-user is not the review author.",
+          });
+        }
+      } else {
+        res.status(404).json({
+          message: "Review couldn't be found",
+        });
+      }
+    } catch (err) {
+      const errors = {};
+      err.errors.map((err) => {
+        errors[err.path] = err.message;
+      });
+      res.json(errors);
+    }
+  } else {
+    res.status(403).json({ message: "Authentication Required" });
   }
 });
 
