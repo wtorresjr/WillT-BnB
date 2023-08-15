@@ -348,6 +348,50 @@ router.post("/:spotId/spot-images", async (req, res) => {
   }
 });
 
+//DELETE IMAGE FROM SPOT BY ID
+router.delete("/:spotId/spot-images/:imageId", async (req, res) => {
+  const { spotId, imageId } = req.params;
+  if (req.user) {
+    const thisUser = req.user.id;
+    const spot = await Spot.findByPk(spotId, {
+      include: { model: Spot_Image },
+    });
+    if (spot) {
+      if (spot.ownerId === thisUser) {
+        if (spot.Spot_Images.length) {
+          const spotImageToDelete = await Spot_Image.findByPk(imageId);
+          if (spotImageToDelete) {
+            if (spotImageToDelete.spotId === spot.id) {
+              await spotImageToDelete.destroy();
+              res.status(200).json({ message: "Successfully deleted" });
+            } else {
+              res
+                .status(403)
+                .json({
+                  message: "Provided imageId does not belong to this spot",
+                });
+            }
+          } else {
+            res.status(404).json({ message: "Spot_Image couldn't be found" });
+          }
+
+          res.json(spot.Spot_Images);
+        } else {
+          res
+            .status(404)
+            .json({ message: "No images have been loaded for this spot" });
+        }
+      } else {
+        res.status(403).json({ message: "Current-user does not own spot" });
+      }
+    } else {
+      res.status(404).json({ message: "Spot couldn't be found" });
+    }
+  } else {
+    return res.status(403).json({ message: "Authentication Required" });
+  }
+});
+
 //DELETE A SPOT
 router.delete("/:spotId", async (req, res) => {
   const { spotId } = req.params;
