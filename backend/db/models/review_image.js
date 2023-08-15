@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
       url: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "URL must be provided",
+          },
+        },
       },
       reviewId: {
         type: DataTypes.INTEGER,
@@ -27,6 +33,17 @@ module.exports = (sequelize, DataTypes) => {
       preview: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
+        validate: {
+          // notEmpty: {
+          //   args: true,
+          //   msg: "Preview must be provided",
+          // },
+          is: {
+            args: /^(?:true|false)$/gim,
+            msg: "Value must be true or false",
+          },
+        },
       },
     },
     {

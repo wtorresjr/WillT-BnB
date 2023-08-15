@@ -48,6 +48,8 @@ router.get("/reviews", async (req, res) => {
       ],
     });
     res.json(userReviews);
+  } else {
+    res.status(403).json({ message: "Authentication Required" });
   }
 });
 
@@ -88,7 +90,7 @@ router.get("/bookings", async (req, res) => {
         lng: booking.Spot.lng,
         name: booking.Spot.name,
         price: booking.Spot.price,
-        previewImage: booking.Spot.Spot_Images[0].url, 
+        previewImage: booking.Spot.Spot_Images[0].url,
       },
       createdAt: booking.createdAt,
       updatedAt: booking.updatedAt,

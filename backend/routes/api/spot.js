@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
     ],
     group: "Spot.id",
   });
-  res.json(allSpots);
+  res.json({ Spots: allSpots });
 });
 
 //GET SPOTS OWNED BY CURRENT-USER
@@ -347,7 +347,6 @@ router.post("/:spotId/spot-images", async (req, res) => {
     res.status(403).json({ message: "Must be logged in" });
   }
 });
-
 
 //DELETE A SPOT
 router.delete("/:spotId", async (req, res) => {

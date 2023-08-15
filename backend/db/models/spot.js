@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       address: {
         type: DataTypes.STRING,
+        allowNull: false,
         validate: {
           notEmpty: {
             args: true,
@@ -39,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       city: {
+        allowNull: false,
         type: DataTypes.STRING,
 
         validate: {
@@ -50,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       state: {
+        allowNull: false,
         type: DataTypes.STRING,
         validate: {
           is: {
@@ -61,6 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       country: {
         type: DataTypes.STRING,
+        allowNull: false,
         validate: {
           is: {
             args: /^[a-z ]+$/i,
@@ -71,6 +75,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       lat: {
         type: DataTypes.DECIMAL,
+        allowNull: false,
         validate: {
           isDecimal: {
             args: true,
@@ -84,6 +89,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       lng: {
         type: DataTypes.DECIMAL,
+        allowNull: false,
         validate: {
           isDecimal: {
             args: true,
@@ -94,6 +100,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING(50),
+        allowNull: false,
         validate: {
           is: {
             args: /^[a-z ]+$/i,
@@ -108,6 +115,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       description: {
         type: DataTypes.STRING(),
+        allowNull: false,
         validate: {
           notEmpty: {
             args: true,
@@ -117,6 +125,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       price: {
         type: DataTypes.DECIMAL,
+        allowNull: false,
         validate: {
           isDecimal: {
             args: true,

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       url: {
         type: DataTypes.STRING,
+        allowNull: false,
         validate: {
           notEmpty: {
             args: true,
@@ -26,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
 
       preview: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
         validate: {
           notEmpty: {
             args: true,
