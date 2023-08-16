@@ -21,12 +21,12 @@ router.get("/", async (req, res) => {
         {
           model: Review,
           required: false,
-          attributes: [
-            [Sequelize.fn("AVG", Sequelize.col("stars")), "avgRating"],
-          ],
+          // attributes: [
+          //   [Sequelize.fn("AVG", Sequelize.col("stars")), "avgRating"],
+          // ],
         },
       ],
-      group: ["Spots.id"],
+      // group: ["Spot.id"],
     });
     res.json({ Spots: allSpots });
   } catch (err) {
