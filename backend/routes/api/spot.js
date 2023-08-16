@@ -14,20 +14,24 @@ const {
 
 //GET ALL SPOTS
 router.get("/", async (req, res) => {
-  const allSpots = await Spot.findAll({
-    include: [
-      { model: Spot_Image, required: false, where: { preview: true } },
-      {
-        model: Review,
-        required: false,
-        attributes: [
-          [Sequelize.fn("AVG", Sequelize.col("stars")), "avgRating"],
-        ],
-      },
-    ],
-    group: "Spot.id",
-  });
-  res.json({ Spots: allSpots });
+  try {
+    const allSpots = await Spot.findAll({
+      include: [
+        { model: Spot_Image, required: false, where: { preview: true } },
+        {
+          model: Review,
+          required: false,
+          attributes: [
+            [Sequelize.fn("AVG", Sequelize.col("stars")), "avgRating"],
+          ],
+        },
+      ],
+      group: "Spot.id",
+    });
+    res.json({ Spots: allSpots });
+  } catch (err) {
+    res.json(err);
+  }
 });
 
 //GET SPOTS OWNED BY CURRENT-USER
@@ -365,11 +369,9 @@ router.delete("/:spotId/spot-images/:imageId", async (req, res) => {
               await spotImageToDelete.destroy();
               res.status(200).json({ message: "Successfully deleted" });
             } else {
-              res
-                .status(403)
-                .json({
-                  message: "Provided imageId does not belong to this spot",
-                });
+              res.status(403).json({
+                message: "Provided imageId does not belong to this spot",
+              });
             }
           } else {
             res.status(404).json({ message: "Spot_Image couldn't be found" });
