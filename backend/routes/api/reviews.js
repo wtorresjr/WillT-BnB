@@ -11,7 +11,6 @@ const {
 } = require("../../db/models");
 
 //CREATE REVIEW IMAGE FOR SPOT BY ID
-
 router.post("/:reviewId/review-images", async (req, res) => {
   if (req.user) {
     const { url, preview } = req.body;
@@ -64,17 +63,6 @@ router.post("/:reviewId/review-images", async (req, res) => {
   }
 });
 
-//  An authenticated user is required for a successful response
-
-//  Only the owner of the review is authorized to delete
-
-//  Image record is removed from the database after request
-
-//  Success response includes a message indicating a successful deletion
-
-//  Error response with status 404 is given when a review image does not exist
-// with the provided id
-
 //DELETE A REVIEW-IMAGE BY REVIEW-ID
 router.delete("/:reviewId/review-images/:reviewImgId", async (req, res) => {
   const { reviewId, reviewImgId } = req.params;
@@ -91,11 +79,9 @@ router.delete("/:reviewId/review-images/:reviewImgId", async (req, res) => {
             await reviewImage.destroy();
             res.status(200).json({ message: "Successfully deleted" });
           } else {
-            res
-              .status(403)
-              .json({
-                message: "Review image id does not belong to this review",
-              });
+            res.status(403).json({
+              message: "Review image id does not belong to this review",
+            });
           }
         } else {
           res.status(404).json({ message: "Review image couldn't be found" });
@@ -150,6 +136,44 @@ router.delete("/:reviewId", async (req, res) => {
     }
   } else {
     res.status(403).json({ message: "Authentication Required" });
+  }
+});
+
+//EDIT A REVIEW
+router.put("/:reviewId", async (req, res) => {
+  const { reviewId } = req.params;
+  const { review, stars } = req.body;
+  if (req.user) {
+    const thisUser = req.user.id;
+    const reviewToEdit = await Review.findByPk(reviewId);
+    if (reviewToEdit) {
+      if (reviewToEdit.userId === thisUser) {
+        if (stars !== undefined) {
+          reviewToEdit.stars = stars;
+        }
+        if (review !== undefined) {
+          reviewToEdit.review = review;
+        }
+        try {
+          await reviewToEdit.save();
+          res.json(reviewToEdit);
+        } catch (err) {
+          const errors = {};
+          err.errors.map((err) => {
+            errors[err.path] = err.message;
+          });
+          return res.status(400).json({ message: "Bad Request", errors });
+        }
+      } else {
+        return res
+          .status(403)
+          .json({ message: "Review does not belong to current-user" });
+      }
+    } else {
+      return res.status(404).json({ message: "Review couldn't be found" });
+    }
+  } else {
+    return res.status(403).json({ message: "Authentication required" });
   }
 });
 
