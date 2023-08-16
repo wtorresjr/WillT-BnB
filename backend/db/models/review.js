@@ -1,8 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
 
-// const { Spot, User } = require("../models");
-
 module.exports = (sequelize, DataTypes) => {
   class Review extends Model {
     /**
@@ -50,17 +48,17 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             args: true,
             msg: "Stars must be provided",
-            statusCode: 400,
+            // statusCode: 400,
           },
           min: {
             args: 1,
             msg: "Stars must be an integer from 1 to 5",
-            statusCode: 400,
+            // statusCode: 400,
           },
           max: {
             args: 5,
             msg: "Stars must be an integer from 1 to 5",
-            statusCode: 400,
+            // statusCode: 400,
           },
         },
       },
