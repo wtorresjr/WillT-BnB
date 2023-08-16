@@ -87,13 +87,27 @@ router.get("/current-user", async (req, res) => {
           (sum, review) => sum + review.stars,
           0
         );
-        spot.setDataValue("avgRating", totalStars / reviews.length);
+
+        const avgRating = totalStars / reviews.length;
+
+        spot.setDataValue("avgRating", avgRating);
+
+        delete spot.dataValues.Reviews;
+        if (spot.dataValues.Spot_Images && spot.dataValues.Spot_Images[0].url) {
+          spot.setDataValue("previewImage", spot.dataValues.Spot_Images[0].url);
+          // console.log("Spot images length", spot.dataValues.Spot_Images);
+        } else {
+          delete spot.dataValues.Spot_Images;
+          spot.setDataValue("previewImage", "No spot images yet");
+        }
+        delete spot.dataValues.Spot_Images;
       } else {
-        spot.setDataValue("avgRating", []);
+        delete spot.dataValues.Reviews;
+        spot.setDataValue("avgRating", "No reviews yet");
       }
     });
 
-    res.json(Spots);
+    res.json({ Spots: Spots });
   }
 });
 
