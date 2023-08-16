@@ -17,17 +17,36 @@ router.get("/", async (req, res) => {
   try {
     const allSpots = await Spot.findAll({
       include: [
-        { model: Spot_Image, required: false, where: { preview: true } },
+        { model: Review, required: false },
         {
-          model: Review,
+          model: Spot_Image,
           required: false,
-          // attributes: [
-          //   [Sequelize.fn("AVG", Sequelize.col("stars")), "avgRating"],
-          // ],
+          where: { preview: true },
+          attributes: ["url"],
         },
       ],
-      // group: ["Spot.id"],
     });
+    allSpots.forEach((spot) => {
+      const reviews = spot.Reviews;
+
+      if (reviews && reviews.length > 0) {
+        const totalStars = reviews.reduce(
+          (sum, review) => sum + review.stars,
+          0
+        );
+
+        const avgRating = totalStars / reviews.length;
+
+        spot.setDataValue("avgRating", avgRating);
+        spot.setDataValue("previewImage", spot.dataValues.Spot_Images[0].url);
+        delete spot.dataValues.Reviews;
+        delete spot.dataValues.Spot_Images;
+
+      } else {
+        spot.dataValues.Reviews = { avgRating: "No reviews yet" };
+      }
+    });
+
     res.json({ Spots: allSpots });
   } catch (err) {
     res.json(err);
