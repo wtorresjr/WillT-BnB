@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
           ],
         },
       ],
-      group: "Spot.id",
+      group: ["Spot.id"],
     });
     res.json({ Spots: allSpots });
   } catch (err) {
