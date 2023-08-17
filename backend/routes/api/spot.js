@@ -220,6 +220,64 @@ router.get("/:spotId", async (req, res) => {
   }
 });
 
+//EDIT A SPOT
+router.put("/:spotId", async (req, res) => {
+  const { address, city, state, country, lat, lng, name, description, price } =
+    req.body;
+  const { spotId } = req.params;
+  if (req.user) {
+    const thisUser = req.user.id;
+    const spotToEdit = await Spot.findByPk(spotId);
+    if (spotToEdit) {
+      if (spotToEdit.ownerId === thisUser) {
+        address !== undefined ? (spotToEdit.address = address) : undefined;
+        city !== undefined ? (spotToEdit.city = city) : undefined;
+        state !== undefined ? (spotToEdit.state = state) : undefined;
+        country !== undefined ? (spotToEdit.country = country) : undefined;
+        lat !== undefined ? (spotToEdit.lat = lat) : undefined;
+        lng !== undefined ? (spotToEdit.lng = lng) : undefined;
+        name !== undefined ? (spotToEdit.name = name) : undefined;
+        description !== undefined
+          ? (spotToEdit.description = description)
+          : undefined;
+        price !== undefined ? (spotToEdit.price = price) : undefined;
+
+        try {
+          if (Object.keys(req.body).length === 0) {
+            spotToEdit.address = "";
+            spotToEdit.city = "";
+            spotToEdit.state = "";
+            spotToEdit.country = "";
+            spotToEdit.lat = "";
+            spotToEdit.lng = "";
+            spotToEdit.name = "";
+            spotToEdit.description = "";
+            spotToEdit.price = "";
+            await spotToEdit.save();
+            // res.status(200).json(spotToEdit);
+          }
+          await spotToEdit.save();
+          res.status(200).json(spotToEdit);
+        } catch (err) {
+          const errors = {};
+          err.errors.map((err) => {
+            errors[err.path] = err.message;
+          });
+          return res.status(400).json({ message: "Bad Request", errors });
+        }
+      } else {
+        res
+          .status(403)
+          .json({ message: "Current user does not own this spot" });
+      }
+    } else {
+      res.status(404).json({ message: "Spot couldn't be found" });
+    }
+  } else {
+    res.status(403).json({ message: "Authentication required" });
+  }
+});
+
 //CREATE A NEW BOOKING FOR SPOT BY ID
 router.post("/:spotId/bookings", async (req, res, next) => {
   if (req.user) {
