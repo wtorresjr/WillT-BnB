@@ -254,7 +254,6 @@ router.put("/:spotId", async (req, res) => {
             spotToEdit.description = "";
             spotToEdit.price = "";
             await spotToEdit.save();
-            // res.status(200).json(spotToEdit);
           }
           await spotToEdit.save();
           res.status(200).json(spotToEdit);

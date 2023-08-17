@@ -32,6 +32,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isDate: true,
+          checkDate(startDay) {
+            const getDate = new Date().toJSON().split("T");
+            todaysDate = getDate[0];
+            if (startDay < todaysDate) {
+              throw new Error("startDate cannot be before todays date");
+            }
+          },
         },
       },
       endDate: {
@@ -42,6 +49,13 @@ module.exports = (sequelize, DataTypes) => {
           checkDate(endDay) {
             if (endDay <= this.startDate) {
               throw new Error("endDate cannot be on or before startDate");
+            }
+          },
+          checkMore(endDay) {
+            const getDate = new Date().toJSON().split("T");
+            todaysDate = getDate[0];
+            if (endDay <= todaysDate) {
+              throw new Error("endDate cannot be on or before todays date");
             }
           },
         },
