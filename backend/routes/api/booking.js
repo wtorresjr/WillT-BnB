@@ -64,7 +64,10 @@ router.put("/:bookingId", async (req, res) => {
         const getDate = new Date().toJSON().split("T");
         todaysDate = getDate[0];
 
-        if (bookingToEdit.endDate < todaysDate) {
+        if (
+          bookingToEdit.endDate < todaysDate ||
+          bookingToEdit.startDate < todaysDate
+        ) {
           return res
             .status(400)
             .json({ message: "Past bookings can't be modified" });
