@@ -167,30 +167,56 @@ router.get("/:spotId/bookings", async (req, res) => {
 //GET A SPOT BY ID
 router.get("/:spotId", async (req, res) => {
   const { spotId } = req.params;
-  const chosenSpot = await Spot.findByPk(spotId, {
-    include: [
-      {
-        model: Review,
-        attributes: [
-          [Sequelize.fn("COUNT", Sequelize.col("review")), "numReviews"],
-          [Sequelize.fn("AVG", Sequelize.col("stars")), "avgStarRating"],
-        ],
-      },
-      {
-        model: Spot_Image,
-        separate: true,
-        attributes: ["id", "url", "preview"],
-      },
-      {
-        model: User,
-        attributes: ["id", "firstName", "lastName"],
-      },
-    ],
-  });
-  if (chosenSpot.id !== null) {
-    res.json(chosenSpot);
-  } else {
-    res.status(404).json({ message: "Spot couldn't be found" });
+  try {
+    const chosenSpot = await Spot.findByPk(spotId, {
+      include: [
+        {
+          model: Review,
+          required: false,
+        },
+        {
+          model: Spot_Image,
+          separate: true,
+          required: false,
+          attributes: ["id", "url", "preview"],
+        },
+        {
+          model: User,
+          required: false,
+          attributes: ["id", "firstName", "lastName"],
+        },
+      ],
+    });
+
+    if (chosenSpot) {
+      if (chosenSpot.Reviews && chosenSpot.Reviews.length > 0) {
+        const reviewCount = chosenSpot.Reviews.length;
+        const totalStars = chosenSpot.Reviews.reduce(
+          (sum, review) => sum + review.stars,
+          0
+        );
+
+        chosenSpot.setDataValue("numReviews", reviewCount);
+        chosenSpot.setDataValue("avgStarRating", totalStars / reviewCount);
+        delete chosenSpot.dataValues.Reviews;
+      } else {
+        chosenSpot.setDataValue("numReviews", "0");
+        chosenSpot.setDataValue("avgStarRating", "No reviews yet");
+        delete chosenSpot.dataValues.Reviews;
+      }
+
+      const spotImages = chosenSpot.Spot_Images;
+      const owner = chosenSpot.User;
+      delete chosenSpot.dataValues.User;
+      delete chosenSpot.dataValues.Spot_Images;
+      chosenSpot.setDataValue("SpotImages", spotImages);
+      chosenSpot.setDataValue("Owner", owner);
+      return res.status(200).json(chosenSpot);
+    } else {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+  } catch (err) {
+    res.json(err);
   }
 });
 
