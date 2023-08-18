@@ -416,20 +416,18 @@ router.post("/:spotId/reviews", async (req, res, next) => {
 
         if (getReviews) {
           return res
-            .status(403)
+            .status(500)
             .json({ message: "User already has a review for this spot" });
         }
 
         const newReview = await Review.create({
-          spotId: spotId,
-          userId: thisUser,
+          spotId: parseInt(spotId),
+          userId: parseInt(thisUser),
           review: review,
           stars: stars,
         });
 
-        return res.status(201).json({
-          newReview,
-        });
+        return res.status(201).json(newReview);
       } else {
         return res.status(404).json({ message: "Spot couldn't be found" });
       }
