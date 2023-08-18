@@ -122,7 +122,7 @@ router.get("/:spotId/reviews", async (req, res, next) => {
     include: {
       model: Review,
       include: [
-        { model: User },
+        { model: User, attributes: ["id", "firstName", "lastName"] },
         { model: Review_Image, attributes: ["id", "url"] },
       ],
     },
@@ -130,7 +130,7 @@ router.get("/:spotId/reviews", async (req, res, next) => {
   });
 
   if (spotReview) {
-    res.json(spotReview);
+    res.status(200).json(spotReview);
   } else {
     res.status(404).json({ message: "Spot couldn't be found" });
   }
