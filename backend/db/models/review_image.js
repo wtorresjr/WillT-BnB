@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
             args: true,
             msg: "URL must be provided",
           },
+          isUrl: {
+            args: true,
+            msg: "Must be a valid Url format",
+          },
         },
       },
       reviewId: {
@@ -35,10 +39,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: false,
         validate: {
-          // notEmpty: {
-          //   args: true,
-          //   msg: "Preview must be provided",
-          // },
           is: {
             args: /^(?:true|false)$/gim,
             msg: "Value must be true or false",
