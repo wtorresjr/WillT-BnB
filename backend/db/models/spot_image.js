@@ -18,6 +18,14 @@ module.exports = (sequelize, DataTypes) => {
             args: true,
             msg: "Url must be provided",
           },
+          notNull: {
+            args: true,
+            msg: "Url must be provided",
+          },
+          isUrl: {
+            args: true,
+            msg: "Must be a valid Url format",
+          },
         },
       },
       spotId: {
@@ -32,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             args: true,
             msg: "Preview cannot be empty",
+          },
+          notNull: {
+            args: true,
+            msg: "Preview value must be provided",
           },
           is: {
             args: /^(?:true|false)$/gim,

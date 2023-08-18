@@ -273,9 +273,7 @@ router.put("/:spotId", async (req, res, next) => {
           return res.status(400).json({ message: "Bad Request", errors });
         }
       } else {
-        res
-          .status(403)
-          .json({ message: "Current user does not own this spot" });
+        res.status(403).json({ message: "Forbidden" });
       }
     } else {
       res.status(404).json({ message: "Spot couldn't be found" });
@@ -348,7 +346,7 @@ router.post("/:spotId/bookings", async (req, res, next) => {
         res.json(newBooking);
       } else {
         res.status(403);
-        next({ message: "This is the users spot" });
+        next({ message: "Forbidden" });
       }
     } else {
       res.status(404);
@@ -481,7 +479,7 @@ router.post("/:spotId/spot-images", async (req, res, next) => {
           return res.status(400).json({ message: "Bad Request", errors });
         }
       } else {
-        res.status(403).json({ message: "Must own spot to add images" });
+        res.status(403).json({ message: "Forbidden" });
       }
     } else {
       res.status(404).json({ message: "Spot couldn't be found" });
@@ -525,7 +523,7 @@ router.delete("/:spotId/spot-images/:imageId", async (req, res, next) => {
             .json({ message: "No images have been loaded for this spot" });
         }
       } else {
-        res.status(403).json({ message: "Current-user does not own spot" });
+        res.status(403).json({ message: "Forbidden" });
       }
     } else {
       res.status(404).json({ message: "Spot couldn't be found" });

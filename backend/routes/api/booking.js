@@ -34,7 +34,7 @@ router.delete("/:bookingId", async (req, res) => {
       } else {
         res
           .status(403)
-          .json({ message: "Booking does not belong to current-user" });
+          .json({ message: "Forbidden" });
       }
     } else {
       res.status(404).json({ message: "Booking couldn't be found" });
@@ -124,7 +124,7 @@ router.put("/:bookingId", async (req, res) => {
       } else {
         res
           .status(403)
-          .json({ message: "Current user does not own this booking" });
+          .json({ message: "Forbidden" });
       }
     } else {
       res.status(404).json({ message: "Booking couldn't be found" });

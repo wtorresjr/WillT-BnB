@@ -52,7 +52,7 @@ router.post("/:reviewId/review-images", async (req, res) => {
         }
       } else {
         return res.status(403).json({
-          message: "Review must belong to current-user",
+          message: "Forbidden",
         });
       }
     } else {
@@ -87,9 +87,7 @@ router.delete("/:reviewId/review-images/:reviewImgId", async (req, res) => {
           res.status(404).json({ message: "Review image couldn't be found" });
         }
       } else {
-        res
-          .status(403)
-          .json({ message: "User is not the Author of this review" });
+        res.status(403).json({ message: "Forbidden" });
       }
     } else {
       res.status(404).json({ message: "Review Id couldn't be found" });
@@ -165,9 +163,7 @@ router.put("/:reviewId", async (req, res) => {
           return res.status(400).json({ message: "Bad Request", errors });
         }
       } else {
-        return res
-          .status(403)
-          .json({ message: "Review does not belong to current-user" });
+        return res.status(403).json({ message: "Forbidden" });
       }
     } else {
       return res.status(404).json({ message: "Review couldn't be found" });
