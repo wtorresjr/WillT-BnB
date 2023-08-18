@@ -308,52 +308,38 @@ router.post("/:spotId/bookings", async (req, res, next) => {
     const thisUser = req.user.id;
     const { spotId } = req.params;
 
-    const spotToBook = await Spot.findByPk(spotId, {
+    const errors = {};
+    const bookingsForSpot = await Spot.findByPk(spotId, {
       include: { model: Booking, attributes: ["startDate", "endDate"] },
       attributes: ["ownerId"],
     });
 
-    if (spotToBook) {
-      if (thisUser !== spotToBook.ownerId) {
-        let hasConflict = false;
-
-        spotToBook.Bookings.forEach((booking) => {
+    if (bookingsForSpot) {
+      if (thisUser !== bookingsForSpot.ownerId) {
+        bookingsForSpot.Bookings.forEach((booking) => {
           if (
-            (startDate >= booking.startDate && startDate <= booking.endDate) ||
-            (endDate >= booking.startDate && endDate <= booking.endDate)
+            booking.startDate === startDate ||
+            booking.endDate === startDate
           ) {
-            hasConflict = true;
+            errors.startDate = "Start date conflicts with an existing booking";
+          }
+          if (booking.endDate === endDate || booking.startDate === endDate) {
+            errors.endDate = "End date conflicts with an existing booking";
           }
         });
 
-        if (hasConflict) {
-          const errors = {};
-
-          if (startDate === endDate) {
-            errors.startDate =
-              "Selected date conflicts with an existing booking";
-          } else {
-            if (startDate >= endDate) {
-              errors.endDate = "endDate cannot be on or before startDate";
-              res.status(400);
-              return next({ message: "Bad Request", errors });
-            } else {
-              errors.startDate =
-                "Start date conflicts with an existing booking";
-              errors.endDate = "End date conflicts with an existing booking";
-            }
-          }
-
-          res.status(403);
-          return next({
+        if (Object.keys(errors).length) {
+          const errorResponse = {
             message:
               "Sorry, this spot is already booked for the specified dates",
-            errors,
-          });
+            errors: errors,
+          };
+          errorResponse.status = 403;
+          return next(errorResponse);
         }
 
         const newBooking = await Booking.create({
-          spotId: spotId,
+          spotId: parseInt(spotId),
           userId: thisUser,
           startDate: startDate,
           endDate: endDate,
@@ -371,8 +357,15 @@ router.post("/:spotId/bookings", async (req, res, next) => {
   } else {
     const error = new Error("Authentication required");
     error.status = 401;
-    next(error);
+    return next(error);
   }
+});
+
+router.use((err, req, res, next) => {
+  const status = err.status || 500;
+  delete err.status;
+  const message = err || "Internal Server Error";
+  return res.status(status).json(message);
 });
 
 //CREATE A SPOT

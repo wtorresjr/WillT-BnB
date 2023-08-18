@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
     /**
@@ -31,10 +32,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATEONLY,
         allowNull: false,
         validate: {
-          isDate: true,
-          checkDate(startDay) {
+          isDate: { args: true, msg: "Must be a valid date" },
+          notEmpty: { args: true, msg: "Start date is required" },
+          notNull: { args: true, msg: "Start date is required" },
+          checkToday(startDay) {
             const getDate = new Date().toJSON().split("T");
-            todaysDate = getDate[0];
+            let todaysDate = getDate[0];
             if (startDay < todaysDate) {
               throw new Error("startDate cannot be before todays date");
             }
@@ -45,15 +48,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATEONLY,
         allowNull: false,
         validate: {
-          isDate: true,
+          isDate: { args: true, msg: "Must be a valid date" },
+          notEmpty: { args: true, msg: "End date is required" },
+          notNull: { args: true, msg: "End date is required" },
           checkDate(endDay) {
             if (endDay <= this.startDate) {
               throw new Error("endDate cannot be on or before startDate");
             }
           },
-          checkMore(endDay) {
+          checkToday(endDay) {
             const getDate = new Date().toJSON().split("T");
-            todaysDate = getDate[0];
+            let todaysDate = getDate[0];
             if (endDay <= todaysDate) {
               throw new Error("endDate cannot be on or before todays date");
             }
