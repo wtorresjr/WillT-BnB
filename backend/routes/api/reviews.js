@@ -146,13 +146,17 @@ router.put("/:reviewId", async (req, res) => {
     const reviewToEdit = await Review.findByPk(reviewId);
     if (reviewToEdit) {
       if (reviewToEdit.userId === thisUser) {
-        if (stars !== undefined) {
-          reviewToEdit.stars = stars;
-        }
-        if (review !== undefined) {
-          reviewToEdit.review = review;
-        }
         try {
+          if (Object.keys(req.body).length === 0) {
+            reviewToEdit.review = "";
+            reviewToEdit.stars = "";
+          }
+          if (stars !== undefined) {
+            reviewToEdit.stars = stars;
+          }
+          if (review !== undefined) {
+            reviewToEdit.review = review;
+          }
           await reviewToEdit.save();
           res.json(reviewToEdit);
         } catch (err) {

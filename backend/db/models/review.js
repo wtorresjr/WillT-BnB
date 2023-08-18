@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: {
             args: true,
-            msg: "Stars must be provided",
+            msg: "Stars must be an integer from 1 to 5",
           },
           min: {
             args: 1,
