@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
             args: true,
             msg: "Street address is required",
           },
+          notNull: {
+            args: true,
+            msg: "Street address is required",
+          },
         },
       },
       city: {
@@ -49,6 +53,10 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Only alphanumeric characters allowed",
           },
           notEmpty: { args: true, msg: "City is required" },
+          notNull: {
+            args: true,
+            msg: "City is required",
+          },
         },
       },
       state: {
@@ -60,6 +68,10 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Only alphanumeric characters allowed",
           },
           notEmpty: { args: true, msg: "State is required" },
+          notNull: {
+            args: true,
+            msg: "State is required",
+          },
         },
       },
       country: {
@@ -71,6 +83,10 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Only alphanumeric characters allowed",
           },
           notEmpty: { args: true, msg: "Country is required" },
+          notNull: {
+            args: true,
+            msg: "Country is required",
+          },
         },
       },
       lat: {
@@ -79,11 +95,15 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isDecimal: {
             args: true,
-            msg: "Only numeric values allowed",
+            msg: "Latitude is not valid",
           },
           notEmpty: {
             args: true,
-            msg: "Latitude is required",
+            msg: "Latitude is not valid",
+          },
+          notNull: {
+            args: true,
+            msg: "Latitude is not valid",
           },
         },
       },
@@ -93,9 +113,13 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isDecimal: {
             args: true,
-            msg: "Only numeric values allowed",
+            msg: "Longitude is not",
           },
-          notEmpty: { args: true, msg: "Longitude is required" },
+          notEmpty: { args: true, msg: "Longitude is not valid" },
+          notNull: {
+            args: true,
+            msg: "Longitude is not valid",
+          },
         },
       },
       name: {
@@ -111,6 +135,10 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Name must be less than 50 characters",
           },
           notEmpty: { args: true, msg: "Name is required" },
+          notNull: {
+            args: true,
+            msg: "Name is required",
+          },
         },
       },
       description: {
@@ -118,6 +146,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
+            args: true,
+            msg: "Description is required",
+          },
+          notNull: {
             args: true,
             msg: "Description is required",
           },
@@ -132,6 +164,10 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Only numeric values allowed",
           },
           notEmpty: {
+            args: true,
+            msg: "Price per day is required",
+          },
+          notNull: {
             args: true,
             msg: "Price per day is required",
           },
