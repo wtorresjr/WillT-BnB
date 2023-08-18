@@ -32,21 +32,33 @@ router.get("/", (req, res) => {
 router.get("/reviews", async (req, res, next) => {
   if (req.user) {
     const thisUser = req.user.id;
-    const userReviews = await Review.findAll({
+    const Reviews = await Review.findAll({
       where: {
         userId: thisUser,
       },
       include: [
-        { model: User },
+        { model: User, attributes: ["id", "firstName", "lastName"] },
         {
           model: Spot,
-          include: { model: Spot_Image, where: { preview: true } },
+          include: {
+            model: Spot_Image,
+            where: { preview: true },
+            attributes: ["url"],
+          },
         },
 
         { model: Review_Image, attributes: ["id", "url"] },
       ],
     });
-    res.json(userReviews);
+
+    Reviews.forEach((spot) => {
+      // console.log(spot.Spot.Spot_Image);
+      let spotImage = spot.Spot.Spot_Images[0].url;
+      delete spot.Spot.dataValues.Spot_Images;
+      spot.Spot.setDataValue("previewImage", spotImage);
+    });
+
+    res.status(200).json({ Reviews });
   } else {
     const error = new Error("Authentication required");
     error.status = 401;
