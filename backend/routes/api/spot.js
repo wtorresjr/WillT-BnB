@@ -154,17 +154,33 @@ router.get("/:spotId/bookings", async (req, res, next) => {
     const bookingsResult = spotBookings.toJSON();
 
     if (spotBookings.ownerId === loggedInUserId) {
-      delete bookingsResult.ownerId;
-      return res.json(bookingsResult);
+      // delete bookingsResult.ownerId;
+      const Bookings = bookingsResult.Bookings.map((ele) => ({
+        User: {
+          id: ele.User.id,
+          firstName: ele.User.firstName,
+          lastName: ele.User.lastName,
+        },
+        id: ele.id,
+        spotId: ele.spotId,
+        userId: ele.userId,
+        startDate: ele.startDate,
+        endDate: ele.endDate,
+        createdAt: ele.createdAt,
+        updatedAt: ele.updatedAt,
+      }));
+      res.status(200).json({ Bookings });
     } else {
       delete bookingsResult.ownerId;
       bookingsResult.Bookings.map((ele) => {
         delete ele.userId;
         delete ele.User;
+        delete ele.createdAt;
+        delete ele.updatedAt;
+        delete ele.id;
       });
-
-      return res.json(bookingsResult);
     }
+    return res.json(bookingsResult);
   } else {
     const error = new Error("Authentication required");
     error.status = 401;
