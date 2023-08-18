@@ -117,7 +117,7 @@ router.delete("/:reviewId", async (req, res) => {
           res.json({ message: "Successfully deleted" });
         } else {
           res.status(403).json({
-            message: "Access Denied: Current-user is not the review author.",
+            message: "Forbidden",
           });
         }
       } else {
