@@ -12,17 +12,19 @@ const validateLogin = [
   check("credential")
     .exists({ checkFalsy: true })
     .notEmpty()
-    .withMessage("Please provide a valid email or username."),
+    .withMessage("Email or username is required"),
   check("password")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a password."),
+    .notEmpty()
+    .withMessage("Password is required"),
   handleValidationErrors,
 ];
 
 //LOG IN
-router.post("/", validateLogin, async (req, res, next) => {
-  const { credential, password } = req.body;
 
+router.post("/", validateLogin, async (req, res, next) => {
+  // router.post("/", async (req, res, next) => {
+  const { credential, password } = req.body;
   const user = await User.unscoped().findOne({
     where: {
       [Op.or]: {
@@ -33,10 +35,8 @@ router.post("/", validateLogin, async (req, res, next) => {
   });
 
   if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-    const err = new Error("Login failed");
+    const err = new Error("Invalid credentials");
     err.status = 401;
-    err.title = "Login failed";
-    err.errors = { credential: "The provided credentials were invalid." };
     return next(err);
   }
 
@@ -55,6 +55,12 @@ router.post("/", validateLogin, async (req, res, next) => {
   });
 });
 
+router.use((err, req, res, next) => {
+  const status = err.status || 500;
+  const message = err.message || "Internal Server Error";
+  const errors = err.errors;
+  return res.status(status).json({ message: message, errors });
+});
 
 //SIGN-OUT CURRENT-USER
 router.delete("/", (_req, res) => {

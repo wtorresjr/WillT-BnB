@@ -13,7 +13,7 @@ const {
 } = require("../../db/models");
 
 //GET ALL SPOTS
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const allSpots = await Spot.findAll({
       include: [
@@ -61,7 +61,7 @@ router.get("/", async (req, res) => {
 });
 
 //GET SPOTS OWNED BY CURRENT-USER
-router.get("/current-user", async (req, res) => {
+router.get("/current-user", async (req, res, next) => {
   if (req.user) {
     const userId = req.user.id;
     const Spots = await Spot.findAll({
@@ -108,11 +108,15 @@ router.get("/current-user", async (req, res) => {
     });
 
     res.json({ Spots: Spots });
+  } else {
+    const error = new Error("Authentication required");
+    error.status = 401;
+    next(error);
   }
 });
 
 //GET REVIEWS BY SPOT ID
-router.get("/:spotId/reviews", async (req, res) => {
+router.get("/:spotId/reviews", async (req, res, next) => {
   const { spotId } = req.params;
   const spotReview = await Spot.findByPk(spotId, {
     include: {
@@ -133,7 +137,7 @@ router.get("/:spotId/reviews", async (req, res) => {
 });
 
 //GET BOOKINGS FOR SPOT BY ID WITH OWNERSHIP VIEWS
-router.get("/:spotId/bookings", async (req, res) => {
+router.get("/:spotId/bookings", async (req, res, next) => {
   if (req.user) {
     const { spotId } = req.params;
     const loggedInUserId = req.user.id;
@@ -161,11 +165,15 @@ router.get("/:spotId/bookings", async (req, res) => {
 
       return res.json(bookingsResult);
     }
+  } else {
+    const error = new Error("Authentication required");
+    error.status = 401;
+    next(error);
   }
 });
 
 //GET A SPOT BY ID
-router.get("/:spotId", async (req, res) => {
+router.get("/:spotId", async (req, res, next) => {
   const { spotId } = req.params;
   try {
     const chosenSpot = await Spot.findByPk(spotId, {
@@ -221,7 +229,7 @@ router.get("/:spotId", async (req, res) => {
 });
 
 //EDIT A SPOT
-router.put("/:spotId", async (req, res) => {
+router.put("/:spotId", async (req, res, next) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
   const { spotId } = req.params;
@@ -273,7 +281,9 @@ router.put("/:spotId", async (req, res) => {
       res.status(404).json({ message: "Spot couldn't be found" });
     }
   } else {
-    res.status(403).json({ message: "Authentication required" });
+    const error = new Error("Authentication required");
+    error.status = 401;
+    next(error);
   }
 });
 
@@ -344,15 +354,15 @@ router.post("/:spotId/bookings", async (req, res, next) => {
       res.status(404);
       next({ message: "Spot couldn't be found" });
     }
+  } else {
+    const error = new Error("Authentication required");
+    error.status = 401;
+    next(error);
   }
 });
 
-router.use((err, req, res, next) => {
-  return res.send(err);
-});
-
 //CREATE A SPOT
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
 
@@ -371,6 +381,10 @@ router.post("/", async (req, res) => {
         price: price,
       });
       return res.status(201).json(newSpot);
+    } else {
+      const error = new Error("Authentication required");
+      error.status = 401;
+      next(error);
     }
   } catch (err) {
     const errors = {};
@@ -383,13 +397,13 @@ router.post("/", async (req, res) => {
 });
 
 //CREATE REVIEW FOR SPOT BY ID
-router.post("/:spotId/reviews", async (req, res) => {
+router.post("/:spotId/reviews", async (req, res, next) => {
   const { review, stars } = req.body;
   const { spotId } = req.params;
-  const thisUser = req.user.id;
 
   try {
     if (req.user) {
+      const thisUser = req.user.id;
       const getSpot = await Spot.findByPk(spotId);
 
       if (getSpot) {
@@ -422,7 +436,9 @@ router.post("/:spotId/reviews", async (req, res) => {
         return res.status(404).json({ message: "Spot couldn't be found" });
       }
     } else {
-      return res.json({ message: "Must be logged in to write a review" });
+      const error = new Error("Authentication required");
+      error.status = 401;
+      next(error);
     }
   } catch (err) {
     const errors = {};
@@ -435,7 +451,7 @@ router.post("/:spotId/reviews", async (req, res) => {
 });
 
 //ADD AN IMAGE TO A SPOT BY ID
-router.post("/:spotId/spot-images", async (req, res) => {
+router.post("/:spotId/spot-images", async (req, res, next) => {
   const { spotId } = req.params;
   const { url, preview } = req.body;
   if (req.user) {
@@ -471,12 +487,14 @@ router.post("/:spotId/spot-images", async (req, res) => {
       res.status(404).json({ message: "Spot couldn't be found" });
     }
   } else {
-    res.status(403).json({ message: "Must be logged in" });
+    const error = new Error("Authentication required");
+    error.status = 401;
+    next(error);
   }
 });
 
 //DELETE IMAGE FROM SPOT BY ID
-router.delete("/:spotId/spot-images/:imageId", async (req, res) => {
+router.delete("/:spotId/spot-images/:imageId", async (req, res, next) => {
   const { spotId, imageId } = req.params;
   if (req.user) {
     const thisUser = req.user.id;
@@ -513,12 +531,14 @@ router.delete("/:spotId/spot-images/:imageId", async (req, res) => {
       res.status(404).json({ message: "Spot couldn't be found" });
     }
   } else {
-    return res.status(403).json({ message: "Authentication Required" });
+    const error = new Error("Authentication required");
+    error.status = 401;
+    next(error);
   }
 });
 
 //DELETE A SPOT
-router.delete("/:spotId", async (req, res) => {
+router.delete("/:spotId", async (req, res, next) => {
   const { spotId } = req.params;
   if (req.user) {
     const thisUser = req.user.id;
@@ -536,7 +556,17 @@ router.delete("/:spotId", async (req, res) => {
     } else {
       return res.status(404).json({ message: "Spot couldn't be found" });
     }
+  } else {
+    const error = new Error("Authentication required");
+    error.status = 401;
+    next(error);
   }
+});
+
+router.use((err, req, res, next) => {
+  const status = err.status || 500;
+  const message = err.message || "Internal Server Error";
+  return res.status(status).json({ message: message });
 });
 
 module.exports = router;

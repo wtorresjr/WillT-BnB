@@ -59,7 +59,7 @@ router.post("/:reviewId/review-images", async (req, res) => {
       return res.status(404).json({ message: "Review couldn't be found" });
     }
   } else {
-    return res.status(403).json({ message: "Authentication required" });
+    return res.status(401).json({ message: "Authentication required" });
   }
 });
 
@@ -95,16 +95,16 @@ router.delete("/:reviewId/review-images/:reviewImgId", async (req, res) => {
       res.status(404).json({ message: "Review Id couldn't be found" });
     }
   } else {
-    return res.status(403).json({ message: "Authentication Required " });
+    return res.status(401).json({ message: "Authentication required" });
   }
 });
 
-router.use((error, req, res, next) => {
-  error.statusCode = error.statusCode || 500;
-  res.status(error.statusCode).json({
-    message: error.message,
-  });
-});
+// router.use((error, req, res, next) => {
+//   error.statusCode = error.statusCode || 500;
+//   res.status(error.statusCode).json({
+//     message: error.message,
+//   });
+// });
 
 //DELETE A REVIEW BY REVIEW-ID
 router.delete("/:reviewId", async (req, res) => {
@@ -135,7 +135,7 @@ router.delete("/:reviewId", async (req, res) => {
       res.json(errors);
     }
   } else {
-    res.status(403).json({ message: "Authentication Required" });
+    res.status(401).json({ message: "Authentication required" });
   }
 });
 
@@ -173,7 +173,7 @@ router.put("/:reviewId", async (req, res) => {
       return res.status(404).json({ message: "Review couldn't be found" });
     }
   } else {
-    return res.status(403).json({ message: "Authentication required" });
+    return res.status(401).json({ message: "Authentication required" });
   }
 });
 

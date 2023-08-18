@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 // const { Op } = require("sequelize");
 
 const {
@@ -30,7 +29,7 @@ router.get("/", (req, res) => {
 });
 
 //GET CURRENT-USER REVIEWS
-router.get("/reviews", async (req, res) => {
+router.get("/reviews", async (req, res, next) => {
   if (req.user) {
     const thisUser = req.user.id;
     const userReviews = await Review.findAll({
@@ -49,12 +48,14 @@ router.get("/reviews", async (req, res) => {
     });
     res.json(userReviews);
   } else {
-    res.status(403).json({ message: "Authentication Required" });
+    const error = new Error("Authentication required");
+    error.status = 401;
+    next(error);
   }
 });
 
 //GET CURRENT-USER BOOKINGS
-router.get("/bookings", async (req, res) => {
+router.get("/bookings", async (req, res, next) => {
   if (req.user) {
     const thisUser = req.user.id;
 
@@ -97,13 +98,23 @@ router.get("/bookings", async (req, res) => {
     }));
 
     res.json({ Bookings: formatBookings });
+  } else {
+    const error = new Error("Authentication required");
+    error.status = 401;
+    next(error);
   }
 });
 
 //SIGN OUT THE CURRENT-USER
-router.delete("/", (_req, res) => {
+router.delete("/", (_req, res, next) => {
   res.clearCookie("token");
   return res.json({ message: "success" });
+});
+
+router.use((err, req, res, next) => {
+  const status = err.status || 500;
+  const message = err.message || "Internal Server Error";
+  return res.status(status).json({ message: message });
 });
 
 module.exports = router;

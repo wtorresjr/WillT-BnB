@@ -34,24 +34,42 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error("Cannot be an email");
             }
           },
+          async checkIfUnique(userName) {
+            const existingUsers = await User.findOne({
+              where: { username: userName },
+            });
+            if (existingUsers) {
+              throw new Error("User with that username already exists");
+            }
+          },
+          notEmpty: {
+            args: true,
+            msg: "Username Name is required",
+          },
         },
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
+          // unique: { args: true, msg: "User with that email already exists" },
           len: [3, 256],
-          isEmail: true,
+          isEmail: {
+            args: true,
+            msg: "Invalid email",
+          },
           async checkIfUnique(emailAddy) {
             const existingUsers = await User.findOne({
               where: { email: emailAddy },
             });
             if (existingUsers) {
-              throw new Error(
-                "Email already exists, please login with your account or contact admin for help."
-              );
+              // msg: "User with that email already exists";
+              throw new Error("User with that email already exists");
             }
+          },
+          notEmpty: {
+            args: true,
+            msg: "Email is required",
           },
         },
       },
@@ -60,6 +78,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           len: [60, 60],
+          notEmpty: {
+            args: true,
+            msg: "Password is required",
+          },
         },
       },
       firstName: {
@@ -67,6 +89,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isAlpha: true,
+          notEmpty: {
+            args: true,
+            msg: "First Name is required",
+          },
         },
       },
       lastName: {
@@ -74,6 +100,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isAlpha: true,
+          notEmpty: {
+            args: true,
+            msg: "Last Name is required",
+          },
         },
       },
     },

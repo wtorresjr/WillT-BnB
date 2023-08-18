@@ -40,7 +40,7 @@ router.delete("/:bookingId", async (req, res) => {
       res.status(404).json({ message: "Booking couldn't be found" });
     }
   } else {
-    res.status(403).json({ message: "Authentication Required" });
+    res.status(401).json({ message: "Authentication required" });
   }
 });
 
@@ -130,7 +130,7 @@ router.put("/:bookingId", async (req, res) => {
       res.status(404).json({ message: "Booking couldn't be found" });
     }
   } else {
-    res.status(403).json({ message: "Authentication required" });
+    res.status(401).json({ message: "Authentication required" });
   }
 });
 
