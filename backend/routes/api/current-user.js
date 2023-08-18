@@ -89,9 +89,6 @@ router.get("/bookings", async (req, res, next) => {
     const formatBookings = userBookings.Bookings.map((booking) => ({
       id: booking.id,
       spotId: booking.spotId,
-      userId: booking.userId,
-      startDate: booking.startDate,
-      endDate: booking.endDate,
       Spot: {
         id: booking.Spot.id,
         ownerId: booking.Spot.ownerId,
@@ -105,11 +102,14 @@ router.get("/bookings", async (req, res, next) => {
         price: booking.Spot.price,
         previewImage: booking.Spot.Spot_Images[0].url,
       },
+      userId: booking.userId,
+      startDate: booking.startDate,
+      endDate: booking.endDate,
       createdAt: booking.createdAt,
       updatedAt: booking.updatedAt,
     }));
 
-    res.json({ Bookings: formatBookings });
+    return res.status(200).json({ Bookings: formatBookings });
   } else {
     const error = new Error("Authentication required");
     error.status = 401;
