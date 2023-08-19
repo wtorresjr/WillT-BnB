@@ -80,7 +80,7 @@ router.delete("/:reviewId/review-images/:reviewImgId", async (req, res) => {
             res.status(200).json({ message: "Successfully deleted" });
           } else {
             res.status(403).json({
-              message: "Review image id does not belong to this review",
+              message: "Forbidden",
             });
           }
         } else {
@@ -96,13 +96,6 @@ router.delete("/:reviewId/review-images/:reviewImgId", async (req, res) => {
     return res.status(401).json({ message: "Authentication required" });
   }
 });
-
-// router.use((error, req, res, next) => {
-//   error.statusCode = error.statusCode || 500;
-//   res.status(error.statusCode).json({
-//     message: error.message,
-//   });
-// });
 
 //DELETE A REVIEW BY REVIEW-ID
 router.delete("/:reviewId", async (req, res) => {
