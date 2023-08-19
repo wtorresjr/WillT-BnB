@@ -43,6 +43,7 @@ router.delete("/:bookingId", async (req, res) => {
 });
 
 router.put("/:bookingId", async (req, res) => {
+  debugger;
   const { bookingId } = req.params;
   const { startDate, endDate } = req.body;
   const errors = {};
@@ -79,6 +80,16 @@ router.put("/:bookingId", async (req, res) => {
         endDate !== undefined ? (bookingToEdit.endDate = endDate) : undefined;
 
         try {
+          if (!startDate && !endDate) {
+            return res.status(403).json({
+              message: "Bad Request",
+              errors: {
+                startDate: "Start date is required",
+                endDate: "End date is required",
+              },
+            });
+          }
+
           if (endDate || startDate) {
             let hasConflict = false;
             let isBadDate = false;
@@ -87,7 +98,8 @@ router.put("/:bookingId", async (req, res) => {
               if (
                 startDate >= booking.startDate &&
                 startDate <= booking.endDate &&
-                booking.id !== bookingId
+                booking.id !== bookingId &&
+                booking.userId !== thisUser
               ) {
                 errors.startDate =
                   "Start date conflicts with an existing booking";
@@ -97,7 +109,8 @@ router.put("/:bookingId", async (req, res) => {
               if (
                 endDate >= booking.startDate &&
                 endDate <= booking.endDate &&
-                booking.id !== bookingId
+                booking.id !== bookingId &&
+                booking.userId !== thisUser
               ) {
                 errors.endDate = "End date conflicts with an existing booking";
                 hasConflict = true;
@@ -106,7 +119,8 @@ router.put("/:bookingId", async (req, res) => {
               if (
                 startDate <= booking.startDate &&
                 endDate >= booking.endDate &&
-                booking.id !== bookingId
+                booking.id !== bookingId &&
+                booking.userId !== thisUser
               ) {
                 errors.startDate =
                   "Start date conflicts with an existing booking";
