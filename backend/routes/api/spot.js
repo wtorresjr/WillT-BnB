@@ -315,13 +315,13 @@ router.put("/:spotId", async (req, res, next) => {
         city !== undefined ? (spotToEdit.city = city) : undefined;
         state !== undefined ? (spotToEdit.state = state) : undefined;
         country !== undefined ? (spotToEdit.country = country) : undefined;
-        lat !== undefined ? (spotToEdit.lat = lat) : undefined;
-        lng !== undefined ? (spotToEdit.lng = lng) : undefined;
+        lat !== undefined ? (spotToEdit.lat = parseFloat(lat)) : undefined;
+        lng !== undefined ? (spotToEdit.lng = parseFloat(lng)) : undefined;
         name !== undefined ? (spotToEdit.name = name) : undefined;
         description !== undefined
           ? (spotToEdit.description = description)
           : undefined;
-        price !== undefined ? (spotToEdit.price = price) : undefined;
+        price !== undefined ? (spotToEdit.price = parseInt(price)) : undefined;
 
         try {
           if (Object.keys(req.body).length === 0) {

@@ -113,7 +113,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isDecimal: {
             args: true,
-            msg: "Longitude is not",
+            msg: "Longitude is not valid",
           },
           notEmpty: { args: true, msg: "Longitude is not valid" },
           notNull: {
