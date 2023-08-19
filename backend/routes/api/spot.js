@@ -558,7 +558,7 @@ router.delete("/:spotId/spot-images/:imageId", async (req, res, next) => {
               res.status(200).json({ message: "Successfully deleted" });
             } else {
               res.status(403).json({
-                message: "Provided imageId does not belong to this spot",
+                message: "Forbidden",
               });
             }
           } else {
