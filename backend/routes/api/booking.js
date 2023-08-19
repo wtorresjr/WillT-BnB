@@ -16,10 +16,15 @@ router.delete("/:bookingId", async (req, res) => {
   const { bookingId } = req.params;
   if (req.user) {
     const thisUser = req.user.id;
-    const bookingToDelete = await Booking.findByPk(bookingId);
+    const bookingToDelete = await Booking.findByPk(bookingId, {
+      include: { model: Spot },
+    });
 
     if (bookingToDelete) {
-      if (bookingToDelete.userId === thisUser) {
+      if (
+        bookingToDelete.userId === thisUser ||
+        bookingToDelete.Spot.ownerId === thisUser
+      ) {
         const getDate = new Date().toJSON().split("T");
         todaysDate = getDate[0];
 
