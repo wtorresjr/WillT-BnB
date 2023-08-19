@@ -31,12 +31,7 @@ router.get("/", checkQueryParams, checkQueryErrors, async (req, res, next) => {
   const where = {};
 
   if (minLng && maxLng) {
-    where.lng = {
-      [Op.and]: {
-        [Op.gte]: minLng,
-        [Op.lte]: maxLng,
-      },
-    };
+    where.lng = { [Op.and]: { [Op.gte]: minLng, [Op.lte]: maxLng } };
   }
   if (minLng && !maxLng) {
     where.lng = { [Op.gte]: minLng };
@@ -44,14 +39,8 @@ router.get("/", checkQueryParams, checkQueryErrors, async (req, res, next) => {
   if (maxLng && !minLng) {
     where.lng = { [Op.lte]: maxLng };
   }
-
   if (minLat && maxLat) {
-    where.lat = {
-      [Op.and]: {
-        [Op.gte]: minLat,
-        [Op.lte]: maxLat,
-      },
-    };
+    where.lat = { [Op.and]: { [Op.gte]: minLat, [Op.lte]: maxLat } };
   }
   if (minLat && !maxLat) {
     where.lat = { [Op.gte]: minLat };
@@ -61,12 +50,7 @@ router.get("/", checkQueryParams, checkQueryErrors, async (req, res, next) => {
   }
 
   if (minPrice && maxPrice) {
-    where.price = {
-      [Op.and]: {
-        [Op.gte]: minPrice,
-        [Op.lte]: maxPrice,
-      },
-    };
+    where.price = { [Op.and]: { [Op.gte]: minPrice, [Op.lte]: maxPrice } };
   }
   if (minPrice && !maxPrice) {
     where.price = { [Op.gte]: minPrice };
@@ -93,6 +77,7 @@ router.get("/", checkQueryParams, checkQueryErrors, async (req, res, next) => {
       ],
       ...pagination,
       where,
+      order: ["id"],
     });
 
     allSpots.forEach((spot) => {
