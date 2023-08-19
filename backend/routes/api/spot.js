@@ -314,6 +314,8 @@ router.post("/:spotId/bookings", async (req, res, next) => {
       attributes: ["ownerId"],
     });
 
+    
+    //WRITE IF BLOCK FOR MISSING REQ.BODY, CHECK MODEL FOR EMPTY/ NULL VALIDATIONS 
     if (bookingsForSpot) {
       if (thisUser !== bookingsForSpot.ownerId) {
         try {

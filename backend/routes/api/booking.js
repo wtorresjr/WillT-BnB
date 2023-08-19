@@ -71,6 +71,8 @@ router.put("/:bookingId", async (req, res) => {
             .json({ message: "Past bookings can't be modified" });
         }
 
+        //WRITE IF BLOCK FOR MISSING REQ.BODY, CHECK MODEL FOR EMPTY/ NULL VALIDATIONS
+
         startDate !== undefined
           ? (bookingToEdit.startDate = startDate)
           : undefined;
