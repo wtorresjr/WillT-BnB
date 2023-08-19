@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-
+const { check } = require("express-validator");
+const { checkQueryErrors } = require("../../utils/queryParamsValidator");
 const { Sequelize, Op } = require("sequelize");
 
 const {
@@ -12,9 +13,36 @@ const {
   Spot_Image,
 } = require("../../db/models");
 
+const checkQueryParams = [
+  check("page")
+    .exists()
+    .bail()
+    .isInt({ min: 1 })
+    .withMessage("Page must be greater than or equal to 1"),
+
+  check("size")
+    .exists()
+    .bail()
+    .isInt({ min: 1 })
+    .withMessage("Size must be greater than or equal to 1"),
+  checkQueryErrors,
+];
+
 //GET ALL SPOTS
-router.get("/", async (req, res, next) => {
+router.get("/", checkQueryParams, async (req, res, next) => {
+  const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
+    req.query;
+
   try {
+    //     if (page < 1 || page > 10) {
+
+    // }
+
+    const pagination = {
+      limit: size,
+      offset: (page - 1) * size,
+    };
+    // const where = { address: { [Op.like]: "%123%" } };
     const allSpots = await Spot.findAll({
       include: [
         { model: Review, required: false },
@@ -25,7 +53,10 @@ router.get("/", async (req, res, next) => {
           attributes: ["url"],
         },
       ],
+      ...pagination,
+      // where,
     });
+
     allSpots.forEach((spot) => {
       const reviews = spot.Reviews;
 
@@ -42,7 +73,6 @@ router.get("/", async (req, res, next) => {
         delete spot.dataValues.Reviews;
         if (spot.dataValues.Spot_Images && spot.dataValues.Spot_Images[0].url) {
           spot.setDataValue("previewImage", spot.dataValues.Spot_Images[0].url);
-          // console.log("Spot images length", spot.dataValues.Spot_Images);
         } else {
           delete spot.dataValues.Spot_Images;
           spot.setDataValue("previewImage", "No spot images yet");
@@ -54,7 +84,7 @@ router.get("/", async (req, res, next) => {
       }
     });
 
-    res.json({ Spots: allSpots });
+    res.json({ Spots: allSpots, page: parseInt(page), size: parseInt(size) });
   } catch (err) {
     res.json(err);
   }
