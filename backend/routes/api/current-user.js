@@ -47,7 +47,11 @@ router.get("/reviews", async (req, res, next) => {
           },
         },
 
-        { model: Review_Image, attributes: ["id", "url"] },
+        {
+          model: Review_Image,
+          as: "ReviewImages",
+          attributes: ["id", "url"],
+        },
       ],
     });
 

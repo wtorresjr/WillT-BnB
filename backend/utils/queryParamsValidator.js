@@ -1,7 +1,7 @@
 const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
 
-const checkQueryParams = [
+const validateSearchFilters = [
   check("page")
     .optional()
     .isInt({ max: 10 })
@@ -49,7 +49,7 @@ const checkQueryParams = [
 
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
-const checkQueryErrors = (req, _res, next) => {
+const checkErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
@@ -66,6 +66,6 @@ const checkQueryErrors = (req, _res, next) => {
 };
 
 module.exports = {
-  checkQueryErrors,
-  checkQueryParams,
+  checkErrors,
+  validateSearchFilters,
 };

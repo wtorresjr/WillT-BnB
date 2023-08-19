@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const {
-  checkQueryErrors,
-  checkQueryParams,
+  checkErrors,
+  validateSearchFilters,
 } = require("../../utils/queryParamsValidator");
 const { Sequelize, Op } = require("sequelize");
 
@@ -16,7 +16,7 @@ const {
 } = require("../../db/models");
 
 //GET ALL SPOTS
-router.get("/", checkQueryParams, checkQueryErrors, async (req, res, next) => {
+router.get("/", validateSearchFilters, checkErrors, async (req, res, next) => {
   let { size, page, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
     req.query;
 
