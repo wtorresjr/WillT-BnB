@@ -20,13 +20,14 @@ router.post("/:reviewId/review-images", async (req, res) => {
     const thisReview = await Review.findByPk(reviewId, {
       include: {
         model: Review_Image,
+        as: "ReviewImages",
         required: false,
       },
     });
 
     if (thisReview) {
       if (thisReview.userId === thisUser) {
-        const imageCount = thisReview.Review_Images.length;
+        const imageCount = thisReview.ReviewImages.length;
         if (imageCount < 10) {
           try {
             const newRevImage = await Review_Image.create({
