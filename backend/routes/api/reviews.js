@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
+const {
+  checkErrors,
+  validateSearchFilters,
+  validateEditReview,
+} = require("../../utils/queryParamsValidator");
 const {
   Review,
   User,
@@ -70,7 +74,7 @@ router.delete("/:reviewId/review-images/:reviewImgId", async (req, res) => {
   if (req.user) {
     const thisUser = req.user.id;
     const thisReview = await Review.findByPk(reviewId, {
-      include: { model: Review_Image },
+      include: { model: Review_Image, as: "ReviewImages" },
     });
     if (thisReview) {
       if (thisReview.userId === thisUser) {
