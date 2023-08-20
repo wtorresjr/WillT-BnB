@@ -46,20 +46,6 @@ const validateSearchFilters = [
     .withMessage("Maximum longitude is invalid"),
 ];
 
-// validateEditReview = [
-//   body("review")
-//     .if(body("stars").not().exists()) // Only validate 'review' if 'stars' doesn't exist
-//     .exists()
-//     .notEmpty()
-//     .withMessage("Review is required"),
-
-//   body("stars")
-//     .if(body("review").not().exists()) // Only validate 'stars' if 'review' doesn't exist
-//     .exists()
-//     .notEmpty()
-//     .withMessage("Stars are required"),
-// ];
-
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
 const checkErrors = (req, _res, next) => {
@@ -81,5 +67,4 @@ const checkErrors = (req, _res, next) => {
 module.exports = {
   checkErrors,
   validateSearchFilters,
-  // validateEditReview,
 };

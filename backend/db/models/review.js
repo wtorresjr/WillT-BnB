@@ -50,17 +50,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          notEmpty: {
-            args: true,
-            msg: "Stars must be an integer from 1 to 5",
-          },
-          min: {
-            args: 1,
-            msg: "Stars must be an integer from 1 to 5",
-          },
-          max: {
-            args: 5,
-            msg: "Stars must be an integer from 1 to 5",
+          starsRange(value) {
+            if (!Number.isInteger(value) || value < 1 || value > 5) {
+              throw new Error("Stars must be an integer from 1 to 5");
+            }
           },
           notNull: {
             args: true,
@@ -72,11 +65,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Review",
-      defaultScope: {
-        attributes: {
-          exclude: [],
-        },
-      },
     }
   );
   return Review;

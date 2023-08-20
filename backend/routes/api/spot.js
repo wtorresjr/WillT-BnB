@@ -619,7 +619,7 @@ router.delete("/:spotId/spot-images/:imageId", async (req, res, next) => {
               });
             }
           } else {
-            res.status(404).json({ message: "Spot_Image couldn't be found" });
+            res.status(404).json({ message: "Spot Image couldn't be found" });
           }
 
           res.json(spot.Spot_Images);

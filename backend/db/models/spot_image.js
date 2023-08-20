@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
           },
           isUrl: {
             args: true,
-            msg: "Must be a valid Url format",
+            msg: "Valid url is required",
           },
         },
       },
