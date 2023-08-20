@@ -504,38 +504,42 @@ router.post("/", async (req, res, next) => {
 
 //CREATE REVIEW FOR SPOT BY ID
 router.post("/:spotId/reviews", async (req, res, next) => {
-  const { review, stars } = req.body;
-  const { spotId } = req.params;
-
   try {
+    const { review, stars } = req.body;
+    const { spotId } = req.params;
+
     if (req.user) {
       const thisUser = req.user.id;
       const getSpot = await Spot.findByPk(spotId);
 
       if (getSpot) {
-        const getReviews = await Review.findOne({
-          where: {
-            [Op.and]: {
-              userId: thisUser,
-              spotId: spotId,
+        if (getSpot.ownerId !== thisUser) {
+          const getReviews = await Review.findOne({
+            where: {
+              [Op.and]: {
+                userId: thisUser,
+                spotId: spotId,
+              },
             },
-          },
-        });
+          });
 
-        if (getReviews) {
-          return res
-            .status(500)
-            .json({ message: "User already has a review for this spot" });
+          if (getReviews) {
+            return res
+              .status(500)
+              .json({ message: "User already has a review for this spot" });
+          } else {
+            const newReview = await Review.create({
+              spotId: parseInt(spotId),
+              userId: parseInt(thisUser),
+              review: review,
+              stars: stars,
+            });
+
+            return res.status(201).json(newReview);
+          }
+        } else {
+          res.status(403).json({ message: "Forbidden" });
         }
-
-        const newReview = await Review.create({
-          spotId: parseInt(spotId),
-          userId: parseInt(thisUser),
-          review: review,
-          stars: stars,
-        });
-
-        return res.status(201).json(newReview);
       } else {
         return res.status(404).json({ message: "Spot couldn't be found" });
       }
