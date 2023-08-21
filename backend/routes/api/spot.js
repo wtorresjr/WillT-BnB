@@ -544,9 +544,6 @@ router.post("/:spotId/reviews", async (req, res, next) => {
         return res.status(404).json({ message: "Spot couldn't be found" });
       }
     } else {
-      console.log("Review", review);
-      console.log("Stars", stars);
-      console.log("Spot Id", spotId);
       const error = new Error("Authentication required");
       error.status = 401;
       next(error);
