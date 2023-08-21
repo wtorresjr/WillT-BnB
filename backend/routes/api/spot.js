@@ -166,9 +166,7 @@ router.get("/current-user", async (req, res, next) => {
 
     res.json({ Spots: Spots });
   } else {
-    const error = new Error("Authentication required");
-    error.status = 401;
-    next(error);
+    res.status(401).json({ message: "Authentication required" });
   }
 });
 
@@ -239,9 +237,7 @@ router.get("/:spotId/bookings", async (req, res, next) => {
     }
     return res.json(bookingsResult);
   } else {
-    const error = new Error("Authentication required");
-    error.status = 401;
-    next(error);
+    return res.status(401).json({ message: "Authentication required" });
   }
 });
 
@@ -352,9 +348,7 @@ router.put("/:spotId", async (req, res, next) => {
       res.status(404).json({ message: "Spot couldn't be found" });
     }
   } else {
-    const error = new Error("Authentication required");
-    error.status = 401;
-    next(error);
+    res.status(401).json({ message: "Authentication required" });
   }
 });
 
@@ -371,7 +365,6 @@ router.post("/:spotId/bookings", async (req, res, next) => {
       attributes: ["ownerId"],
     });
 
-    //WRITE IF BLOCK FOR MISSING REQ.BODY, CHECK MODEL FOR EMPTY/ NULL VALIDATIONS
     if (bookingsForSpot) {
       if (thisUser !== bookingsForSpot.ownerId) {
         try {
@@ -454,9 +447,7 @@ router.post("/:spotId/bookings", async (req, res, next) => {
       next({ message: "Spot couldn't be found" });
     }
   } else {
-    const error = new Error("Authentication required");
-    error.status = 401;
-    return next(error);
+    res.status(401).json({ message: "Authentication required" });
   }
 });
 
@@ -488,9 +479,7 @@ router.post("/", async (req, res, next) => {
       });
       return res.status(201).json(newSpot);
     } else {
-      const error = new Error("Authentication required");
-      error.status = 401;
-      next(error);
+      res.status(401).json({ message: "Authentication required" });
     }
   } catch (err) {
     const errors = {};
