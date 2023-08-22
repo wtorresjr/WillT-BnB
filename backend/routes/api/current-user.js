@@ -37,7 +37,7 @@ router.get("/reviews", async (req, res, next) => {
         userId: thisUser,
       },
       include: [
-        { model: User, attributes: ["id", "firstName", "lastName"] },
+        { model: User, attributes: ["id", "firstName"] },
         {
           model: Spot,
           attributes: { exclude: ["createdAt", "updatedAt", "description"] },
