@@ -40,6 +40,7 @@ router.get("/reviews", async (req, res, next) => {
         { model: User, attributes: ["id", "firstName", "lastName"] },
         {
           model: Spot,
+          attributes: { exclude: ["createdAt", "updatedAt", "description"] },
           include: {
             model: Spot_Image,
             where: { preview: true },

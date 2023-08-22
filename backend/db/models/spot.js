@@ -126,19 +126,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(50),
         allowNull: false,
         validate: {
-          is: {
-            args: /^[a-z ]+$/i,
-            msg: "Only alphanumeric characters allowed",
-          },
+          // is: {
+          //   args: /^[a-z ]+$/i,
+          //   msg: "Only alphanumeric characters allowed",
+          // },
           len: {
             args: [1, 50],
             msg: "Name must be less than 50 characters",
           },
           notEmpty: { args: true, msg: "Name is required" },
-          notNull: {
-            args: true,
-            msg: "Name is required",
-          },
+          notNull: { args: true, msg: "Name is required" },
         },
       },
       description: {

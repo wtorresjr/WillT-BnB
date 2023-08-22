@@ -378,10 +378,9 @@ router.post("/:spotId/bookings", async (req, res, next) => {
             });
           }
 
+          let hasConflict = false;
+          let isBadDate = false;
           if (endDate || startDate) {
-            let hasConflict = false;
-            let isBadDate = false;
-
             bookingsForSpot.Bookings.forEach((booking) => {
               if (
                 startDate >= booking.startDate &&
@@ -409,19 +408,18 @@ router.post("/:spotId/bookings", async (req, res, next) => {
                 errors.endDate = "endDate cannot come before startDate";
                 isBadDate = true;
               }
-
-              if (isBadDate) {
-                return res.status(400).json({ message: "Bad Request", errors });
-              }
-
-              if (hasConflict) {
-                return res.status(403).json({
-                  message:
-                    "Sorry, this spot is already booked for the specified dates",
-                  errors,
-                });
-              }
             });
+            if (isBadDate) {
+              return res.status(400).json({ message: "Bad Request", errors });
+            }
+
+            if (hasConflict) {
+              return res.status(403).json({
+                message:
+                  "Sorry, this spot is already booked for the specified dates",
+                errors,
+              });
+            }
             const newBooking = await Booking.create({
               spotId: parseInt(spotId),
               userId: thisUser,
@@ -439,12 +437,10 @@ router.post("/:spotId/bookings", async (req, res, next) => {
           return res.status(400).json({ message: "Bad Request", errors });
         }
       } else {
-        res.status(403);
-        next({ message: "Forbidden" });
+        return res.status(403).json({ message: "Forbidden" });
       }
     } else {
-      res.status(404);
-      next({ message: "Spot couldn't be found" });
+      return res.status(404).json({ message: "Spot couldn't be found" });
     }
   } else {
     res.status(401).json({ message: "Authentication required" });
