@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wtorresjr/Auth-Me-LP.git"
+    "url": "git+https://github.com/wtorresjr/WillT-BnB"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wtorresjr/Auth-Me-LP/issues"
+    "url": "https://github.com/wtorresjr/WillT-BnB/issues"
   },
-  "homepage": "https://github.com/wtorresjr/Auth-Me-LP#readme"
+  "homepage": "https://github.com/wtorresjr/WillT-BnB#readme"
 }

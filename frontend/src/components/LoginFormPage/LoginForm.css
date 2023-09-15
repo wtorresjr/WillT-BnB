@@ -1,0 +1,6 @@
+.loginPanel {
+  background-color: grey;
+  border-radius: 10px;
+  padding: 0 10px 10px 10px;
+  box-sizing: border-box;
+}
