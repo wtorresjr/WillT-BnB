@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
-import Spots from "./components/Spots";
 import * as sessionActions from "./store/session";
+import SignupFormPage from "./components/SignUpFormPage";
+import Spots from "./components/Spots";
 
 function App() {
   const dispatch = useDispatch();
@@ -14,10 +15,13 @@ function App() {
   return (
     isLoaded && (
       <Switch>
-        <Route path="/Login">
+        <Route path="/login">
           <LoginFormPage />
         </Route>
-        <Route path="/Spots">
+        <Route path="/signup">
+          <SignupFormPage />
+        </Route>
+        <Route path="/spots">
           <Spots />
         </Route>
       </Switch>
