@@ -33,6 +33,14 @@ export const signup = (user) => async (dispatch) => {
   return response;
 };
 
+export const logout = () => async (dispatch) => {
+  const response = await csrfFetch("/api/current-user", {
+    method: "DELETE",
+  });
+  dispatch(removeUser());
+  return response;
+};
+
 export const restoreUser = () => async (dispatch) => {
   const response = await csrfFetch("/api/current-user");
   const currUser = await response.json();
