@@ -1,1 +1,30 @@
 
+.loginPanel {
+  display: flex;
+  border-radius: 10px;
+  padding: 0 20px 30px 20px;
+  box-sizing: border-box;
+  flex-flow: column;
+  min-width: 80%;
+  /* background-color: antiquewhite; */
+}
+
+.loginPanel input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.loginPanel button {
+  margin: 10px 0 0;
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  background-color: cornflowerblue;
+  color: white;
+  font-size: 18px;
+  font-weight: bolder;
+  cursor: pointer;
+}

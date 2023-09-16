@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 
+import "./SignupForm.css";
+
 function SignupFormPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
@@ -14,7 +16,7 @@ function SignupFormPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser) return <Redirect to="/Spots" />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +45,7 @@ function SignupFormPage() {
 
   return (
     <>
-      <div className="loginPanel">
+      <div className="signupPanel">
         <h1>Sign Up</h1>
         <form onSubmit={handleSubmit}>
           <label>
