@@ -1,0 +1,38 @@
+.navUl {
+  border: 1px solid black;
+  /* border-radius: 8px; */
+  box-sizing: border-box;
+  width: 80vw;
+  padding: 20px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+li {
+  list-style-type: none;
+}
+
+.profile-dropdown-hidden {
+  visibility: hidden;
+  display: flex;
+  flex-flow: row;
+  gap: 20px;
+  justify-content: right;
+  align-items: center;
+  height: 0px;
+}
+
+.profile-dropdown {
+  display: flex;
+  flex-flow: row;
+  gap: 20px;
+  justify-content: right;
+  align-items: center;
+}
+
+.profileOptions {
+  display: flex;
+  flex-flow: row;
+  gap: 20px;
+}
