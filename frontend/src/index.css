@@ -12,3 +12,16 @@ body {
   /* margin: 0;
   padding: 0; */
 }
+
+.coolBtns {
+  height: 50px;
+  border-radius: 8px;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.coolBtns:hover {
+  background-color: lightskyblue;
+  color: white;
+  cursor: pointer;
+}

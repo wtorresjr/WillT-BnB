@@ -43,11 +43,11 @@ function ProfileButton({ user }) {
           </li>
           <li>{user.email}</li>
           <li>
-            <button onClick={logout}>Log Out</button>
+            <button className="coolBtns" onClick={logout}>Log Out</button>
           </li>
         </ul>
-        <button onClick={openMenu}>
-          <i className="fas fa-user-circle fa-2x" />
+        <button id="userProfileBtn" onClick={openMenu}>
+          <i className="fas fa-user-circle fa-3x" />
         </button>
       </div>
     </>

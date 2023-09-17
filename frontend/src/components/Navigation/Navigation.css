@@ -1,6 +1,6 @@
 .navUl {
   border: 1px solid black;
-  /* border-radius: 8px; */
+  border-radius: 15px;
   box-sizing: border-box;
   width: 80vw;
   padding: 20px;
@@ -35,4 +35,16 @@ li {
   display: flex;
   flex-flow: row;
   gap: 20px;
+}
+
+.coolBtns:hover {
+  background-color: lightskyblue;
+  color: white;
+  cursor: pointer;
+}
+
+#userProfileBtn {
+  border-radius: 10px;
+  border: 1px solid;
+  cursor: pointer;
 }
