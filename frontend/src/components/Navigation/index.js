@@ -11,7 +11,7 @@ function Navigation({ isLoaded }) {
     <ul className="navUl">
       <li>
         <NavLink exact to="/">
-          Home
+          <img src="../../airbnb-logo-full.svg" id="logo" />
         </NavLink>
       </li>
       {isLoaded && (
