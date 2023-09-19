@@ -22,6 +22,7 @@ module.exports = {
       {
         username: {
           [Op.in]: [
+            "DemoUser",
             "User1",
             "User2",
             "User3",

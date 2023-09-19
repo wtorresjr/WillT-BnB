@@ -71,6 +71,13 @@ const seedUsers = [
     firstName: "FakeFirst10",
     lastName: "FakeLast10",
   },
+  {
+    email: "DemoUser@user.io",
+    username: "DemoUser",
+    hashedPassword: bcrypt.hashSync("demopass", 10),
+    firstName: "Demo",
+    lastName: "User",
+  },
 ];
 
 const seedSpots = [
