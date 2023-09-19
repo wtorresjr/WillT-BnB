@@ -32,7 +32,7 @@ function SignupFormModal() {
     } else {
       setIsDisabled(false);
     }
-  }, []);
+  }, [email, username, firstName, lastName, password, confirmPassword]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
