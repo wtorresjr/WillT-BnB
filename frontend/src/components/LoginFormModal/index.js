@@ -43,15 +43,7 @@ function LoginFormModal() {
       credential: "DemoUser",
       password: "demopass",
     };
-    return dispatch(sessionActions.login(demoUser))
-      .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.message);
-        }
-        setCollectedErrors(data.message);
-      });
+    return dispatch(sessionActions.login(demoUser)).then(closeModal);
   };
 
   return (

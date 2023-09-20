@@ -4,7 +4,7 @@
   padding: 0 20px 30px 20px;
   box-sizing: border-box;
   flex-flow: column;
-  width: 50vw;
+  /* width: 50vw; */
 }
 
 .loginPanel input {
