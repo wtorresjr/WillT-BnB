@@ -10,19 +10,20 @@ const loadAllSpots = (allspots) => {
 };
 
 export const fetchAllSpots = () => async (dispatch) => {
-  const response = await fetch("/api/spots");
+  const response = await csrfFetch("/api/spots");
+  //   console.log(response, "Response in fetchAllSpots");
   if (response.ok) {
     const allSpots = await response.json();
     dispatch(loadAllSpots(allSpots));
   }
 };
 
-const initialState = { allSpots: [], isLoading: true };
+// const initialState = {};
 
-const spotReducer = (state = initialState, action) => {
+const spotReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_ALL_SPOTS:
-      return { ...state, allSpots: [...action.allSpots] };
+      return { ...state, ...action };
     default:
       return state;
   }
