@@ -16,7 +16,19 @@ const Spots = () => {
   return (
     <div className="spotsClass">
       {allSpots?.map((spot) => {
-        return <li key={spot.id}>{spot.previewImage}</li>;
+        return (
+          <div key={spot.id} className="spotContainer">
+            <img src={spot.previewImage} className="previewImage" />
+            <div className="cityAndRating">
+              <p>{`${spot.city}, ${spot.state}`}</p>
+              <p>
+                <i class="fa-solid fa-star" style={{ color: 'orange'}}></i>
+                {`${spot.avgRating || "New"}`}
+              </p>
+            </div>
+            <p>{`$${spot.price}/night`}</p>
+          </div>
+        );
       })}
     </div>
   );

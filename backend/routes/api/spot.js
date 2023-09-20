@@ -103,7 +103,7 @@ router.get("/", validateSearchFilters, checkErrors, async (req, res, next) => {
         delete spot.dataValues.Spot_Images;
       } else {
         delete spot.dataValues.Reviews;
-        spot.setDataValue("avgRating", "No reviews yet");
+        spot.setDataValue("avgRating", "");
       }
     });
 
