@@ -1,10 +1,12 @@
 .navUl {
   box-sizing: border-box;
   width: 100vw;
-  padding: 0 65px;
+  padding: 0 20px;
   align-items: center;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 70px;
 }
 
 ul {
@@ -19,25 +21,38 @@ li {
 
 .profile-dropdown-hidden {
   visibility: hidden;
-  height: 0px;
-  width: 0px;
+  height: 0;
+  width: 0;
 }
 
 .profile-dropdown {
+  display: flex;
+  flex-flow: column;
   box-shadow: 0px 2px 5px rgba(128, 128, 128, 0.3);
-  border: 1px solid rgba(128, 128, 128, 0.205);
-  width: 250px;
-  justify-content: right;
+  border: 1px solid rgba(128, 128, 128, 0.3);
   background-color: white;
-  border-radius: 15px;
-  margin: 10px 35px 0 0;
+  margin: 5px 20px 0 0;
   position: absolute;
-  right: 50px;
+  right: 0px;
+}
+
+.profile-dropdown p {
+  padding: 5px 10px;
+  margin: 0;
+}
+
+.userInfo {
+  text-align: left;
+}
+
+.centeredBtn {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
 }
 
 .profileOptions {
   display: flex;
-  /* flex-flow: row; */
 }
 
 #userProfileBtn {
@@ -48,8 +63,8 @@ li {
   height: 52px;
   background-color: white;
   display: flex;
-  /* justify-content: space-evenly; */
   align-items: center;
+  margin: 10px 0 0 0;
 }
 
 #userProfileBtn:hover {
@@ -68,4 +83,11 @@ li {
 #profileFace {
   width: 36px;
   padding: 0 0 0 12px;
+}
+
+.profileActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 10px 20px;
 }

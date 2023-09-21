@@ -31,3 +31,48 @@
   display: flex;
   justify-content: space-between;
 }
+
+.newSpotForm {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 40%;
+}
+
+.newSpotForm h1,
+h3,
+p {
+  padding: 0px;
+  margin: 0px;
+}
+.newSpotForm input {
+  background-color: rgb(208, 243, 255);
+  border: 1px solid black;
+  height: 25px;
+  padding: 5px 0 5px 5px;
+  margin: 5px 0 5px 0;
+}
+
+.greyDivider {
+  border-top: 1px solid rgba(136, 136, 136, 0.8);
+  /* padding: 10px 0 10px 0; */
+  margin: 20px 0 5px 0;
+}
+
+.newSpotForm button {
+  width: 35%;
+  align-self: center;
+  height: 40px;
+  cursor: pointer;
+  margin: 10px 0 50px 0;
+  background-color: rgb(223, 0, 0);
+  color: white;
+  border: 0;
+  font-weight: bolder;
+}
+
+.newSpotForm label {
+  font-weight: bold;
+}

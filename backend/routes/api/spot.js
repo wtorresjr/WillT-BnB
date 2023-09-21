@@ -91,6 +91,7 @@ router.get("/", validateSearchFilters, checkErrors, async (req, res, next) => {
 
         const avgRating = totalStars / reviews.length;
 
+        //Set average rating to be fixed to only 2 decimal units
         spot.setDataValue("avgRating", avgRating);
 
         delete spot.dataValues.Reviews;
