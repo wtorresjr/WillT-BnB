@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createSpot } from "../../store/spots";
 import { useHistory } from "react-router-dom";
 
 const CreateSpot = () => {
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const history = useHistory();
   const [address, setAddress] = useState("");
@@ -15,33 +16,42 @@ const CreateSpot = () => {
   const [placeName, setPlaceName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [previewImg, setPreviewImg] = useState("");
+  const [exImg1, setExImg1] = useState("");
+  const [exImg2, setExImg2] = useState("");
+  const [exImg3, setExImg3] = useState("");
+  const [exImg4, setExImg4] = useState("");
 
- const handleSubmit = async (e) => {
-   e.preventDefault();
+  // const createdSpot = useSelector((state) => state.spots.createdSpot);
 
-   const newSpotData = {
-     address: address,
-     city: city,
-     state: state,
-     country: country,
-     lat: lat,
-     lng: long, 
-     name: placeName,
-     description: description,
-     price: price,
-   };
+  const newSpotInfo = {
+    address: address,
+    city: city,
+    state: state,
+    country: country,
+    lat: lat,
+    lng: long,
+    name: placeName,
+    description: description,
+    price: price,
+  };
 
-   try {
-     const createdSpot = await dispatch(createSpot(newSpotData));
-     if (createdSpot) {
-       console.log(createdSpot);
-       history.push(`/spots/${createdSpot.id}`);
-     }
-   } catch (error) {
-     console.error("Error:", error);
-   }
- };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    dispatch(createSpot(newSpotInfo))
+      .then(async (newSpot) => {
+        history.push(`/spots/${newSpot.id}`);
+      })
+      .catch(async (res) => {
+        if (res instanceof Response) {
+          const data = await res.json();
+          if (data.errors) {
+            setErrors(data.errors);
+          }
+        }
+      });
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -58,12 +68,14 @@ const CreateSpot = () => {
           value={country}
           onChange={(e) => setCountry(e.target.value)}
         />
+        {errors.country && <p className="errorRed">{errors.country}</p>}
         <label>Street Address</label>
         <input
           placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
+        {errors.address && <p className="errorRed">{errors.address}</p>}
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div style={{ display: "flex", flexFlow: "column", width: "60%" }}>
@@ -73,6 +85,7 @@ const CreateSpot = () => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
+            {errors.city && <p className="errorRed">{errors.city}</p>}
           </div>
           <div style={{ display: "flex", flexFlow: "column", width: "35%" }}>
             <label>State</label>
@@ -81,6 +94,7 @@ const CreateSpot = () => {
               value={state}
               onChange={(e) => setState(e.target.value)}
             />
+            {errors.state && <p className="errorRed">{errors.state}</p>}
           </div>
         </div>
 
@@ -88,18 +102,22 @@ const CreateSpot = () => {
           <div style={{ display: "flex", flexFlow: "column", width: "48%" }}>
             <label>Longitude</label>
             <input
+              name="lng"
               placeholder="Longitude"
               value={long}
               onChange={(e) => setLong(e.target.value)}
             />
+            {errors.lng && <p className="errorRed">{errors.lng}</p>}
           </div>
           <div style={{ display: "flex", flexFlow: "column", width: "48%" }}>
             <label>Latitude</label>
             <input
+              name="lat"
               placeholder="Latitude"
               value={lat}
               onChange={(e) => setLat(e.target.value)}
             />
+            {errors.lat && <p className="errorRed">{errors.lat}</p>}
           </div>
         </div>
 
@@ -116,6 +134,7 @@ const CreateSpot = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+        {errors.description && <p className="errorRed">{errors.description}</p>}
         <span className="greyDivider"></span>
         <h3>Create a title for your spot</h3>
         <p>
@@ -127,6 +146,7 @@ const CreateSpot = () => {
           value={placeName}
           onChange={(e) => setPlaceName(e.target.value)}
         />
+        {errors.name && <p className="errorRed">{errors.name}</p>}
         <span className="greyDivider"></span>
         <h3>Set a base price for your spot</h3>
         <p>
@@ -142,20 +162,42 @@ const CreateSpot = () => {
         >
           <strong>$</strong>
           <input
+            name="price"
             placeholder="Price per night (USD)"
             style={{ width: "95%" }}
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
+        {errors.price && <p className="errorRed">{errors.price}</p>}
         <span className="greyDivider"></span>
         <h3>Liven up your spot with photos</h3>
         <p>Submit a link to at least one photo to publish your spot.</p>
-        <input placeholder="Preview Image URL" />
-        <input placeholder="Image URL" />
-        <input placeholder="Image URL" />
-        <input placeholder="Image URL" />
-        <input placeholder="Image URL" />
+        <input
+          placeholder="Preview Image URL"
+          value={previewImg}
+          onChange={(e) => setPreviewImg(e.target.value)}
+        />
+        <input
+          placeholder="Image URL"
+          value={exImg1}
+          onChange={(e) => setExImg1(e.target.value)}
+        />
+        <input
+          placeholder="Image URL"
+          value={exImg2}
+          onChange={(e) => setExImg2(e.target.value)}
+        />
+        <input
+          placeholder="Image URL"
+          value={exImg3}
+          onChange={(e) => setExImg3(e.target.value)}
+        />
+        <input
+          placeholder="Image URL"
+          value={exImg4}
+          onChange={(e) => setExImg4(e.target.value)}
+        />
         <span className="greyDivider"></span>
         <button>Create Spot</button>
       </div>

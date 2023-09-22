@@ -17,7 +17,7 @@ function SignupFormModal() {
   const { closeModal } = useModal();
 
   useEffect(() => {
-    if (
+    if ( 
       !email.length ||
       !username.length ||
       !firstName.length ||

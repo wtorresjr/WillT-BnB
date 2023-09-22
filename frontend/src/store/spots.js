@@ -28,20 +28,21 @@ export const fetchAllSpots = () => async (dispatch) => {
 export const createSpot = (payload) => async (dispatch) => {
   const response = await csrfFetch("/api/spots", {
     method: "POST",
-    // headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
-  if (response.ok) {
-    const newSpot = await response.json();
-    dispatch(createNewSpot(newSpot));
-    return newSpot;
-  }
+
+  const newSpot = await response.json();
+  dispatch(createNewSpot(newSpot));
+  return newSpot;
 };
 
 const spotReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_ALL_SPOTS:
       return { ...state, ...action };
+    case CREATE_SPOT:
+      return { ...state, createdSpot: action.spotData };
     default:
       return state;
   }
