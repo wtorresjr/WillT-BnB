@@ -279,7 +279,7 @@ router.get("/:spotId", async (req, res, next) => {
         delete chosenSpot.dataValues.Reviews;
       } else {
         chosenSpot.setDataValue("numReviews", "0");
-        chosenSpot.setDataValue("avgStarRating", "No reviews yet");
+        chosenSpot.setDataValue("avgStarRating", "");
         delete chosenSpot.dataValues.Reviews;
       }
 

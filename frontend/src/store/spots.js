@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_ALL_SPOTS = "spots/getAll";
 const CREATE_SPOT = "spots/create";
 const ADD_IMAGE = "spots/add-images";
+const FIND_ONE_SPOT = "spots/find-one";
 
 const createNewSpot = (spotData) => {
   return {
@@ -23,6 +24,20 @@ const addImages = (imageUrl) => {
     type: ADD_IMAGE,
     imageUrl,
   };
+};
+
+const findOneSpot = (id) => {
+  return {
+    type: FIND_ONE_SPOT,
+    id,
+  };
+};
+
+export const findOne = (id) => async (dispatch) => {
+  const response = await fetch(`/api/spots/${id}`);
+  const foundSpot = await response.json();
+  dispatch(findOneSpot(foundSpot));
+  return foundSpot;
 };
 
 export const addImageToSpot = (id, imageUrl) => async (dispatch) => {
@@ -61,6 +76,8 @@ const spotReducer = (state = {}, action) => {
       return { ...state, ...action };
     case CREATE_SPOT:
       return { ...state, createdSpot: action.spotData };
+    case FIND_ONE_SPOT:
+      return { ...state, oneSpot: action.id };
     default:
       return state;
   }
