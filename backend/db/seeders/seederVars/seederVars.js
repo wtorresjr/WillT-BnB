@@ -511,7 +511,7 @@ const seedSpotImages = [
     preview: false,
   },
   {
-    url: "https://media.istockphoto.com/id/140781367/photo/luxury-dream-home.jpg",
+    url: "https://allurausa.com/uploads/image/file/113/home-design_22.jpg",
     spotId: 4,
     preview: true,
   },
