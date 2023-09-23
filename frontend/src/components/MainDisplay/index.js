@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import "./mainDisplay.css";
 import Spots from "../Spots";
 import CreateSpot from "../Spots/CreateSpot";
+import SpotDetails from "../Spots/SpotDetails";
 
 const MainDisplay = () => {
   return (
@@ -13,6 +14,9 @@ const MainDisplay = () => {
         </Route>
         <Route exact path="/spots">
           <CreateSpot />
+        </Route>
+        <Route exact path="/spots/:id">
+          <SpotDetails />
         </Route>
       </Switch>
     </div>

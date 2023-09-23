@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createSpot } from "../../store/spots";
+import { addImageToSpot, createSpot } from "../../store/spots";
 import { useHistory } from "react-router-dom";
+import { checkForErrors } from "../../utils/ErrorCheck";
 
 const CreateSpot = () => {
   const [errors, setErrors] = useState({});
@@ -22,8 +23,6 @@ const CreateSpot = () => {
   const [exImg3, setExImg3] = useState("");
   const [exImg4, setExImg4] = useState("");
 
-  // const createdSpot = useSelector((state) => state.spots.createdSpot);
-
   const newSpotInfo = {
     address: address,
     city: city,
@@ -34,27 +33,94 @@ const CreateSpot = () => {
     name: placeName,
     description: description,
     price: price,
+    url: previewImg,
+    preview: true,
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
     dispatch(createSpot(newSpotInfo))
       .then(async (newSpot) => {
-        history.push(`/spots/${newSpot.id}`);
+        const addImage = await dispatch(
+          addImageToSpot(newSpot.id, {
+            url: newSpotInfo.url,
+            preview: newSpotInfo.preview,
+          })
+        );
+
+        if (addImage) {
+          history.push(`/spots/${newSpot.id}`);
+        }
       })
       .catch(async (res) => {
         if (res instanceof Response) {
           const data = await res.json();
           if (data.errors) {
-            setErrors(data.errors);
+            return setErrors(errorCollector);
           }
         }
       });
   };
 
+  const errorCollector = {};
+
+  const checkForErrors = (e) => {
+    e.preventDefault();
+
+    !address.length && (errorCollector.address = "Address is required");
+    !city.length && (errorCollector.city = "City is required");
+    !state.length && (errorCollector.state = "State is required");
+    !country.length && (errorCollector.country = "Country is required");
+    !lat.length && (errorCollector.lat = "Latitude is required");
+    !long.length && (errorCollector.lng = "Longitude is required");
+    if (lat.length && !Number(lat)) {
+      errorCollector.lat = "Latitude is not valid";
+    }
+    if (long.length && !Number(long)) {
+      errorCollector.lng = "Longitude is not valid";
+    }
+    !description.length &&
+      (errorCollector.description = "Description is required");
+    if (description.length && description.length < 30) {
+      errorCollector.description =
+        "Description needs a minimum of 30 characters";
+    }
+    !placeName.length && (errorCollector.name = "Name is required");
+
+    !price.length && (errorCollector.price = "Price is required");
+    if (price.length && !Number(price)) {
+      errorCollector.price = "Price must be a valid number";
+    }
+    !previewImg.length && (errorCollector.url = "Preview image is required");
+
+    if (previewImg.length) {
+      const protoCheck = previewImg.slice(0, 7);
+      const formatCheck = previewImg.slice(-5);
+      const parsedProto = protoCheck.split(":");
+      const parsedFormat = formatCheck.split(".");
+      const values = ["jpeg", "jpg", "png", "http", "https", "ftp", "ftps"];
+      const formats = new Set(values);
+
+      if (
+        !formats.has(parsedProto[0].toLowerCase()) ||
+        previewImg.length === 4 ||
+        previewImg.length === 3
+      ) {
+        errorCollector.url = "Valid URL required";
+      }
+      if (!parsedFormat[1] || !formats.has(parsedFormat[1].toLowerCase())) {
+        errorCollector.url = "Image URL must end in .png .jpg .jpeg";
+      }
+    }
+    setErrors(errorCollector);
+
+    if (!Object.keys(errorCollector).length) {
+      return handleSubmit();
+    }
+    console.log("Errors length", Object.keys(errorCollector).length);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={checkForErrors}>
       <div className="newSpotForm">
         <h1>Create a new Spot</h1>
         <h3 style={{ padding: "10px 0 0 0" }}>Where's your place located?</h3>
@@ -178,6 +244,7 @@ const CreateSpot = () => {
           value={previewImg}
           onChange={(e) => setPreviewImg(e.target.value)}
         />
+        {errors.url && <p className="errorRed">{errors.url}</p>}
         <input
           placeholder="Image URL"
           value={exImg1}
