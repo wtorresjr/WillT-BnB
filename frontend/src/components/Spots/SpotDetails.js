@@ -16,9 +16,11 @@ const SpotDetails = () => {
 
   return (
     <div className="spotDetails">
-      <h3>{thisSpot?.name}</h3>
-      <span></span>
-      <p>{`${thisSpot?.city}, ${thisSpot?.state}, ${thisSpot?.country}`}</p>
+      <div className="titleLocation">
+        <h3>{thisSpot?.name}</h3>
+        <p>{`${thisSpot?.city}, ${thisSpot?.state}, ${thisSpot?.country}`}</p>
+      </div>
+
       <div className="imagesContainer">
         <div className="previewContainer">
           <img src={thisSpot?.SpotImages[0].url} className="preview-image" />

@@ -20,7 +20,10 @@ const Spots = () => {
         return (
           <NavLink to={`/spots/${spot.id}`}>
             <div key={spot?.id} className="spotContainer">
-              <img src={spot?.previewImage} className="previewImage" />
+              <img
+                src={spot?.Spot_Images?.[0].url || spot?.previewImage}
+                className="previewImage"
+              />
               <div className="cityAndRating">
                 <p>{`${spot?.city}, ${spot?.state}`}</p>
                 <p>
