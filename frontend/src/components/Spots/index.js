@@ -19,16 +19,16 @@ const Spots = () => {
       {allSpots?.map((spot) => {
         return (
           <NavLink to={`/spots/${spot.id}`}>
-            <div key={spot.id} className="spotContainer">
-              <img src={spot.previewImage} className="previewImage" />
+            <div key={spot?.id} className="spotContainer">
+              <img src={spot?.previewImage} className="previewImage" />
               <div className="cityAndRating">
-                <p>{`${spot.city}, ${spot.state}`}</p>
+                <p>{`${spot?.city}, ${spot?.state}`}</p>
                 <p>
                   <i class="fa-solid fa-star" style={{ color: "orange" }}></i>
-                  {`${spot.avgRating || "New"}`}
+                  {`${spot?.avgRating || "New"}`}
                 </p>
               </div>
-              <p>{`$${spot.price}/night`}</p>
+              <p>{`$${spot?.price}/night`}</p>
             </div>
           </NavLink>
         );

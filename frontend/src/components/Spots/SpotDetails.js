@@ -1,16 +1,30 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { fetchAllSpots } from "../../store/spots";
+import "./spotDetails.css";
 
 const SpotDetails = () => {
   const { id } = useParams();
-  const spots = useSelector((state) => state?.spots?.allspots?.Spots);
-  const thisSpot = spots.find((spot) => spot.id === parseInt(id));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllSpots(id));
+  }, [dispatch, id]);
+  const thisSpot = useSelector((state) =>
+    state?.spots?.allspots?.Spots.find((spot) => spot.id == id)
+  );
 
   return (
-    <>
-      <h1>Spot Details</h1>
-      Spot Name: {thisSpot.previewImage}
-    </>
+    <div className="spotDetails">
+      <h3>{thisSpot?.name}</h3>
+      <span></span>
+      <p>{`${thisSpot?.city}, ${thisSpot?.state}, ${thisSpot?.country}`}</p>
+      <img
+        src={thisSpot?.previewImage}
+        className="preview-image"
+      />
+    </div>
   );
 };
 

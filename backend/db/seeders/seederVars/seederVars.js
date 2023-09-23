@@ -481,17 +481,17 @@ const seedReviews = [
 
 const seedSpotImages = [
   {
-    url: "http://spotImageForId1true.jpg",
+    url: "https://cdn.houseplansservices.com/product/6dgaqm2bie1u67654k05n9bcg3/w800x533.jpg",
     spotId: 1,
     preview: true,
   },
   {
-    url: "http://spotImageForId2true.jpg",
+    url: "https://cdnassets.hw.net/c3/e7/bbdf5c9c4bf388005d1b1bad6b78/house-plan-430-184.jpg",
     spotId: 2,
     preview: true,
   },
   {
-    url: "http://spotImageForId3true.jpg",
+    url: "https://i.pinimg.com/1200x/b9/cb/d6/b9cbd6ad312b0f30e60da68cf52f6445.jpg",
     spotId: 3,
     preview: true,
   },
@@ -511,17 +511,17 @@ const seedSpotImages = [
     preview: false,
   },
   {
-    url: "http://spotImageForId4true.jpg",
+    url: "https://media.istockphoto.com/id/140781367/photo/luxury-dream-home.jpg",
     spotId: 4,
     preview: true,
   },
   {
-    url: "http://spotImageForId5true.jpg",
+    url: "https://st.hzcdn.com/simgs/pictures/exteriors/traditional-exterior-surrounds-landscape-architecture-construction-img~0041842307c487dd_14-8943-1-e7afa73.jpg",
     spotId: 5,
     preview: true,
   },
   {
-    url: "http://spotImageForId6true.jpg",
+    url: "https://i.pinimg.com/236x/20/5d/a0/205da05962105684315f60025dbd8e23--french-country-houses-country-mansion.jpg",
     spotId: 6,
     preview: true,
   },
@@ -541,17 +541,17 @@ const seedSpotImages = [
     preview: false,
   },
   {
-    url: "http://spotImageForId7true.jpg",
+    url: "https://architizer-prod.imgix.net/media/mediadata/uploads/15709800348393.jpg",
     spotId: 7,
     preview: true,
   },
   {
-    url: "http://spotImageForId8true.jpg",
+    url: "https://live.staticflickr.com/8144/7451751618_279dbb3ee3_c.jpg",
     spotId: 8,
     preview: true,
   },
   {
-    url: "http://spotImageForId9true.jpg",
+    url: "https://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2019/4/23/1/HUHH2019-Escape_Preston-Hollow-Dallas-TX_1.jpg.rend.hgtvcom.616.411.suffix/1556025050918.jpeg",
     spotId: 9,
     preview: true,
   },
@@ -571,7 +571,7 @@ const seedSpotImages = [
     preview: false,
   },
   {
-    url: "http://spotImageForId10false.jpg",
+    url: "https://img.freepik.com/premium-photo/modern-luxury-mansion-with-white-walls-panoramic-windows-hitech-style-house-exterior_124507-58253.jpg",
     spotId: 10,
     preview: true,
   },
