@@ -86,7 +86,12 @@ p {
 }
 
 .cityAndRating p {
-  margin: 10px 0 10px 0;
+  font-weight: bold;
+  margin: 10px 0 0 0;
+}
+
+.spotContainer p {
+  font-weight: bold;
 }
 
 a {

@@ -31,7 +31,7 @@ const Spots = () => {
                     className="fa-solid fa-star"
                     style={{ color: "orange" }}
                   ></i>
-                  {`${spot?.avgRating || "New"}`}
+                  {` ${spot?.avgRating || "New"}`}
                 </p>
               </div>
               <p>{`$${spot?.price}/night`}</p>
