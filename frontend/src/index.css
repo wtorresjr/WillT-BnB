@@ -24,7 +24,7 @@ body {
 .errorRed {
   color: red;
   text-align: left;
-  font-size:12px;
+  font-size: 12px;
 }
 
 .logOutBtn {
@@ -39,5 +39,9 @@ body {
 #createNewSpot {
   text-decoration: none;
   font-weight: bolder;
-  
+}
+
+.greyDivider {
+  border-top: 1px solid rgba(136, 136, 136, 0.8);
+  margin: 20px 0 5px 0;
 }

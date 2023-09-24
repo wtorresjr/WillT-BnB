@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { addImageToSpot, createSpot } from "../../store/spots";
 import { useHistory } from "react-router-dom";
-import { checkForErrors } from "../../utils/ErrorCheck";
 
 const CreateSpot = () => {
   const [errors, setErrors] = useState({});
@@ -37,6 +36,9 @@ const CreateSpot = () => {
     preview: true,
   };
 
+  let extraImages = [];
+  let validExtraImages = [];
+
   const handleSubmit = async (e) => {
     dispatch(createSpot(newSpotInfo))
       .then(async (newSpot) => {
@@ -48,6 +50,16 @@ const CreateSpot = () => {
         );
 
         if (addImage) {
+          if (validExtraImages.length) {
+            validExtraImages.map((image) =>
+              dispatch(
+                addImageToSpot(newSpot.id, {
+                  url: image,
+                  preview: false,
+                })
+              )
+            );
+          }
           history.push(`/spots/${newSpot.id}`);
         }
       })
@@ -62,6 +74,26 @@ const CreateSpot = () => {
   };
 
   const errorCollector = {};
+
+  const checkValidUrl = (imageUrl) => {
+    const protoCheck = imageUrl.slice(0, 7);
+    const formatCheck = imageUrl.slice(-5);
+    const parsedProto = protoCheck.split(":");
+    const parsedFormat = formatCheck.split(".");
+    const values = ["jpeg", "jpg", "png", "http", "https", "ftp", "ftps"];
+
+    if (
+      !values.includes(parsedProto[0].toLowerCase()) ||
+      imageUrl.length === 4 ||
+      imageUrl.length === 3
+    ) {
+      return "Valid URL required";
+    }
+    if (!parsedFormat[1] || !values.includes(parsedFormat[1].toLowerCase())) {
+      return "Image URL must end in .png .jpg .jpeg";
+    }
+    return 0;
+  };
 
   const checkForErrors = (e) => {
     e.preventDefault();
@@ -90,33 +122,43 @@ const CreateSpot = () => {
     if (price.length && !Number(price)) {
       errorCollector.price = "Price must be a valid number";
     }
+
     !previewImg.length && (errorCollector.url = "Preview image is required");
 
     if (previewImg.length) {
-      const protoCheck = previewImg.slice(0, 7);
-      const formatCheck = previewImg.slice(-5);
-      const parsedProto = protoCheck.split(":");
-      const parsedFormat = formatCheck.split(".");
-      const values = ["jpeg", "jpg", "png", "http", "https", "ftp", "ftps"];
-      const formats = new Set(values);
-
-      if (
-        !formats.has(parsedProto[0].toLowerCase()) ||
-        previewImg.length === 4 ||
-        previewImg.length === 3
-      ) {
-        errorCollector.url = "Valid URL required";
-      }
-      if (!parsedFormat[1] || !formats.has(parsedFormat[1].toLowerCase())) {
-        errorCollector.url = "Image URL must end in .png .jpg .jpeg";
+      let msg = checkValidUrl(previewImg);
+      if (msg.length) {
+        errorCollector.url = msg;
       }
     }
+
+    extraImages = [
+      { exImg1: exImg1 },
+      { exImg2: exImg2 },
+      { exImg3: exImg3 },
+      { exImg4: exImg4 },
+    ];
+
+    for (let i = 0; i < extraImages.length; i++) {
+      let currImgUrl = extraImages[i];
+      let currUrlValue = Object.values(currImgUrl);
+      let currUrlKey = Object.keys(currImgUrl);
+
+      if (currUrlValue[0].length) {
+        let msg = checkValidUrl(currUrlValue[0]);
+        if (msg.length) {
+          errorCollector[currUrlKey[0]] = msg;
+        } else {
+          validExtraImages.push(currUrlValue[0]);
+        }
+      }
+    }
+
     setErrors(errorCollector);
 
     if (!Object.keys(errorCollector).length) {
       return handleSubmit();
     }
-    console.log("Errors length", Object.keys(errorCollector).length);
   };
 
   return (
@@ -250,21 +292,25 @@ const CreateSpot = () => {
           value={exImg1}
           onChange={(e) => setExImg1(e.target.value)}
         />
+        {errors.exImg1 && <p className="errorRed">{errors.exImg1}</p>}
         <input
           placeholder="Image URL"
           value={exImg2}
           onChange={(e) => setExImg2(e.target.value)}
         />
+        {errors.exImg2 && <p className="errorRed">{errors.exImg2}</p>}
         <input
           placeholder="Image URL"
           value={exImg3}
           onChange={(e) => setExImg3(e.target.value)}
         />
+        {errors.exImg3 && <p className="errorRed">{errors.exImg3}</p>}
         <input
           placeholder="Image URL"
           value={exImg4}
           onChange={(e) => setExImg4(e.target.value)}
         />
+        {errors.exImg4 && <p className="errorRed">{errors.exImg4}</p>}
         <span className="greyDivider"></span>
         <button>Create Spot</button>
       </div>

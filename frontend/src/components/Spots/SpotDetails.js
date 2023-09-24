@@ -8,11 +8,12 @@ const SpotDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
+  const thisSpot = useSelector((state) => state?.spots?.oneSpot);
+  const spotImgs = useSelector((state) => state?.spots?.oneSpot?.SpotImages);
+
   useEffect(() => {
     dispatch(findOne(id));
-  }, [dispatch, id]);
-
-  const thisSpot = useSelector((state) => state?.spots?.oneSpot);
+  }, [dispatch]);
 
   return (
     <div className="spotDetails">
@@ -26,18 +27,17 @@ const SpotDetails = () => {
           <img src={thisSpot?.SpotImages[0].url} className="preview-image" />
         </div>
         <div className="smallImagesContainer">
-          <div className="moreImages">
-            <img className="imgCont" />
-          </div>
-          <div className="moreImages">
-            <img className="imgCont" />
-          </div>
-          <div className="moreImages">
-            <img className="imgCont" />
-          </div>
-          <div className="moreImages">
-            <img className="imgCont" />
-          </div>
+          {spotImgs &&
+            Object.keys(spotImgs).length > 1 &&
+            spotImgs.map((image) => {
+              if (image.preview === false) {
+                return (
+                  <div className="moreImages" key={image.id}>
+                    <img className="imgCont" src={image?.url} />
+                  </div>
+                );
+              }
+            })}
         </div>
       </div>
       <div className="underImgs">
@@ -60,6 +60,7 @@ const SpotDetails = () => {
           <button id="reserveBtn">Reserve</button>
         </div>
       </div>
+      <div className="greyDivider"></div>
     </div>
   );
 };

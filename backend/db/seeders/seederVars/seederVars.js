@@ -495,21 +495,21 @@ const seedSpotImages = [
     spotId: 3,
     preview: true,
   },
-  {
-    url: "http://spotImageForId1false.jpg",
-    spotId: 1,
-    preview: false,
-  },
-  {
-    url: "http://spotImageForId2false.jpg",
-    spotId: 2,
-    preview: false,
-  },
-  {
-    url: "http://spotImageForId3false.jpg",
-    spotId: 3,
-    preview: false,
-  },
+  // {
+  //   url: "http://spotImageForId1false.jpg",
+  //   spotId: 1,
+  //   preview: false,
+  // },
+  // {
+  //   url: "http://spotImageForId2false.jpg",
+  //   spotId: 2,
+  //   preview: false,
+  // },
+  // {
+  //   url: "http://spotImageForId3false.jpg",
+  //   spotId: 3,
+  //   preview: false,
+  // },
   {
     url: "https://allurausa.com/uploads/image/file/113/home-design_22.jpg",
     spotId: 4,
@@ -525,21 +525,21 @@ const seedSpotImages = [
     spotId: 6,
     preview: true,
   },
-  {
-    url: "http://spotImageForId4false.jpg",
-    spotId: 4,
-    preview: false,
-  },
-  {
-    url: "http://spotImageForId5false.jpg",
-    spotId: 5,
-    preview: false,
-  },
-  {
-    url: "http://spotImageForId6false.jpg",
-    spotId: 6,
-    preview: false,
-  },
+  // {
+  //   url: "http://spotImageForId4false.jpg",
+  //   spotId: 4,
+  //   preview: false,
+  // },
+  // {
+  //   url: "http://spotImageForId5false.jpg",
+  //   spotId: 5,
+  //   preview: false,
+  // },
+  // {
+  //   url: "http://spotImageForId6false.jpg",
+  //   spotId: 6,
+  //   preview: false,
+  // },
   {
     url: "https://architizer-prod.imgix.net/media/mediadata/uploads/15709800348393.jpg",
     spotId: 7,
@@ -555,31 +555,31 @@ const seedSpotImages = [
     spotId: 9,
     preview: true,
   },
-  {
-    url: "http://spotImageForId7false.jpg",
-    spotId: 7,
-    preview: false,
-  },
-  {
-    url: "http://spotImageForId8false.jpg",
-    spotId: 8,
-    preview: false,
-  },
-  {
-    url: "http://spotImageForId9false.jpg",
-    spotId: 9,
-    preview: false,
-  },
+  // {
+  //   url: "http://spotImageForId7false.jpg",
+  //   spotId: 7,
+  //   preview: false,
+  // },
+  // {
+  //   url: "http://spotImageForId8false.jpg",
+  //   spotId: 8,
+  //   preview: false,
+  // },
+  // {
+  //   url: "http://spotImageForId9false.jpg",
+  //   spotId: 9,
+  //   preview: false,
+  // },
   {
     url: "https://img.freepik.com/premium-photo/modern-luxury-mansion-with-white-walls-panoramic-windows-hitech-style-house-exterior_124507-58253.jpg",
     spotId: 10,
     preview: true,
   },
-  {
-    url: "http://spotImageForId10false.jpg",
-    spotId: 10,
-    preview: false,
-  },
+  // {
+  //   url: "http://spotImageForId10false.jpg",
+  //   spotId: 10,
+  //   preview: false,
+  // },
 ];
 
 const seedReviewImages = [
