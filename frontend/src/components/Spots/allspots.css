@@ -25,7 +25,7 @@
 .previewImage {
   width: 350px;
   height: 225px;
-  border-radius:10px;
+  border-radius: 10px;
 }
 
 .cityAndRating {
@@ -56,8 +56,6 @@ p {
   margin: 5px 0 5px 0;
 }
 
-
-
 .newSpotForm button {
   width: 35%;
   align-self: center;
@@ -72,4 +70,25 @@ p {
 
 .newSpotForm label {
   font-weight: bold;
+}
+
+.manageSpotsHeader {
+  width: 100%;
+}
+
+.manageBtnClass {
+  background-color: rgb(114, 114, 114);
+  color: white;
+  height: 25px;
+  cursor: pointer;
+  padding: 0 30px;
+  margin: 15px 15px 0 0;
+}
+
+.cityAndRating p {
+  margin: 10px 0 10px 0;
+}
+
+a {
+  text-decoration: none;
 }
