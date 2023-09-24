@@ -4,6 +4,7 @@ import "./mainDisplay.css";
 import Spots from "../Spots";
 import CreateSpot from "../Spots/CreateSpot";
 import SpotDetails from "../Spots/SpotDetails";
+import ManageSpots from "../Spots/ManageSpots";
 
 const MainDisplay = () => {
   return (
@@ -12,11 +13,14 @@ const MainDisplay = () => {
         <Route exact path="/">
           <Spots />
         </Route>
-        <Route exact path="/spots">
+        <Route exact path="/create-a-spot">
           <CreateSpot />
         </Route>
         <Route exact path="/spots/:id">
           <SpotDetails />
+        </Route>
+        <Route exact path="/manage-spots">
+          <ManageSpots />
         </Route>
       </Switch>
     </div>

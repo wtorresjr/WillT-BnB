@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import "./allspots.css";
 import { fetchAllSpots } from "../../store/spots";
 
-const Spots = () => {
+const ManageSpots = () => {
   const dispatch = useDispatch();
   const allSpots = useSelector((state) => state?.spots?.allspots?.Spots);
 
@@ -15,7 +15,8 @@ const Spots = () => {
 
   return (
     <div className="spotsClass">
-      {allSpots?.map((spot) => {
+      Manage Spots
+      {/* {allSpots?.map((spot) => {
         return (
           <NavLink to={`/spots/${spot.id}`}>
             <div key={spot?.id} className="spotContainer">
@@ -34,9 +35,9 @@ const Spots = () => {
             </div>
           </NavLink>
         );
-      })}
+      })} */}
     </div>
   );
 };
 
-export default Spots;
+export default ManageSpots;

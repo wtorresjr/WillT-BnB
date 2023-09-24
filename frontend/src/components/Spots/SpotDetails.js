@@ -50,7 +50,7 @@ const SpotDetails = () => {
             <h4>{`$${thisSpot?.price}/night`}</h4>
             <p>
               <i class="fa-solid fa-star" style={{ color: "orange" }}></i>
-              {`${thisSpot?.avgStarRating || "New"}`}
+              {` ${thisSpot?.avgStarRating || "New"}`}
 
               {thisSpot?.numReviews > 0
                 ? ` - ${thisSpot?.numReviews} reviews`
