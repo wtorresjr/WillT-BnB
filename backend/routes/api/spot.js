@@ -120,6 +120,7 @@ router.get("/", validateSearchFilters, checkErrors, async (req, res, next) => {
 
 //GET SPOTS OWNED BY CURRENT-USER
 router.get("/current-user", async (req, res, next) => {
+  // console.log(req.user.id, "Get current user");
   if (req.user) {
     const userId = req.user.id;
     const Spots = await Spot.findAll({
@@ -161,7 +162,7 @@ router.get("/current-user", async (req, res, next) => {
         delete spot.dataValues.Spot_Images;
       } else {
         delete spot.dataValues.Reviews;
-        spot.setDataValue("avgRating", "No reviews yet");
+        spot.setDataValue("avgRating", "");
       }
     });
 

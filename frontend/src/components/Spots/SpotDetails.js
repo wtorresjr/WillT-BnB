@@ -47,6 +47,7 @@ const SpotDetails = () => {
                     </div>
                   );
                 }
+                return;
               })}
           </div>
         </div>

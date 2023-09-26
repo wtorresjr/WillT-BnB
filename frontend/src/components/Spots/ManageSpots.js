@@ -2,24 +2,20 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import "./allspots.css";
-import { fetchAllSpots, getUserSpots } from "../../store/spots";
+import { getUserSpots } from "../../store/spots";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteSpotModal from "./DeleteSpotModal";
+
 
 const ManageSpots = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const allSpots = useSelector((state) => state?.spots?.allspots?.Spots);
-  const usersSpots = [];
+  const usersSpots = useSelector((state) => state?.spots?.usersSpots?.Spots);
+
 
   useEffect(() => {
-    dispatch(fetchAllSpots());
+    dispatch(getUserSpots());
   }, [dispatch]);
-
-  sessionUser &&
-    allSpots?.map(
-      (spot) => spot?.ownerId === sessionUser.id && usersSpots.push(spot)
-    );
 
   return (
     <div className="spotsClass">
@@ -71,7 +67,7 @@ const ManageSpots = () => {
           );
         })}
       {!sessionUser && <p>Log in to see your spots.</p>}
-      {!usersSpots.length && sessionUser && <p>You don't have any spots.</p>}
+      {!usersSpots && sessionUser && <p>You don't have any spots.</p>}
     </div>
   );
 };

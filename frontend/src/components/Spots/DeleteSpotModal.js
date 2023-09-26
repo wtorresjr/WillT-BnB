@@ -1,17 +1,26 @@
 import { useModal } from "../../context/Modal";
-import { useDispatch } from "react-redux";
-import { deleteUserSpot, fetchAllSpots } from "../../store/spots";
-
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUserSpot, getUserSpots } from "../../store/spots";
+import { useState, useEffect } from "react";
 
 const DeleteSpotModal = ({ spotId }) => {
   const dispatch = useDispatch();
-
   const { closeModal } = useModal();
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const deleteSpot = () => {
-    dispatch(deleteUserSpot(spotId));
-    closeModal();
+  const deleteSpot = async () => {
+    try {
+      await dispatch(deleteUserSpot(spotId));
+      setIsDeleting(true);
+      closeModal();
+    } catch (error) {
+      console.error("Error deleting spot:", error);
+    }
   };
+
+  useEffect(() => {
+    dispatch(getUserSpots());
+  }, [dispatch, isDeleting]);
 
   return (
     <div className="deleteSpotModal">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import "./mainDisplay.css";
 import Spots from "../Spots";
@@ -7,6 +7,7 @@ import SpotDetails from "../Spots/SpotDetails";
 import ManageSpots from "../Spots/ManageSpots";
 
 const MainDisplay = () => {
+
   return (
     <div className="mainDisplay">
       <Switch>
