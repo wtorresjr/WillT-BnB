@@ -479,108 +479,25 @@ const seedReviews = [
   },
 ];
 
-const seedSpotImages = [
-  {
-    url: "https://cdn.houseplansservices.com/product/6dgaqm2bie1u67654k05n9bcg3/w800x533.jpg",
-    spotId: 1,
+const seedSpotImages = [];
+
+for (let spotId = 1; spotId <= 10; spotId++) {
+  seedSpotImages.push({
+    url: "https://picsum.photos/800/800.jpg",
+    spotId: spotId,
     preview: true,
-  },
-  {
-    url: "https://cdnassets.hw.net/c3/e7/bbdf5c9c4bf388005d1b1bad6b78/house-plan-430-184.jpg",
-    spotId: 2,
-    preview: true,
-  },
-  {
-    url: "https://i.pinimg.com/1200x/b9/cb/d6/b9cbd6ad312b0f30e60da68cf52f6445.jpg",
-    spotId: 3,
-    preview: true,
-  },
-  // {
-  //   url: "http://spotImageForId1false.jpg",
-  //   spotId: 1,
-  //   preview: false,
-  // },
-  // {
-  //   url: "http://spotImageForId2false.jpg",
-  //   spotId: 2,
-  //   preview: false,
-  // },
-  // {
-  //   url: "http://spotImageForId3false.jpg",
-  //   spotId: 3,
-  //   preview: false,
-  // },
-  {
-    url: "https://allurausa.com/uploads/image/file/113/home-design_22.jpg",
-    spotId: 4,
-    preview: true,
-  },
-  {
-    url: "https://st.hzcdn.com/simgs/pictures/exteriors/traditional-exterior-surrounds-landscape-architecture-construction-img~0041842307c487dd_14-8943-1-e7afa73.jpg",
-    spotId: 5,
-    preview: true,
-  },
-  {
-    url: "https://i.pinimg.com/236x/20/5d/a0/205da05962105684315f60025dbd8e23--french-country-houses-country-mansion.jpg",
-    spotId: 6,
-    preview: true,
-  },
-  // {
-  //   url: "http://spotImageForId4false.jpg",
-  //   spotId: 4,
-  //   preview: false,
-  // },
-  // {
-  //   url: "http://spotImageForId5false.jpg",
-  //   spotId: 5,
-  //   preview: false,
-  // },
-  // {
-  //   url: "http://spotImageForId6false.jpg",
-  //   spotId: 6,
-  //   preview: false,
-  // },
-  {
-    url: "https://architizer-prod.imgix.net/media/mediadata/uploads/15709800348393.jpg",
-    spotId: 7,
-    preview: true,
-  },
-  {
-    url: "https://live.staticflickr.com/8144/7451751618_279dbb3ee3_c.jpg",
-    spotId: 8,
-    preview: true,
-  },
-  {
-    url: "https://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2019/4/23/1/HUHH2019-Escape_Preston-Hollow-Dallas-TX_1.jpg.rend.hgtvcom.616.411.suffix/1556025050918.jpeg",
-    spotId: 9,
-    preview: true,
-  },
-  // {
-  //   url: "http://spotImageForId7false.jpg",
-  //   spotId: 7,
-  //   preview: false,
-  // },
-  // {
-  //   url: "http://spotImageForId8false.jpg",
-  //   spotId: 8,
-  //   preview: false,
-  // },
-  // {
-  //   url: "http://spotImageForId9false.jpg",
-  //   spotId: 9,
-  //   preview: false,
-  // },
-  {
-    url: "https://img.freepik.com/premium-photo/modern-luxury-mansion-with-white-walls-panoramic-windows-hitech-style-house-exterior_124507-58253.jpg",
-    spotId: 10,
-    preview: true,
-  },
-  // {
-  //   url: "http://spotImageForId10false.jpg",
-  //   spotId: 10,
-  //   preview: false,
-  // },
-];
+  });
+
+  for (let i = 0; i < 4; i++) {
+    seedSpotImages.push({
+      url: "https://picsum.photos/800/800.jpg",
+      spotId: spotId,
+      preview: false,
+    });
+  }
+}
+
+console.log(seedSpotImages);
 
 const seedReviewImages = [
   {
@@ -784,8 +701,6 @@ const seedReviewImages = [
     preview: false,
   },
 ];
-
-// Use the seedReviews array as needed in your application
 
 module.exports = {
   seedUsers,

@@ -23,16 +23,18 @@ h4 {
 
 .reserveContainer {
   width: 30vw;
-  border: 1px solid;
+  border: 1px solid rgb(185, 185, 185);
   padding: 20px;
   border-radius: 10px;
   height: 80px;
   font-size: 14px;
+  box-shadow: 0px 5px 5px rgba(212, 212, 212, 0.6);
 }
 
 .underImgs {
   display: flex;
   justify-content: space-between;
+  /* flex-flow: column; */
   margin: 40px 0 0 0;
 }
 
@@ -110,7 +112,6 @@ h4 {
   height: 100%;
   display: block;
   box-sizing: border-box;
-  border: 1px solid black;
   position: absolute;
   top: 0;
   left: 0;

@@ -172,6 +172,7 @@ const CreateSpot = () => {
         </p>
         <label>Country</label>
         <input
+          name="country"
           placeholder="Country"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
@@ -179,6 +180,7 @@ const CreateSpot = () => {
         {errors.country && <p className="errorRed">{errors.country}</p>}
         <label>Street Address</label>
         <input
+          name="address"
           placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
@@ -189,6 +191,7 @@ const CreateSpot = () => {
           <div style={{ display: "flex", flexFlow: "column", width: "60%" }}>
             <label>City</label>
             <input
+              name="city"
               placeholder="City"
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -198,6 +201,7 @@ const CreateSpot = () => {
           <div style={{ display: "flex", flexFlow: "column", width: "35%" }}>
             <label>State</label>
             <input
+              name="state"
               placeholder="State"
               value={state}
               onChange={(e) => setState(e.target.value)}
@@ -236,6 +240,7 @@ const CreateSpot = () => {
           fast wifi or parking, and what you love about the neighborhood.
         </p>
         <textarea
+          name="description"
           style={{ backgroundColor: "rgb(208,243,255)", resize: "none" }}
           rows={"6"}
           placeholder="Please write at least 30 characters"
@@ -250,6 +255,7 @@ const CreateSpot = () => {
           you place special.
         </p>
         <input
+          name="spotname"
           placeholder="Name of your spot"
           value={placeName}
           onChange={(e) => setPlaceName(e.target.value)}
@@ -282,30 +288,35 @@ const CreateSpot = () => {
         <h3>Liven up your spot with photos</h3>
         <p>Submit a link to at least one photo to publish your spot.</p>
         <input
+          name="previewImg"
           placeholder="Preview Image URL"
           value={previewImg}
           onChange={(e) => setPreviewImg(e.target.value)}
         />
         {errors.url && <p className="errorRed">{errors.url}</p>}
         <input
+          name="exImg1"
           placeholder="Image URL"
           value={exImg1}
           onChange={(e) => setExImg1(e.target.value)}
         />
         {errors.exImg1 && <p className="errorRed">{errors.exImg1}</p>}
         <input
+          name="exImg2"
           placeholder="Image URL"
           value={exImg2}
           onChange={(e) => setExImg2(e.target.value)}
         />
         {errors.exImg2 && <p className="errorRed">{errors.exImg2}</p>}
         <input
+          name="exImg3"
           placeholder="Image URL"
           value={exImg3}
           onChange={(e) => setExImg3(e.target.value)}
         />
         {errors.exImg3 && <p className="errorRed">{errors.exImg3}</p>}
         <input
+          name="exImg4"
           placeholder="Image URL"
           value={exImg4}
           onChange={(e) => setExImg4(e.target.value)}

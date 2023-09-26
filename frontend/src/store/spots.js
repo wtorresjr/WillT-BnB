@@ -5,6 +5,7 @@ const CREATE_SPOT = "spots/create";
 const ADD_IMAGE = "spots/add-images";
 const FIND_ONE_SPOT = "spots/find-one";
 const FIND_USER_SPOTS = "spots/user-spots";
+const DELETE_USER_SPOT = "spots/delete-a-spot";
 
 const findOneSpot = (id) => {
   return {
@@ -79,24 +80,49 @@ const findUserSpots = (usersSpots) => {
 };
 
 export const getUserSpots = () => async (dispatch) => {
-  const response = await csrfFetch(`/api/current-user`);
-  console.log(response, "Get User Spots response");
+  const response = await csrfFetch(`/api/current-user`, {
+    method: "GET",
+  });
+  // console.log(response, "Get User Spots response");
   const foundSpots = await response.json();
-  console.log(foundSpots, "Found spots response");
+  // console.log(foundSpots, "Found spots response");
   dispatch(findUserSpots(foundSpots));
   return foundSpots;
+};
+
+const deleteSpot = (id) => {
+  return {
+    type: DELETE_USER_SPOT,
+    id,
+  };
+};
+
+export const deleteUserSpot = (id) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${id}`, {
+    method: "DELETE",
+  });
+  const deletedSpot = await response.json();
+  return deletedSpot;
 };
 
 const spotReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_ALL_SPOTS:
-      return { ...state, ...action };
+      return { ...state, allspots: action.allspots }; // Update allspots
     case FIND_USER_SPOTS:
       return { ...state, usersSpots: action.usersSpots };
     case CREATE_SPOT:
       return { ...state, createdSpot: action.spotData };
     case FIND_ONE_SPOT:
       return { ...state, oneSpot: action.id };
+    case DELETE_USER_SPOT:
+      if (state.usersSpots) {
+        const updatedUsersSpots = state.usersSpots.filter(
+          (spot) => spot.id !== action.id
+        );
+        return { ...state, usersSpots: updatedUsersSpots };
+      }
+      return state;
     default:
       return state;
   }

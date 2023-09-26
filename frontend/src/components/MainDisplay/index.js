@@ -22,6 +22,9 @@ const MainDisplay = () => {
         <Route exact path="/manage-spots">
           <ManageSpots />
         </Route>
+        <Route path="*">
+          <h1>Page Not Found</h1>
+        </Route>
       </Switch>
     </div>
   );
