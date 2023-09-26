@@ -6,16 +6,16 @@ import { getUserSpots } from "../../store/spots";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteSpotModal from "./DeleteSpotModal";
 
-
 const ManageSpots = () => {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector((state) => state?.session?.user);
   const usersSpots = useSelector((state) => state?.spots?.usersSpots?.Spots);
 
-
   useEffect(() => {
-    dispatch(getUserSpots());
-  }, [dispatch]);
+    if (sessionUser != null) {
+      dispatch(getUserSpots());
+    }
+  }, [dispatch, sessionUser]);
 
   return (
     <div className="spotsClass">
@@ -27,7 +27,8 @@ const ManageSpots = () => {
           </NavLink>
         )}
       </div>
-      {usersSpots &&
+      {sessionUser &&
+        usersSpots &&
         usersSpots?.map((spot) => {
           return (
             <div key={spot?.id}>
@@ -51,12 +52,9 @@ const ManageSpots = () => {
                   <p>{`$${spot?.price}/night`}</p>
                 </div>
               </NavLink>
-              <button className="manageBtnClass">
-                <OpenModalMenuItem
-                  itemText="Update"
-                  modalComponent={<DeleteSpotModal />}
-                />
-              </button>
+              <NavLink to={`/update-a-spot/${spot?.id}`}>
+                <button className="manageBtnClass">Update</button>
+              </NavLink>
               <button className="manageBtnClass">
                 <OpenModalMenuItem
                   itemText="Delete"
@@ -66,8 +64,10 @@ const ManageSpots = () => {
             </div>
           );
         })}
+      {sessionUser && usersSpots && !Object.keys(usersSpots)?.length && (
+        <p>You don't have any spots.</p>
+      )}
       {!sessionUser && <p>Log in to see your spots.</p>}
-      {!usersSpots && sessionUser && <p>You don't have any spots.</p>}
     </div>
   );
 };
