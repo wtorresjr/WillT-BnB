@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addImageToSpot, createSpot } from "../../store/spots";
+import { addImageToSpot } from "../../store/spots";
 import { useHistory, useParams } from "react-router-dom";
 import { findOne } from "../../store/spots";
-import { updateUsersSpot, updateSpotImages } from "../../store/spots";
+import { updateUsersSpot } from "../../store/spots";
 
 const UpdateSpotComponent = () => {
   const [errors, setErrors] = useState({});
@@ -68,7 +68,7 @@ const UpdateSpotComponent = () => {
   let errorCollector = {};
   const handleSubmit = async (e) => {
     dispatch(updateUsersSpot(spotId, newSpotInfo)).then(async (newSpot) => {
-      const addImage = await dispatch(
+      await dispatch(
         addImageToSpot(
           spotId,
           {
