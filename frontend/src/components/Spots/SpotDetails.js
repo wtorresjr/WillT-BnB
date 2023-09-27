@@ -16,6 +16,10 @@ const SpotDetails = () => {
     dispatch(findOne(id));
   }, [dispatch, id]);
 
+  const previewImg = thisSpot?.SpotImages?.find(
+    (image) => image.preview === true
+  );
+
   return (
     <>
       <div className="spotDetails">
@@ -27,7 +31,7 @@ const SpotDetails = () => {
         <div className="imagesContainer">
           <div className="previewContainer">
             <img
-              src={thisSpot?.SpotImages[0].url}
+              src={previewImg?.url}
               className="preview-image"
               alt={`Main view of house in ${thisSpot?.city}, ${thisSpot?.state}`}
             />

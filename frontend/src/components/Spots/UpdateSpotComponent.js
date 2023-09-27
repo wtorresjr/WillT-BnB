@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addImageToSpot, createSpot } from "../../store/spots";
 import { useHistory, useParams } from "react-router-dom";
 import { findOne } from "../../store/spots";
-import { updateUsersSpot } from "../../store/spots";
+import { updateUsersSpot, updateSpotImages } from "../../store/spots";
 
 const UpdateSpotComponent = () => {
   const [errors, setErrors] = useState({});
+  const [isUpdate, setIsUpdate] = useState(false);
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const history = useHistory();
@@ -66,38 +67,29 @@ const UpdateSpotComponent = () => {
   let validExtraImages = [];
   let errorCollector = {};
   const handleSubmit = async (e) => {
-    dispatch(updateUsersSpot(spotId, newSpotInfo));
-    history
-      .push(`/spots/${spotId}`)
-      // .then(async (newSpot) => {
-      //   const addImage = await dispatch(
-      //     addImageToSpot(newSpot.id, {
-      //       url: newSpotInfo.url,
-      //       preview: newSpotInfo.preview,
-      //     })
-      //   );
-
-      //   if (addImage) {
-      //     if (validExtraImages.length) {
-      //       validExtraImages.map((image) =>
-      //         dispatch(
-      //           addImageToSpot(newSpot.id, {
-      //             url: image,
-      //             preview: false,
-      //           })
-      //         )
-      //       );
-      //     }
-      //   }
-      // })
-      // .catch(async (res) => {
-      //   if (res instanceof Response) {
-      //     const data = await res.json();
-      //     if (data.errors) {
-      //       return setErrors(errorCollector);
-      //     }
-      //   }
-      // });
+    dispatch(updateUsersSpot(spotId, newSpotInfo)).then(async (newSpot) => {
+      const addImage = await dispatch(
+        addImageToSpot(
+          spotId,
+          {
+            url: newSpotInfo.url,
+            preview: newSpotInfo.preview,
+          },
+          isUpdate
+        )
+      )
+        .then((result) => {
+          history.push(`/spots/${spotId}`);
+        })
+        .catch(async (res) => {
+          if (res instanceof Response) {
+            const data = await res.json();
+            if (data.errors) {
+              return setErrors(errorCollector);
+            }
+          }
+        });
+    });
   };
 
   const checkValidUrl = (imageUrl) => {
@@ -317,7 +309,10 @@ const UpdateSpotComponent = () => {
           name="previewImg"
           placeholder="Preview Image URL"
           value={previewImg}
-          onChange={(e) => setPreviewImg(e.target.value)}
+          onChange={(e) => {
+            setPreviewImg(e.target.value);
+            setIsUpdate(true);
+          }}
         />
         {errors.url && <p className="errorRed">{errors.url}</p>}
         <input
@@ -349,7 +344,7 @@ const UpdateSpotComponent = () => {
         />
         {errors.exImg4 && <p className="errorRed">{errors.exImg4}</p>}
         <span className="greyDivider"></span>
-        <button>Create Spot</button>
+        <button>Update Spot</button>
       </div>
     </form>
   );

@@ -51,15 +51,44 @@ export const findOne = (id) => async (dispatch) => {
   dispatch(findOneSpot(foundSpot));
   return foundSpot;
 };
-export const addImageToSpot = (id, imageUrl) => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/${id}/spot-images`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(imageUrl),
-  });
-  const newImage = await response.json();
-  dispatch(addImages(newImage));
-  return newImage;
+export const addImageToSpot = (id, imageUrl, isUpdate) => async (dispatch) => {
+  // console.log(isUpdate, "Is update value");
+  if (!isUpdate) {
+    const response = await csrfFetch(`/api/spots/${id}/spot-images`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(imageUrl),
+    });
+    const newImage = await response.json();
+    dispatch(addImages(newImage));
+    return newImage;
+  } else {
+    // console.log("Not A New Spot / Update Function To Go Here");
+    const spotToEdit = await dispatch(findOne(id));
+    const spotImages = await spotToEdit.SpotImages;
+
+    for (let image = 0; image < spotImages.length; image++) {
+      let theImage = spotImages[image];
+      if (theImage.preview === true) {
+        console.log(theImage, "The Preview Image");
+
+        const deleteImage = await csrfFetch(
+          `/api/spots/${id}/spot-images/${theImage.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+        const doneDeletingImg = await deleteImage.json();
+        if (doneDeletingImg) {
+          const finishAdding = await dispatch(
+            addImageToSpot(id, imageUrl, false)
+          );
+          return finishAdding;
+        }
+      }
+    }
+    console.log(spotImages, "Spot to edit from addImageToSpot");
+  }
 };
 export const fetchAllSpots = () => async (dispatch) => {
   const response = await csrfFetch("/api/spots");
@@ -105,8 +134,6 @@ const updateSpot = (updateFields) => {
 };
 
 export const updateUsersSpot = (spotId, fieldsToUpdate) => async (dispatch) => {
-  // console.log(spotId, "Spot ID from reducer");
-  // console.log(fieldsToUpdate, "Fields To  Update from reducer");
   const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
