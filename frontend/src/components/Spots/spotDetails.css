@@ -119,3 +119,7 @@ h4 {
   bottom: 0;
   object-fit: cover;
 }
+
+.spotDetailsRating {
+  font-size: 11px;
+}

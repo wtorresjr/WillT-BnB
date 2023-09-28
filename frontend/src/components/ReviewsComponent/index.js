@@ -1,40 +1,42 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./reviewComponentStyle.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getReviews } from "../../store/reviews";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import DeleteReviewModal from "./DeleteReviewModal";
 import { findOne } from "../../store/spots";
 
 const SpotDetailsReviews = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [reviewsState, setReviewsState] = useState(0);
   const sessionUser = useSelector((state) => state?.session?.user);
   const spotReviews = useSelector((state) => state?.reviews?.Reviews);
   const currentSpot = useSelector((state) => state?.spots?.oneSpot);
 
   useEffect(() => {
     dispatch(getReviews(id));
-    // dispatch(findOne());
-  }, [dispatch, id]);
+    dispatch(findOne(id));
+  }, [dispatch, id, reviewsState]);
 
-  let reviewHeader = "";
-  if (spotReviews?.length) {
-    reviewHeader += currentSpot?.avgStarRating + " -";
-    reviewHeader += " " + currentSpot?.numReviews;
-    if (spotReviews?.length > 1) {
-      reviewHeader += " reviews";
-    } else {
-      reviewHeader += " review";
-    }
-  } else {
-    reviewHeader = "New";
-  }
+  const updateCount = () => {
+    console.log("Update Count Function Called");
+    setReviewsState((prevCount) => prevCount + 1);
+  };
 
   return (
     <div className="reviewComponent">
-      <i className="fa-solid fa-star" style={{ color: "orange" }}></i>{" "}
-      {reviewHeader}
+      <strong>
+        <i className="fa-solid fa-star" style={{ color: "orange" }}></i>{" "}
+        {currentSpot?.avgStarRating}{" "}
+        {currentSpot?.numReviews == 0
+          ? "New"
+          : (currentSpot?.numReviews > 1 &&
+              `- ${currentSpot?.numReviews} reviews`) ||
+            `- ${currentSpot?.numReviews} review`}
+      </strong>
       {spotReviews &&
         spotReviews?.map((review) => {
           return (
@@ -51,7 +53,19 @@ const SpotDetailsReviews = () => {
                   : null}
               </p>
               <p className="reviewText">{review?.review}</p>
-              {review?.userId === sessionUser?.id && <button className="manageBtnClass">Delete</button>}
+              {review?.userId === sessionUser?.id && (
+                <button className="manageBtnClass">
+                  <OpenModalMenuItem
+                    itemText="Delete"
+                    modalComponent={
+                      <DeleteReviewModal
+                        reviewId={review?.id}
+                        updateCount={updateCount}
+                      />
+                    }
+                  />
+                </button>
+              )}
             </div>
           );
         })}

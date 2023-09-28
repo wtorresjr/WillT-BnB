@@ -22,19 +22,6 @@ const SpotDetails = () => {
     (image) => image.preview === true
   );
 
-  let reviewHeader = "";
-  if (spotReviews?.length) {
-    reviewHeader += thisSpot?.avgStarRating + " -";
-    reviewHeader += " " + thisSpot?.numReviews;
-    if (spotReviews?.length > 1) {
-      reviewHeader += " reviews";
-    } else {
-      reviewHeader += " review";
-    }
-  } else {
-    reviewHeader = "New";
-  }
-
   return (
     <>
       <div className="spotDetails">
@@ -80,11 +67,17 @@ const SpotDetails = () => {
               <h4>{`$${thisSpot?.price}/night`}</h4>
               <p>
                 <i className="fa-solid fa-star" style={{ color: "orange" }}></i>{" "}
-                {reviewHeader}
-                {/* {` ${thisSpot?.avgStarRating || "New"}`}
-                {thisSpot?.numReviews > 0
-                  ? ` - ${thisSpot?.numReviews} reviews`
-                  : ""} */}
+                {
+                  <strong className="spotDetailsRating">
+                    {" "}
+                    {thisSpot?.avgStarRating}{" "}
+                    {thisSpot?.numReviews == 0
+                      ? "New"
+                      : (thisSpot?.numReviews > 1 &&
+                          `- ${thisSpot?.numReviews} reviews`) ||
+                        `- ${thisSpot?.numReviews} review`}
+                  </strong>
+                }
               </p>
             </div>
             <button id="reserveBtn">Reserve</button>
