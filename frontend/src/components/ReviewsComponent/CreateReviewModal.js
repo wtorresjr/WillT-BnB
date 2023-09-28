@@ -1,9 +1,9 @@
 import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getReviews, deleteMyReview } from "../../store/reviews";
+import { getReviews } from "../../store/reviews";
 import { useState, useEffect } from "react";
 
-const CreateReviewModal = ({ reviewId, updateCount }) => {
+const CreateReviewModal = ({ spotId, updateCount }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [isCreating, setIsCreating] = useState(false);
