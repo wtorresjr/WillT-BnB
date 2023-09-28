@@ -7,6 +7,7 @@ import { getReviews } from "../../store/reviews";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "./DeleteReviewModal";
 import { findOne } from "../../store/spots";
+import CreateReviewModal from "./CreateReviewModal";
 
 const SpotDetailsReviews = () => {
   const { id } = useParams();
@@ -28,15 +29,36 @@ const SpotDetailsReviews = () => {
 
   return (
     <div className="reviewComponent">
-      <strong>
-        <i className="fa-solid fa-star" style={{ color: "orange" }}></i>{" "}
-        {currentSpot?.avgStarRating}{" "}
-        {currentSpot?.numReviews == 0
-          ? "New"
-          : (currentSpot?.numReviews > 1 &&
-              `- ${currentSpot?.numReviews} reviews`) ||
-            `- ${currentSpot?.numReviews} review`}
-      </strong>
+      <div className="reviewsHeadDiv">
+        <strong>
+          <i className="fa-solid fa-star" style={{ color: "orange" }}></i>{" "}
+          {currentSpot?.avgStarRating}{" "}
+          {currentSpot?.numReviews == 0
+            ? "New"
+            : (currentSpot?.numReviews > 1 &&
+                `- ${currentSpot?.numReviews} reviews`) ||
+              `- ${currentSpot?.numReviews} review`}
+        </strong>
+      </div>
+      <div>
+        {sessionUser && sessionUser.id !== currentSpot?.ownerId && (
+          <button className="manageBtnClass">
+            {" "}
+            <OpenModalMenuItem
+              itemText="Post Your Review"
+              modalComponent={
+                <CreateReviewModal
+                  spotId={currentSpot?.id}
+                  updateCount={updateCount}
+                />
+              }
+            />
+          </button>
+        )}
+        {currentSpot?.numReviews == 0 && (
+          <p className="beFirstPtag">Be the first to post a review!</p>
+        )}
+      </div>
       {spotReviews &&
         spotReviews?.map((review) => {
           return (
