@@ -9,7 +9,7 @@ const CreateReviewModal = ({ spotId, updateCount }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const currentSpot = useSelector((state) => state?.spots?.oneSpot);
-  const [starRating, setStarRating] = useState(0);
+  const [starRating, setStarRating] = useState(1);
   const [newReview, setNewReview] = useState("");
 
   const createReview = async () => {
