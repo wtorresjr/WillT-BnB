@@ -29,6 +29,34 @@
   border: 1px solid grey;
 }
 
-#reviewTextArea{
-  
+#reviewTextArea {
+  width: 40vw;
+  resize: none;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.starsContainer {
+  display: flex;
+  padding: 25px 0 20px 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.starsContainer .fa-regular {
+  color: black;
+}
+.starsContainer .fa-solid {
+  color: orange;
+}
+
+.starsContainer p {
+  padding: 0 0 0 10px;
+  font-weight: bold;
+}
+.starsContainer button {
+  border: 0;
+  background-color: white;
+  box-shadow: none;
+  width: auto;
 }
