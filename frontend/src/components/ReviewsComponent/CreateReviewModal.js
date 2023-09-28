@@ -2,27 +2,36 @@ import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviews } from "../../store/reviews";
 import { useState, useEffect } from "react";
+import { createNewReview } from "../../store/reviews";
 
 const CreateReviewModal = ({ spotId, updateCount }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [isCreating, setIsCreating] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
-  const currentSpot = useSelector((state) => state?.spots?.oneSpot);
   const [starRating, setStarRating] = useState(1);
   const [newReview, setNewReview] = useState("");
 
+  const currentSpot = useSelector((state) => state?.spots?.oneSpot);
+
   const createReview = async () => {
-    console.log("Users Review", newReview);
-    console.log("Star Rating", starRating);
-    closeModal();
-    // try {
-    //   await dispatch(deleteMyReview(reviewId));
-    //   setIsDeleting(true);
-    //   closeModal();
-    // } catch (error) {
-    //   console.error("Error deleting spot:", error);
-    // }
+    // console.log("Users Review", newReview.toString());
+
+    // console.log("Star Rating", +starRating);
+    // console.log("Current Spot Id", currentSpot?.id);
+
+    try {
+      await dispatch(
+        createNewReview(currentSpot?.id, {
+          review: newReview,
+          stars: +starRating,
+        })
+      );
+      setIsCreating(true);
+      closeModal();
+    } catch (error) {
+      console.error("Error creating review:", error);
+    }
   };
 
   let notPickedStar = "fa-regular fa-star fa-2xl";
@@ -43,12 +52,12 @@ const CreateReviewModal = ({ spotId, updateCount }) => {
         starNode.setAttribute("class", notPickedStar);
       }
     }
-  }, [dispatch, starRating]);
+  }, [starRating, pickedStar, notPickedStar]);
 
   useEffect(() => {
     dispatch(getReviews(currentSpot?.id));
     updateCount();
-  }, [dispatch, isCreating]);
+  }, [dispatch, isCreating, currentSpot?.id]);
 
   return (
     <div className="deleteSpotModal">

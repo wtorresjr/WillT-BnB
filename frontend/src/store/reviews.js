@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_SPOT_REVIEWS = "reviews/get-reviews";
 const DELETE_USER_REVIEW = "reviews/delete-review";
+const CREATE_NEW_REVIEW = "reviews/create-a-review";
 
 const deleteReview = (deleteReviewId) => {
   return {
@@ -25,7 +26,6 @@ export const deleteMyReview = (reviewId) => async (dispatch) => {
     const deletedReview = await response.json();
     console.log(response, "Deleted Review Data");
     dispatch(deleteReview(reviewId));
-    // dispatch(getReviews())
     return deletedReview;
   } catch (error) {
     console.error("Error deleting review:", error);
@@ -44,6 +44,28 @@ export const getReviews = (id) => async (dispatch) => {
   }
 };
 
+const createSpotReview = (newSpotReview) => {
+  return {
+    type: CREATE_NEW_REVIEW,
+    newSpotReview,
+  };
+};
+
+export const createNewReview = (spotId, newReview) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newReview),
+    });
+    const newestReview = await response.json();
+    dispatch(createSpotReview());
+    return newestReview;
+  } catch (error) {
+    console.log("Error creating review:", error);
+  }
+};
+
 const reviewReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_SPOT_REVIEWS:
@@ -53,7 +75,8 @@ const reviewReducer = (state = {}, action) => {
       };
     case DELETE_USER_REVIEW:
       return { ...state, ...action.deleteReviewId };
-      // return state;
+    case CREATE_NEW_REVIEW:
+      return { ...state, ...action.newSpotReview };
     default:
       return state;
   }
