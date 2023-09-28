@@ -4,7 +4,7 @@ import { getReviews } from "../../store/reviews";
 import { useState, useEffect } from "react";
 import { createNewReview } from "../../store/reviews";
 
-const CreateReviewModal = ({ spotId, updateCount }) => {
+const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [isCreating, setIsCreating] = useState(false);
@@ -15,11 +15,6 @@ const CreateReviewModal = ({ spotId, updateCount }) => {
   const currentSpot = useSelector((state) => state?.spots?.oneSpot);
 
   const createReview = async () => {
-    // console.log("Users Review", newReview.toString());
-
-    // console.log("Star Rating", +starRating);
-    // console.log("Current Spot Id", currentSpot?.id);
-
     try {
       await dispatch(
         createNewReview(currentSpot?.id, {
@@ -28,6 +23,7 @@ const CreateReviewModal = ({ spotId, updateCount }) => {
         })
       );
       setIsCreating(true);
+      toggleReviewStatus(true);
       closeModal();
     } catch (error) {
       console.error("Error creating review:", error);

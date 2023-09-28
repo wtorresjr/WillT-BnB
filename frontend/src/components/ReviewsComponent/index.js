@@ -12,19 +12,33 @@ import CreateReviewModal from "./CreateReviewModal";
 const SpotDetailsReviews = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [reviewsState, setReviewsState] = useState(0);
   const sessionUser = useSelector((state) => state?.session?.user);
   const spotReviews = useSelector((state) => state?.reviews?.Reviews);
   const currentSpot = useSelector((state) => state?.spots?.oneSpot);
+  const [reviewsState, setReviewsState] = useState(0);
+  const [isReviewed, setIsReviewed] = useState(false);
 
   useEffect(() => {
     dispatch(getReviews(id));
     dispatch(findOne(id));
-  }, [dispatch, id, reviewsState]);
+  }, [dispatch, id, reviewsState, isReviewed]);
+
+  useEffect(() => {
+    for (let review = 0; review < spotReviews?.length; review++) {
+      if (spotReviews[review]?.userId === sessionUser?.id) {
+        return setIsReviewed(true);
+      } else {
+        setIsReviewed(false);
+      }
+    }
+  });
 
   const updateCount = () => {
-    console.log("Update Count Function Called");
     setReviewsState((prevCount) => prevCount + 1);
+  };
+
+  const hasThisBeenReviewed = (status) => {
+    setIsReviewed(status);
   };
 
   return (
@@ -40,25 +54,31 @@ const SpotDetailsReviews = () => {
               `- ${currentSpot?.numReviews} review`}
         </strong>
       </div>
+
       <div>
-        {sessionUser && sessionUser.id !== currentSpot?.ownerId && (
-          <button className="manageBtnClass">
-            {" "}
-            <OpenModalMenuItem
-              itemText="Post Your Review"
-              modalComponent={
-                <CreateReviewModal
-                  spotId={currentSpot?.id}
-                  updateCount={updateCount}
-                />
-              }
-            />
-          </button>
-        )}
-        {currentSpot?.numReviews == 0 && (
-          <p className="beFirstPtag">Be the first to post a review!</p>
-        )}
+        {isReviewed !== true &&
+          sessionUser &&
+          sessionUser.id !== currentSpot?.ownerId && (
+            <button className="manageBtnClass">
+              {" "}
+              <OpenModalMenuItem
+                itemText="Post Your Review"
+                modalComponent={
+                  <CreateReviewModal
+                    spotId={currentSpot?.id}
+                    updateCount={updateCount}
+                    toggleReviewStatus={hasThisBeenReviewed}
+                  />
+                }
+              />
+            </button>
+          )}
+        {currentSpot?.numReviews == 0 &&
+          sessionUser?.id !== currentSpot?.ownerId && (
+            <p className="beFirstPtag">Be the first to post a review!</p>
+          )}
       </div>
+
       {spotReviews &&
         spotReviews?.map((review) => {
           return (
@@ -83,6 +103,7 @@ const SpotDetailsReviews = () => {
                       <DeleteReviewModal
                         reviewId={review?.id}
                         updateCount={updateCount}
+                        toggleReviewStatus={hasThisBeenReviewed}
                       />
                     }
                   />

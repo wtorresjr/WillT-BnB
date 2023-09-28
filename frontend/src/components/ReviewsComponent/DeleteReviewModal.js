@@ -1,12 +1,9 @@
 import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getReviews,
-  deleteMyReview,
-} from "../../store/reviews";
+import { getReviews, deleteMyReview } from "../../store/reviews";
 import { useState, useEffect } from "react";
 
-const DeleteReviewModal = ({ reviewId, updateCount }) => {
+const DeleteReviewModal = ({ reviewId, updateCount, toggleReviewStatus }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -16,6 +13,7 @@ const DeleteReviewModal = ({ reviewId, updateCount }) => {
     try {
       await dispatch(deleteMyReview(reviewId));
       setIsDeleting(true);
+      toggleReviewStatus(false);
       closeModal();
     } catch (error) {
       console.error("Error deleting spot:", error);
@@ -24,6 +22,7 @@ const DeleteReviewModal = ({ reviewId, updateCount }) => {
 
   useEffect(() => {
     dispatch(getReviews(currentSpot?.id));
+
     updateCount();
   }, [dispatch, isDeleting]);
 
