@@ -10,7 +10,7 @@ const DeleteReviewModal = ({ reviewId, updateCount }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [isDeleting, setIsDeleting] = useState(false);
-//   const currentSpot = useSelector((state) => state?.spots?.oneSpot);
+  const currentSpot = useSelector((state) => state?.spots?.oneSpot);
 
   const deleteReview = async () => {
     try {

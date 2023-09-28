@@ -184,6 +184,7 @@ router.get("/:spotId/reviews", async (req, res, next) => {
       ],
     },
     attributes: [],
+    order: [[{ model: Review }, "createdAt", "DESC"]],
   });
 
   if (spotReview) {
