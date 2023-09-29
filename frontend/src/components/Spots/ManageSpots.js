@@ -20,12 +20,7 @@ const ManageSpots = () => {
   return (
     <div className="spotsClass">
       <div className="manageSpotsHeader">
-        <h3>Manage Your Spots</h3>
-        {sessionUser && (
-          <NavLink to="/create-a-spot">
-            <button className="manageBtnClass">Create a New Spot</button>
-          </NavLink>
-        )}
+        <h3>Manage Spots</h3>
       </div>
       {sessionUser &&
         usersSpots &&
@@ -49,7 +44,7 @@ const ManageSpots = () => {
                       {`${spot?.avgRating || "New"}`}
                     </p>
                   </div>
-                  <p>{`$${spot?.price}/night`}</p>
+                  <p>{`$${spot?.price} · night`}</p>
                 </div>
               </NavLink>
               <NavLink to={`/update-a-spot/${spot?.id}`}>
@@ -65,7 +60,9 @@ const ManageSpots = () => {
           );
         })}
       {sessionUser && usersSpots && !Object.keys(usersSpots)?.length && (
-        <p>You don't have any spots.</p>
+        <NavLink to="/create-a-spot">
+          <button className="manageBtnClass">Create a New Spot</button>
+        </NavLink>
       )}
       {!sessionUser && <p>Log in to see your spots.</p>}
     </div>

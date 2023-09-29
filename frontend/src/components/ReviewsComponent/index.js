@@ -51,8 +51,8 @@ const SpotDetailsReviews = () => {
           {parseInt(currentSpot?.numReviews) === 0
             ? "New"
             : (currentSpot?.numReviews > 1 &&
-                `- ${currentSpot?.numReviews} reviews`) ||
-              `- ${currentSpot?.numReviews} review`}
+                `· ${currentSpot?.numReviews} reviews`) ||
+              `· ${currentSpot?.numReviews} review`}
         </strong>
       </div>
 

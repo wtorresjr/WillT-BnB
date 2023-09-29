@@ -35,6 +35,7 @@ const DeleteReviewModal = ({
       updateCount();
     } else {
       dispatch(getAllUserReviews());
+      updateCount();
     }
   }, [dispatch, isDeleting]);
 

@@ -182,7 +182,7 @@ const UpdateSpotComponent = () => {
   return (
     <form onSubmit={checkForErrors}>
       <div className="newSpotForm">
-        <h1>Create a new Spot</h1>
+        <h1>Create your Spot</h1>
         <h3 style={{ padding: "10px 0 0 0" }}>Where's your place located?</h3>
         <p style={{ padding: "0 0 20px 0" }}>
           Guests will only get your exact address once they have booked a
@@ -344,7 +344,7 @@ const UpdateSpotComponent = () => {
         />
         {errors.exImg4 && <p className="errorRed">{errors.exImg4}</p>}
         <span className="greyDivider"></span>
-        <button>Update Spot</button>
+        <button>Update Your Spot</button>
       </div>
     </form>
   );

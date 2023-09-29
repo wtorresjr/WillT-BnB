@@ -34,7 +34,7 @@ const Spots = () => {
                   {` ${spot?.avgRating || "New"}`}
                 </p>
               </div>
-              <p>{`$${spot?.price}/night`}</p>
+              <p>{`$${spot?.price}·night`}</p>
             </div>
           </NavLink>
         );

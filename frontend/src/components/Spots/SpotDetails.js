@@ -64,7 +64,7 @@ const SpotDetails = () => {
           </div>
           <div className="reserveContainer">
             <div className="priceNrating">
-              <h4>{`$${thisSpot?.price}/night`}</h4>
+              <h4>{`$${thisSpot?.price}·night`}</h4>
               <p>
                 <i className="fa-solid fa-star" style={{ color: "orange" }}></i>{" "}
                 {
@@ -74,8 +74,8 @@ const SpotDetails = () => {
                     {thisSpot?.numReviews == 0
                       ? "New"
                       : (thisSpot?.numReviews > 1 &&
-                          `- ${thisSpot?.numReviews} reviews`) ||
-                        `- ${thisSpot?.numReviews} review`}
+                          `· ${thisSpot?.numReviews} reviews`) ||
+                        `· ${thisSpot?.numReviews} review`}
                   </strong>
                 }
               </p>
