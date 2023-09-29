@@ -108,6 +108,7 @@ a {
   box-sizing: border-box;
   flex-flow: column;
   border: 1px solid black;
+  max-width: 100%;
 }
 
 button li {

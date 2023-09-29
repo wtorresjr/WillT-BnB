@@ -117,6 +117,8 @@ const CreateSpot = () => {
         "Description needs a minimum of 30 characters";
     }
     !placeName.length && (errorCollector.name = "Name is required");
+    placeName.length > 50 &&
+      (errorCollector.name = "Name must be less than 50 characters");
 
     !price.length && (errorCollector.price = "Price is required");
     if (price.length && !Number(price)) {

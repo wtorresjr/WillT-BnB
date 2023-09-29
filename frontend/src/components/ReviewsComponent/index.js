@@ -26,7 +26,8 @@ const SpotDetailsReviews = () => {
   useEffect(() => {
     for (let review = 0; review < spotReviews?.length; review++) {
       if (spotReviews[review]?.userId === sessionUser?.id) {
-        return setIsReviewed(true);
+        setIsReviewed(true);
+        break;
       } else {
         setIsReviewed(false);
       }
@@ -47,7 +48,7 @@ const SpotDetailsReviews = () => {
         <strong>
           <i className="fa-solid fa-star" style={{ color: "orange" }}></i>{" "}
           {currentSpot?.avgStarRating}{" "}
-          {currentSpot?.numReviews == 0
+          {parseInt(currentSpot?.numReviews) === 0
             ? "New"
             : (currentSpot?.numReviews > 1 &&
                 `- ${currentSpot?.numReviews} reviews`) ||
@@ -73,7 +74,7 @@ const SpotDetailsReviews = () => {
               />
             </button>
           )}
-        {currentSpot?.numReviews == 0 &&
+        {parseInt(currentSpot?.numReviews) === 0 &&
           sessionUser?.id !== currentSpot?.ownerId && (
             <p className="beFirstPtag">Be the first to post a review!</p>
           )}

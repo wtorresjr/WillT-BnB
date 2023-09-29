@@ -2,13 +2,8 @@
 
 html,
 body {
-  /* display: flex; */
-  /* justify-content: center; */
-  /* justify-items: center; */
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  /* box-sizing: border-box; */
-  /* width: 100vw; */
   margin: 0px;
   padding: 0px;
 }
@@ -34,6 +29,7 @@ body {
   background-color: rgb(101, 101, 101);
   color: white;
   cursor: pointer;
+  margin: 10px 0 0 0;
 }
 
 #createNewSpot {

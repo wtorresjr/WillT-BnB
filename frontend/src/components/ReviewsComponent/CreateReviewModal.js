@@ -11,6 +11,8 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [starRating, setStarRating] = useState(1);
   const [newReview, setNewReview] = useState("");
+  const [isHover, setIsHover] = useState(false);
+  const [hoverIndex, setHoverIndex] = useState();
 
   const currentSpot = useSelector((state) => state?.spots?.oneSpot);
 
@@ -48,17 +50,27 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
         starNode.setAttribute("class", notPickedStar);
       }
     }
-  }, [starRating, pickedStar, notPickedStar]);
+
+    if (isHover) {
+      allStars.forEach((star) => {
+        if (star.value <= hoverIndex + 1) {
+          star.setAttribute("class", pickedStar);
+        } else {
+          star.setAttribute("class", notPickedStar);
+        }
+      });
+    }
+  }, [starRating, pickedStar, notPickedStar, isHover, hoverIndex]);
 
   useEffect(() => {
     dispatch(getReviews(currentSpot?.id));
     updateCount();
-  }, [dispatch, isCreating, currentSpot?.id]);
+  }, [dispatch, isCreating, currentSpot?.id, updateCount]);
 
   return (
     <div className="deleteSpotModal">
       <h3 style={{ margin: "10px 0", textAlign: "center" }}>
-        How was your stay?
+        How was your stay at {currentSpot?.name}?
       </h3>
       <textarea
         id="reviewTextArea"
@@ -77,21 +89,53 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
           className="fa-regular fa-star fa-2xl"
           value={2}
           onClick={(e) => setStarRating(e.target.value)}
+          onMouseEnter={() => {
+            setIsHover(true);
+            setHoverIndex(1);
+          }}
+          onMouseLeave={() => {
+            setIsHover(false);
+            setHoverIndex(0);
+          }}
         ></button>
         <button
           className="fa-regular fa-star fa-2xl"
           value={3}
           onClick={(e) => setStarRating(e.target.value)}
+          onMouseEnter={() => {
+            setIsHover(true);
+            setHoverIndex(2);
+          }}
+          onMouseLeave={() => {
+            setIsHover(false);
+            setHoverIndex(0);
+          }}
         ></button>
         <button
           className="fa-regular fa-star fa-2xl"
           value={4}
           onClick={(e) => setStarRating(e.target.value)}
+          onMouseEnter={() => {
+            setIsHover(true);
+            setHoverIndex(3);
+          }}
+          onMouseLeave={() => {
+            setIsHover(false);
+            setHoverIndex(0);
+          }}
         ></button>
         <button
           className="fa-regular fa-star fa-2xl"
           value={5}
           onClick={(e) => setStarRating(e.target.value)}
+          onMouseEnter={() => {
+            setIsHover(true);
+            setHoverIndex(4);
+          }}
+          onMouseLeave={() => {
+            setIsHover(false);
+            setHoverIndex(0);
+          }}
         ></button>
         <p>Stars</p>
       </div>
