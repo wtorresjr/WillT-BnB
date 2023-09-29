@@ -15,7 +15,7 @@ const SpotDetailsReviews = () => {
   const sessionUser = useSelector((state) => state?.session?.user);
   const spotReviews = useSelector((state) => state?.reviews?.Reviews);
   const currentSpot = useSelector((state) => state?.spots?.oneSpot);
-  const [reviewsState, setReviewsState] = useState(0);
+  const [reviewsState, setReviewsState] = useState();
   const [isReviewed, setIsReviewed] = useState(false);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const SpotDetailsReviews = () => {
       <div>
         {isReviewed !== true &&
           sessionUser &&
-          sessionUser.id !== currentSpot?.ownerId && (
+          sessionUser?.id !== currentSpot?.ownerId && (
             <button className="manageBtnClass">
               {" "}
               <OpenModalMenuItem
