@@ -11,6 +11,7 @@ const ManageReviews = () => {
   const sessionUser = useSelector((state) => state?.session?.user);
   const usersReviews = useSelector((state) => state?.reviews?.Reviews);
   const [reviewsState, setReviewsState] = useState();
+  const [isReviewed, setIsReviewed] = useState(false);
 
   useEffect(() => {
     dispatch(getAllUserReviews());
@@ -18,6 +19,10 @@ const ManageReviews = () => {
 
   const updateCount = () => {
     setReviewsState((prevCount) => prevCount + 1);
+  };
+
+  const hasThisBeenReviewed = (status) => {
+    setIsReviewed(status);
   };
 
   return (
@@ -55,6 +60,8 @@ const ManageReviews = () => {
                     <DeleteReviewModal
                       reviewId={review?.id}
                       updateCount={updateCount}
+                      toggleReviewStatus={hasThisBeenReviewed}
+                      manageReviews={true}
                     />
                   }
                 />

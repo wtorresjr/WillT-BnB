@@ -1,9 +1,18 @@
 import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getReviews, deleteMyReview } from "../../store/reviews";
+import {
+  getReviews,
+  deleteMyReview,
+  getAllUserReviews,
+} from "../../store/reviews";
 import { useState, useEffect } from "react";
 
-const DeleteReviewModal = ({ reviewId, updateCount, toggleReviewStatus }) => {
+const DeleteReviewModal = ({
+  reviewId,
+  updateCount,
+  toggleReviewStatus,
+  manageReviews,
+}) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -21,8 +30,12 @@ const DeleteReviewModal = ({ reviewId, updateCount, toggleReviewStatus }) => {
   };
 
   useEffect(() => {
-    dispatch(getReviews(currentSpot?.id));
-    updateCount();
+    if (!manageReviews) {
+      dispatch(getReviews(currentSpot?.id));
+      updateCount();
+    } else {
+      dispatch(getAllUserReviews());
+    }
   }, [dispatch, isDeleting]);
 
   return (
