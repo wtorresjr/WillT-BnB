@@ -52,6 +52,7 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
     }
 
     if (isHover) {
+      allStars.forEach((star) => star.setAttribute("class", notPickedStar));
       allStars.forEach((star) => {
         if (star.value <= hoverIndex + 1) {
           star.setAttribute("class", pickedStar);
@@ -60,7 +61,7 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
         }
       });
     }
-  }, [starRating, pickedStar, notPickedStar, isHover, hoverIndex]);
+  }, [starRating, isHover, hoverIndex]);
 
   useEffect(() => {
     dispatch(getReviews(currentSpot?.id));
@@ -84,6 +85,14 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
           className="fa-regular fa-star fa-2xl"
           value={1}
           onClick={(e) => setStarRating(e.target.value)}
+          onMouseEnter={() => {
+            setIsHover(true);
+            setHoverIndex(0);
+          }}
+          onMouseLeave={() => {
+            setIsHover(false);
+            setHoverIndex(0);
+          }}
         ></button>
         <button
           className="fa-regular fa-star fa-2xl"

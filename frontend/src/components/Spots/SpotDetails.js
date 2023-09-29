@@ -80,7 +80,12 @@ const SpotDetails = () => {
                 }
               </p>
             </div>
-            <button id="reserveBtn">Reserve</button>
+            <button
+              id="reserveBtn"
+              onClick={() => alert("Feature Coming Soon...")}
+            >
+              Reserve
+            </button>
           </div>
         </div>
         <div className="greyDivider"></div>

@@ -22,7 +22,6 @@ const DeleteReviewModal = ({ reviewId, updateCount, toggleReviewStatus }) => {
 
   useEffect(() => {
     dispatch(getReviews(currentSpot?.id));
-
     updateCount();
   }, [dispatch, isDeleting]);
 

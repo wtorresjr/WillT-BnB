@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_SPOT_REVIEWS = "reviews/get-reviews";
 const DELETE_USER_REVIEW = "reviews/delete-review";
 const CREATE_NEW_REVIEW = "reviews/create-a-review";
+const GET_USER_REVIEWS = "reviews/get-user-reviews";
 
 const deleteReview = (deleteReviewId) => {
   return {
@@ -65,6 +66,23 @@ export const createNewReview = (spotId, newReview) => async (dispatch) => {
   }
 };
 
+const getUserReviews = (userReviews) => {
+  return {
+    type: GET_USER_REVIEWS,
+    userReviews,
+  };
+};
+
+export const getAllUserReviews = (userId) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/current-user/reviews`);
+    const currUserReviews = await response.json();
+    dispatch(getUserReviews(currUserReviews));
+  } catch (error) {
+    console.log("Get User Reviews Errors Backend", error);
+  }
+};
+
 const reviewReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_SPOT_REVIEWS:
@@ -76,6 +94,8 @@ const reviewReducer = (state = {}, action) => {
       return { ...state, ...action.deleteReviewId };
     case CREATE_NEW_REVIEW:
       return { ...state, ...action.newSpotReview };
+    case GET_USER_REVIEWS:
+      return { ...state, ...action.userReviews };
     default:
       return state;
   }

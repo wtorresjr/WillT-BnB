@@ -54,6 +54,7 @@ router.get("/reviews", async (req, res, next) => {
           attributes: ["id", "url"],
         },
       ],
+      order: [["createdAt", "DESC"]],
     });
 
     Reviews.forEach((spot) => {
@@ -62,7 +63,6 @@ router.get("/reviews", async (req, res, next) => {
       delete spot.Spot.dataValues.Spot_Images;
       spot.Spot.setDataValue("previewImage", spotImage);
     });
-
     res.status(200).json({ Reviews });
   } else {
     const error = new Error("Authentication required");
