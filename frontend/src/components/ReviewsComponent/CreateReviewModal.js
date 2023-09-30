@@ -9,7 +9,7 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
   const { closeModal } = useModal();
   const [isCreating, setIsCreating] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [starRating, setStarRating] = useState(1);
+  const [starRating, setStarRating] = useState();
   const [newReview, setNewReview] = useState("");
   const [isHover, setIsHover] = useState(false);
   const [hoverIndex, setHoverIndex] = useState();
@@ -34,7 +34,7 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
         setErrors(theErrors);
         // console.log(errors, "<======== Errors state");
       } else {
-        // console.error("unexpected error", error);
+        console.error("unexpected error", error);
       }
     }
   };
@@ -80,6 +80,11 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
       <h3 style={{ margin: "10px 0", textAlign: "center" }}>
         How was your stay at {currentSpot?.name}?
       </h3>
+      {errors && (
+        <p className="errorRed" style={{ textAlign: "center" }}>
+          {errors?.message}
+        </p>
+      )}
       <textarea
         id="reviewTextArea"
         rows={8}
@@ -87,11 +92,7 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
         value={newReview}
         onChange={(e) => setNewReview(e.target.value)}
       ></textarea>
-      {errors && (
-        <p className="errorRed" style={{ textAlign: "center" }}>
-          {errors?.message}
-        </p>
-      )}
+
       <div className="starsContainer">
         <button
           className="fa-regular fa-star fa-2xl"

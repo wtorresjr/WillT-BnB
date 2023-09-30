@@ -68,7 +68,7 @@ li {
   border-radius: 100px;
   border: 1px solid rgba(128, 128, 128, 0.205);
   cursor: pointer;
-  padding:4px 4px;
+  padding: 4px 4px;
   background-color: white;
   display: flex;
   align-items: center;
@@ -80,7 +80,7 @@ li {
 }
 
 #logo {
-  width: 128px;
+  width: 170px;
 }
 
 #hamburger-menu {
