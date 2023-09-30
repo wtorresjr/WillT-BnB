@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { findOne } from "../../store/spots";
 import { getReviews } from "../../store/reviews";
 import "./spotDetails.css";
@@ -22,6 +22,8 @@ const SpotDetails = () => {
     (image) => image.preview === true
   );
 
+  let imgCount = 0;
+
   return (
     <>
       <div className="spotDetails">
@@ -31,6 +33,14 @@ const SpotDetails = () => {
         </div>
 
         <div className="imagesContainer">
+          {spotImgs && Object.keys(spotImgs)?.length > 5 && (
+            <NavLink to={`/all-images/${id}`}>
+              {" "}
+              <button className="manageBtnClass" id="viewAllImgs">
+                View All Images
+              </button>
+            </NavLink>
+          )}
           <div className="previewContainer">
             <img
               src={previewImg?.url}
@@ -38,11 +48,13 @@ const SpotDetails = () => {
               alt={`Main view of house in ${thisSpot?.city}, ${thisSpot?.state}`}
             />
           </div>
+
           <div className="smallImagesContainer">
             {spotImgs &&
-              Object.keys(spotImgs).length > 1 &&
+              Object.keys(spotImgs)?.length > 1 &&
               spotImgs.map((image) => {
-                if (image.preview === false) {
+                if (image?.preview === false && imgCount < 4) {
+                  imgCount++;
                   return (
                     <div className="moreImages" key={image.id}>
                       <img
@@ -71,7 +83,7 @@ const SpotDetails = () => {
                   <strong className="spotDetailsRating">
                     {" "}
                     {thisSpot?.avgStarRating}{" "}
-                    {thisSpot?.numReviews == 0
+                    {+thisSpot?.numReviews === 0
                       ? "New"
                       : (thisSpot?.numReviews > 1 &&
                           `· ${thisSpot?.numReviews} reviews`) ||

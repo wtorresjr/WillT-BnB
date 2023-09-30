@@ -11,7 +11,7 @@ function Navigation({ isLoaded }) {
     <ul className="navUl">
       <li>
         <NavLink exact to="/">
-          <img src="../../willt-bnb-logo.svg" id="logo" />
+          <img src="../../willt-bnb-logo.svg" id="logo" alt="website logo"/>
         </NavLink>
       </li>
       <div className="profileActions">

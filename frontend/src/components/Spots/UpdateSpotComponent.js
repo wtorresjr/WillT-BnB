@@ -13,6 +13,10 @@ const UpdateSpotComponent = () => {
   const history = useHistory();
   const thisSpot = useSelector((state) => state?.spots?.oneSpot);
 
+  const oldPrevImg = thisSpot?.SpotImages?.find(
+    (image) => image.preview === true
+  );
+
   useEffect(() => {
     dispatch(findOne(spotId));
   }, [dispatch, spotId]);
@@ -27,7 +31,7 @@ const UpdateSpotComponent = () => {
     setPlaceName(thisSpot?.name || "");
     setDescription(thisSpot?.description || "");
     setPrice(thisSpot?.price || "");
-    setPreviewImg(thisSpot?.SpotImages[0].url || "");
+    setPreviewImg(oldPrevImg?.url);
     setExImg1(thisSpot?.SpotImages[1].url || "");
     setExImg2(thisSpot?.SpotImages[2].url || "");
     setExImg3(thisSpot?.SpotImages[3].url || "");

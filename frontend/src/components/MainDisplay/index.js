@@ -7,6 +7,7 @@ import SpotDetails from "../Spots/SpotDetails";
 import ManageSpots from "../Spots/ManageSpots";
 import UpdateSpotComponent from "../Spots/UpdateSpotComponent";
 import ManageReviews from "../ReviewsComponent/ManageReviews";
+import AllImagesComponent from "../AllImageComponent/AllImagesComponent";
 
 const MainDisplay = () => {
   return (
@@ -29,6 +30,9 @@ const MainDisplay = () => {
         </Route>
         <Route exact path="/manage-reviews">
           <ManageReviews />
+        </Route>
+        <Route exact path="/all-images/:spotId">
+          <AllImagesComponent />
         </Route>
         <Route path="*">
           <h1>Page Not Found</h1>
