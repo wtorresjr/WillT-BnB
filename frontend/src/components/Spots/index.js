@@ -18,7 +18,7 @@ const Spots = () => {
       {allSpots?.map((spot) => {
         return (
           <NavLink key={spot?.id} to={`/spots/${spot.id}`}>
-            <div className="spotContainer">
+            <div className="spotContainer" title={spot?.name}>
               <img
                 src={spot?.Spot_Images?.[0].url || spot?.previewImage}
                 className="previewImage"
