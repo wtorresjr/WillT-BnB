@@ -9,7 +9,7 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
   const { closeModal } = useModal();
   const [isCreating, setIsCreating] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [starRating, setStarRating] = useState();
+  const [starRating, setStarRating] = useState(1);
   const [newReview, setNewReview] = useState("");
   const [isHover, setIsHover] = useState(false);
   const [hoverIndex, setHoverIndex] = useState();
