@@ -125,3 +125,10 @@ button li {
   cursor: pointer;
   box-shadow: 2px 2px 2px rgba(100, 100, 100, 0.6);
 }
+
+#manageReviews {
+  display: flex;
+ max-width: 1000px;
+  margin:0 auto;
+  justify-content: center;
+}

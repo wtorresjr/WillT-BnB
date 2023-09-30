@@ -64,7 +64,9 @@ function ProfileButton({ user }) {
             <div className="userInfo">
               <p>{`Hello, ${user.firstName}`}</p>
               <p>{user.email}</p>
-
+            </div>
+            <span className="greyline"></span>
+            <div className="userInfo">
               <NavLink to="/manage-spots" style={{}}>
                 <p>Manage Spots</p>
               </NavLink>
@@ -72,6 +74,7 @@ function ProfileButton({ user }) {
                 <p>Manage Reviews</p>
               </NavLink>
             </div>
+            <span className="greyline"></span>
             <div className="centeredBtn">
               <button onClick={logout} className="logOutBtn">
                 Log Out

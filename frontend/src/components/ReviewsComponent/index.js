@@ -97,18 +97,26 @@ const SpotDetailsReviews = () => {
               </p>
               <p className="reviewText">{review?.review}</p>
               {review?.userId === sessionUser?.id && (
-                <button className="manageBtnClass">
-                  <OpenModalMenuItem
-                    itemText="Delete"
-                    modalComponent={
-                      <DeleteReviewModal
-                        reviewId={review?.id}
-                        updateCount={updateCount}
-                        toggleReviewStatus={hasThisBeenReviewed}
-                      />
-                    }
-                  />
-                </button>
+                <>
+                  <button
+                    className="manageBtnClass"
+                    onClick={() => alert("Feature Coming Soon...")}
+                  >
+                    Update
+                  </button>
+                  <button className="manageBtnClass">
+                    <OpenModalMenuItem
+                      itemText="Delete"
+                      modalComponent={
+                        <DeleteReviewModal
+                          reviewId={review?.id}
+                          updateCount={updateCount}
+                          toggleReviewStatus={hasThisBeenReviewed}
+                        />
+                      }
+                    />
+                  </button>
+                </>
               )}
             </div>
           );
