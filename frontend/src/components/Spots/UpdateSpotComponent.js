@@ -66,30 +66,34 @@ const UpdateSpotComponent = () => {
   let extraImages = [];
   let validExtraImages = [];
   let errorCollector = {};
+  
   const handleSubmit = async (e) => {
-    dispatch(updateUsersSpot(spotId, newSpotInfo)).then(async (newSpot) => {
-      await dispatch(
-        addImageToSpot(
-          spotId,
-          {
-            url: newSpotInfo.url,
-            preview: newSpotInfo.preview,
-          },
-          isUpdate
-        )
-      )
-        .then((result) => {
-          history.push(`/spots/${spotId}`);
-        })
-        .catch(async (res) => {
-          if (res instanceof Response) {
-            const data = await res.json();
-            if (data.errors) {
-              return setErrors(errorCollector);
-            }
+    dispatch(updateUsersSpot(spotId, newSpotInfo))
+      .then(async (updatedSpot) => {
+        if (isUpdate) {
+          await dispatch(
+            addImageToSpot(
+              spotId,
+              {
+                url: newSpotInfo.url,
+                preview: newSpotInfo.preview,
+              },
+              isUpdate
+            )
+          );
+        }
+      })
+      .then((result) => {
+        history.push(`/spots/${spotId}`);
+      })
+      .catch(async (res) => {
+        if (res instanceof Response) {
+          const data = await res.json();
+          if (data.errors) {
+            return setErrors(errorCollector);
           }
-        });
-    });
+        }
+      });
   };
 
   const checkValidUrl = (imageUrl) => {

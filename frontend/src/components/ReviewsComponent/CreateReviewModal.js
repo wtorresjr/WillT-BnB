@@ -13,12 +13,13 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
   const [newReview, setNewReview] = useState("");
   const [isHover, setIsHover] = useState(false);
   const [hoverIndex, setHoverIndex] = useState();
+  const [errors, setErrors] = useState({});
 
   const currentSpot = useSelector((state) => state?.spots?.oneSpot);
 
   const createReview = async () => {
     try {
-      await dispatch(
+      const newReviewData = await dispatch(
         createNewReview(currentSpot?.id, {
           review: newReview,
           stars: +starRating,
@@ -28,7 +29,13 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
       toggleReviewStatus(true);
       closeModal();
     } catch (error) {
-      console.error("Error creating review:", error);
+      if (error) {
+        const theErrors = await error.json();
+        setErrors(theErrors);
+        // console.log(errors, "<======== Errors state");
+      } else {
+        // console.error("unexpected error", error);
+      }
     }
   };
 
@@ -80,6 +87,11 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
         value={newReview}
         onChange={(e) => setNewReview(e.target.value)}
       ></textarea>
+      {errors && (
+        <p className="errorRed" style={{ textAlign: "center" }}>
+          {errors?.message}
+        </p>
+      )}
       <div className="starsContainer">
         <button
           className="fa-regular fa-star fa-2xl"

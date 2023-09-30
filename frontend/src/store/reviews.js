@@ -58,11 +58,17 @@ export const createNewReview = (spotId, newReview) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newReview),
     });
+
+    if (!response.ok) {
+      console.log(response, "Response from thunk");
+      throw response;
+    }
+
     const newestReview = await response.json();
     dispatch(createSpotReview());
     return newestReview;
   } catch (error) {
-    console.log("Error creating review:", error);
+    throw error;
   }
 };
 

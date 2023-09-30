@@ -63,31 +63,12 @@ export const addImageToSpot = (id, imageUrl, isUpdate) => async (dispatch) => {
     dispatch(addImages(newImage));
     return newImage;
   } else {
-    // console.log("Not A New Spot / Update Function To Go Here");
+    console.log("Not A New Spot / Update Function To Go Here");
     const spotToEdit = await dispatch(findOne(id));
-    const spotImages = await spotToEdit.SpotImages;
+    // const spotImages = await spotToEdit.SpotImages;
 
-    for (let image = 0; image < spotImages.length; image++) {
-      let theImage = spotImages[image];
-      if (theImage.preview === true) {
-        console.log(theImage, "The Preview Image");
-
-        const deleteImage = await csrfFetch(
-          `/api/spots/${id}/spot-images/${theImage.id}`,
-          {
-            method: "DELETE",
-          }
-        );
-        const doneDeletingImg = await deleteImage.json();
-        if (doneDeletingImg) {
-          const finishAdding = await dispatch(
-            addImageToSpot(id, imageUrl, false)
-          );
-          return finishAdding;
-        }
-      }
-    }
-    console.log(spotImages, "Spot to edit from addImageToSpot");
+    const finishAdding = await dispatch(addImageToSpot(id, imageUrl));
+    return finishAdding;
   }
 };
 export const fetchAllSpots = () => async (dispatch) => {
