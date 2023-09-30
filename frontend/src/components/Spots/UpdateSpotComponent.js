@@ -66,7 +66,7 @@ const UpdateSpotComponent = () => {
   let extraImages = [];
   let validExtraImages = [];
   let errorCollector = {};
-  
+
   const handleSubmit = async (e) => {
     dispatch(updateUsersSpot(spotId, newSpotInfo))
       .then(async (updatedSpot) => {

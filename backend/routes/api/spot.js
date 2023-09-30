@@ -556,11 +556,31 @@ router.post("/:spotId/spot-images", async (req, res, next) => {
   if (req.user) {
     const thisUser = req.user.id;
 
-    const getSpot = await Spot.findOne({ where: { id: spotId } });
+    const getSpot = await Spot.findOne({
+      where: { id: spotId },
+      include: { model: Spot_Image },
+    });
 
     if (getSpot) {
       if (getSpot.ownerId === thisUser) {
         try {
+
+          //Set old preview image to false before adding new preview image.
+          if (preview === true) {
+            for (
+              let existingImgs = 0;
+              existingImgs < getSpot.Spot_Images.length;
+              existingImgs++
+            ) {
+              let existingImage = getSpot.Spot_Images[existingImgs];
+              let previewVal =
+                getSpot.Spot_Images[existingImgs].dataValues.preview;
+              if (previewVal === true) {
+                await existingImage.update({ preview: false });
+              }
+            }
+          }
+
           const newImage = await Spot_Image.create({
             spotId: spotId,
             url: url,
@@ -577,6 +597,7 @@ router.post("/:spotId/spot-images", async (req, res, next) => {
             errors[err.path] = err.message;
           });
 
+          console.log(errors, "All errors ?");
           return res.status(400).json({ message: "Bad Request", errors });
         }
       } else {
