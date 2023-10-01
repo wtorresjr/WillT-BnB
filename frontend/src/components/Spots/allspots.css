@@ -19,8 +19,6 @@
 
 .spotContainer:hover {
   box-shadow: 0px 5px 5px rgba(212, 212, 212, 0.6);
-  /* background-color: rgb(255, 183, 183); */
-  /* color: white; */
 }
 
 .previewImage {
@@ -137,7 +135,6 @@ button li {
 }
 
 .revImgContainer {
-  /* background-color: green; */
   width: 125px;
   height: 125px;
   overflow: hidden;

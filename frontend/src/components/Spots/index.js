@@ -17,10 +17,10 @@ const Spots = () => {
     <div className="spotsClass">
       {allSpots?.map((spot) => {
         return (
-          <NavLink key={spot?.id} to={`/spots/${spot.id}`}>
+          <NavLink key={spot?.id} to={`/spots/${spot?.id}`}>
             <div className="spotContainer" title={spot?.name}>
               <img
-                src={spot?.Spot_Images?.[0].url || spot?.previewImage}
+                src={spot?.previewImage || spot?.Spot_Images?.[0].url}
                 className="previewImage"
                 alt={`House in ${spot?.city},${spot?.state}`}
               />

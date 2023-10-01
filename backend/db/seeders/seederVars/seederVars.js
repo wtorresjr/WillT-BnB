@@ -83,8 +83,8 @@ const seedUsers = [
 const seedSpots = [
   {
     ownerId: 1,
-    address: "123 Fake Street",
-    city: "Fake Town",
+    address: "123 Holograph Street",
+    city: "Fine Town",
     state: "California",
     country: "United States",
     lat: 23.56,
@@ -97,7 +97,7 @@ const seedSpots = [
   {
     ownerId: 2,
     address: "555 Phony Avenue",
-    city: "Phony City",
+    city: "Not City",
     state: "New York",
     country: "United States",
     lat: 53.66,
