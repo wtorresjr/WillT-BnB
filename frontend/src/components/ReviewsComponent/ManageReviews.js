@@ -5,6 +5,7 @@ import "../Spots/allspots.css";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import { getAllUserReviews } from "../../store/reviews";
 import DeleteReviewModal from "./DeleteReviewModal";
+import { findOne } from "../../store/spots";
 
 const ManageReviews = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const ManageReviews = () => {
 
   useEffect(() => {
     dispatch(getAllUserReviews());
+    dispatch(findOne(usersReviews?.Spot?.id));
   }, [dispatch, sessionUser, reviewsState]);
 
   const updateCount = () => {
@@ -35,37 +37,45 @@ const ManageReviews = () => {
         usersReviews?.map((review) => {
           return (
             <div key={review?.id} className="reviewPanel">
-              <h4 className="reviewerInfo">{review?.Spot?.name}</h4>
-              <p className="reviewDate">
-                {review?.createdAt
-                  ? new Date(review.createdAt).toLocaleDateString(undefined, {
-                      year: "numeric",
-                      month: "long",
-                    })
-                  : null}
-              </p>
-              <p className="reviewText">{review?.review}</p>
-              {/* <NavLink to={`/update-a-spot/${review?.id}`}> */}
-              <button
-                className="manageBtnClass"
-                onClick={() => alert("Feature Coming Soon...")}
-              >
-                Update
-              </button>
-              {/* </NavLink> */}
-              <button className="manageBtnClass">
-                <OpenModalMenuItem
-                  itemText="Delete"
-                  modalComponent={
-                    <DeleteReviewModal
-                      reviewId={review?.id}
-                      updateCount={updateCount}
-                      toggleReviewStatus={hasThisBeenReviewed}
-                      manageReviews={true}
-                    />
-                  }
+              <div className="reviewInfo">
+                <h4 className="reviewerInfo">{review?.Spot?.name}</h4>
+                <p className="reviewDate">
+                  {review?.createdAt
+                    ? new Date(review.createdAt).toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "long",
+                      })
+                    : null}
+                </p>
+                <p className="reviewText">{review?.review}</p>
+                {/* <NavLink to={`/update-a-spot/${review?.id}`}> */}
+                <button
+                  className="manageBtnClass"
+                  onClick={() => alert("Feature Coming Soon...")}
+                >
+                  Update
+                </button>
+                {/* </NavLink> */}
+                <button className="manageBtnClass">
+                  <OpenModalMenuItem
+                    itemText="Delete"
+                    modalComponent={
+                      <DeleteReviewModal
+                        reviewId={review?.id}
+                        updateCount={updateCount}
+                        toggleReviewStatus={hasThisBeenReviewed}
+                        manageReviews={true}
+                      />
+                    }
+                  />
+                </button>
+              </div>
+              <div className="revImgContainer">
+                <img
+                  src={review?.Spot?.previewImage}
+                  className="reviewSpotImg"
                 />
-              </button>
+              </div>
             </div>
           );
         })}

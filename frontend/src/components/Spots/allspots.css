@@ -126,9 +126,31 @@ button li {
   box-shadow: 2px 2px 2px rgba(100, 100, 100, 0.6);
 }
 
+.reviewPanel {
+  /* background-color: grey; */
+  /* height: 20vh; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.reviewInfo {
+  /* background-color: red; */
+}
+
+.revImgContainer {
+  /* background-color: green; */
+  width: 125px;
+  height: 125px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+}
+
 #manageReviews {
   display: flex;
- max-width: 1000px;
-  margin:0 auto;
+  max-width: 1000px;
+  margin: 0 auto;
   justify-content: center;
 }
