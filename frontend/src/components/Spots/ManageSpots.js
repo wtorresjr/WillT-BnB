@@ -20,7 +20,7 @@ const ManageSpots = () => {
   return (
     <div className="spotsClass">
       <div className="manageSpotsHeader">
-        <h3>Manage Spots</h3>
+        <h2>Manage Spots</h2>
       </div>
       {sessionUser &&
         usersSpots &&

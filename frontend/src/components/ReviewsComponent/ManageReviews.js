@@ -28,7 +28,7 @@ const ManageReviews = () => {
   return (
     <div className="spotsClass" id="manageReviews">
       <div className="manageSpotsHeader">
-        <h3>Manage Reviews</h3>
+        <h2>Manage Reviews</h2>
       </div>
       {sessionUser &&
         usersReviews &&

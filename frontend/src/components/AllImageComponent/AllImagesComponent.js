@@ -30,6 +30,7 @@ const AllImagesComponent = () => {
                 className="allImgsImg"
                 key={image?.id}
                 alt={thisSpot?.name}
+                onClick={() => alert(`clicked image ${image?.id}`)}
               />
             );
           })}
