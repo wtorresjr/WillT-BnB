@@ -127,14 +127,13 @@ button li {
 }
 
 .reviewPanel {
-  /* background-color: grey; */
-  /* height: 20vh; */
+  align-items: center;
+}
+
+#manageReviewsPanel {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.reviewInfo {
-  /* background-color: red; */
 }
 
 .revImgContainer {

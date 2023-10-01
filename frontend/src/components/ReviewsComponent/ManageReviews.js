@@ -36,7 +36,7 @@ const ManageReviews = () => {
         usersReviews &&
         usersReviews?.map((review) => {
           return (
-            <div key={review?.id} className="reviewPanel">
+            <div key={review?.id} className="reviewPanel" id="manageReviewsPanel">
               <div className="reviewInfo">
                 <h4 className="reviewerInfo">{review?.Spot?.name}</h4>
                 <p className="reviewDate">

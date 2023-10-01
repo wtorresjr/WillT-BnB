@@ -71,7 +71,7 @@ const SpotDetails = () => {
         </div>
         <div className="underImgs">
           <div className="spotDescription">
-            <h3>{`Hosted by ${thisSpot?.Owner.firstName} ${thisSpot?.Owner.lastName}`}</h3>
+            <h3>{`Hosted by ${thisSpot?.Owner?.firstName} ${thisSpot?.Owner?.lastName}`}</h3>
             <p>{thisSpot?.description}</p>
           </div>
           <div className="reserveContainer">
