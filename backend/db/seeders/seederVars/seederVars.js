@@ -479,18 +479,37 @@ const seedReviews = [
   },
 ];
 
+const urls = [
+  "https://picsum.photos/800/800.jpg",
+  "https://picsum.photos/600/600.jpg",
+  "https://picsum.photos/500/500.jpg",
+  "https://picsum.photos/700/700.jpg",
+  "https://picsum.photos/400/400.jpg",
+  "https://picsum.photos/300/300.jpg",
+  "https://picsum.photos/800/500.jpg",
+  "https://picsum.photos/700/350.jpg",
+  "https://picsum.photos/600/400.jpg",
+  "https://picsum.photos/500/300.jpg",
+  "https://picsum.photos/300/700.jpg",
+  "https://picsum.photos/800/300.jpg",
+  "https://picsum.photos/300/400.jpg",
+  "https://picsum.photos/800/400.jpg",
+  "https://picsum.photos/700/250.jpg",
+  "https://picsum.photos/900/550.jpg",
+  "https://picsum.photos/800/350.jpg",
+];
 const seedSpotImages = [];
 
 for (let spotId = 1; spotId <= 10; spotId++) {
   seedSpotImages.push({
-    url: "https://picsum.photos/800/800.jpg",
+    url: urls[Math.floor(Math.random() * urls.length)],
     spotId: spotId,
     preview: true,
   });
 
   for (let i = 0; i < 4; i++) {
     seedSpotImages.push({
-      url: "https://picsum.photos/800/800.jpg",
+      url: urls[Math.floor(Math.random() * urls.length)],
       spotId: spotId,
       preview: false,
     });
