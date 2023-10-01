@@ -520,7 +520,7 @@ for (let spotId = 1; spotId <= 10; spotId++) {
     preview: true,
   });
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     seedSpotImages.push({
       url: urls[Math.floor(Math.random() * urls.length)],
       spotId: spotId,
@@ -529,7 +529,7 @@ for (let spotId = 1; spotId <= 10; spotId++) {
   }
 }
 
-console.log(seedSpotImages);
+// console.log(seedSpotImages);
 
 const seedReviewImages = [
   {
