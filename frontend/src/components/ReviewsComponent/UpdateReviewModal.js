@@ -16,7 +16,7 @@ const UpdateReviewModal = ({ review, updateCount }) => {
   const sessionUser = useSelector((state) => state?.session?.user);
 
   useEffect(() => {
-    dispatch(getAllUserReviews(sessionUser?.id));
+    // dispatch(getAllUserReviews(sessionUser?.id));
     updateCount();
   }, [dispatch, isCreating, sessionUser]);
 

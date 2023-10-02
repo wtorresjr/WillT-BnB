@@ -125,7 +125,10 @@ const reviewReducer = (state = {}, action) => {
     case GET_USER_REVIEWS:
       return { ...state, ...action.userReviews };
     case UPDATE_REVIEW:
-      return { ...state, ...action.reviewToUpdate };
+      return {
+        ...state,
+        [action.reviewToUpdate.id]: action.reviewToUpdate,
+      };
     default:
       return state;
   }
