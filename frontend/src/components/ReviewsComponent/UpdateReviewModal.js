@@ -40,10 +40,11 @@ const UpdateReviewModal = ({ review, updateCount, manageReviews }) => {
   useEffect(() => {
     if (manageReviews === false) {
       dispatch(getReviews(review?.spotId));
+      updateCount();
     } else {
       dispatch(getAllUserReviews(sessionUser?.id));
+      updateCount();
     }
-    updateCount();
   }, [dispatch, isCreating, sessionUser]);
 
   let notPickedStar = "fa-regular fa-star fa-2xl";
