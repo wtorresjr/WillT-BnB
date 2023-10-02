@@ -4,6 +4,7 @@ const GET_SPOT_REVIEWS = "reviews/get-reviews";
 const DELETE_USER_REVIEW = "reviews/delete-review";
 const CREATE_NEW_REVIEW = "reviews/create-a-review";
 const GET_USER_REVIEWS = "reviews/get-user-reviews";
+const UPDATE_REVIEW = "reviews/update-user-review";
 
 const deleteReview = (deleteReviewId) => {
   return {
@@ -89,6 +90,27 @@ export const getAllUserReviews = (userId) => async (dispatch) => {
   }
 };
 
+const updateReview = (reviewToUpdate) => {
+  return {
+    type: UPDATE_REVIEW,
+    reviewToUpdate,
+  };
+};
+
+export const updateUserReview = (reviewId, updateData) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updateData),
+    });
+    const updatedReview = await response.json();
+    dispatch(updateReview(updatedReview));
+  } catch (error) {
+    throw error;
+  }
+};
+
 const reviewReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_SPOT_REVIEWS:
@@ -102,6 +124,8 @@ const reviewReducer = (state = {}, action) => {
       return { ...state, ...action.newSpotReview };
     case GET_USER_REVIEWS:
       return { ...state, ...action.userReviews };
+    case UPDATE_REVIEW:
+      return { ...state, ...action.reviewToUpdate };
     default:
       return state;
   }

@@ -179,7 +179,7 @@ const CreateSpot = () => {
           value={country}
           onChange={(e) => setCountry(e.target.value)}
         />
-        {errors.country && <p className="errorRed">{errors.country}</p>}
+        {errors?.country && <p className="errorRed">{errors.country}</p>}
         <label>Street Address</label>
         <input
           name="address"
@@ -187,7 +187,7 @@ const CreateSpot = () => {
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
-        {errors.address && <p className="errorRed">{errors.address}</p>}
+        {errors?.address && <p className="errorRed">{errors.address}</p>}
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div style={{ display: "flex", flexFlow: "column", width: "60%" }}>
@@ -198,7 +198,7 @@ const CreateSpot = () => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
-            {errors.city && <p className="errorRed">{errors.city}</p>}
+            {errors?.city && <p className="errorRed">{errors.city}</p>}
           </div>
           <div style={{ display: "flex", flexFlow: "column", width: "35%" }}>
             <label>State</label>
@@ -208,7 +208,7 @@ const CreateSpot = () => {
               value={state}
               onChange={(e) => setState(e.target.value)}
             />
-            {errors.state && <p className="errorRed">{errors.state}</p>}
+            {errors?.state && <p className="errorRed">{errors.state}</p>}
           </div>
         </div>
 
@@ -221,7 +221,7 @@ const CreateSpot = () => {
               value={long}
               onChange={(e) => setLong(e.target.value)}
             />
-            {errors.lng && <p className="errorRed">{errors.lng}</p>}
+            {errors?.lng && <p className="errorRed">{errors.lng}</p>}
           </div>
           <div style={{ display: "flex", flexFlow: "column", width: "48%" }}>
             <label>Latitude</label>
@@ -231,7 +231,7 @@ const CreateSpot = () => {
               value={lat}
               onChange={(e) => setLat(e.target.value)}
             />
-            {errors.lat && <p className="errorRed">{errors.lat}</p>}
+            {errors?.lat && <p className="errorRed">{errors.lat}</p>}
           </div>
         </div>
 
@@ -249,7 +249,9 @@ const CreateSpot = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        {errors.description && <p className="errorRed">{errors.description}</p>}
+        {errors?.description && (
+          <p className="errorRed">{errors.description}</p>
+        )}
         <span className="greyDivider"></span>
         <h3>Create a title for your spot</h3>
         <p>
@@ -262,7 +264,7 @@ const CreateSpot = () => {
           value={placeName}
           onChange={(e) => setPlaceName(e.target.value)}
         />
-        {errors.name && <p className="errorRed">{errors.name}</p>}
+        {errors?.name && <p className="errorRed">{errors.name}</p>}
         <span className="greyDivider"></span>
         <h3>Set a base price for your spot</h3>
         <p>
@@ -285,7 +287,7 @@ const CreateSpot = () => {
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
-        {errors.price && <p className="errorRed">{errors.price}</p>}
+        {errors?.price && <p className="errorRed">{errors.price}</p>}
         <span className="greyDivider"></span>
         <h3>Liven up your spot with photos</h3>
         <p>Submit a link to at least one photo to publish your spot.</p>
@@ -295,35 +297,35 @@ const CreateSpot = () => {
           value={previewImg}
           onChange={(e) => setPreviewImg(e.target.value)}
         />
-        {errors.url && <p className="errorRed">{errors.url}</p>}
+        {errors?.url && <p className="errorRed">{errors.url}</p>}
         <input
           name="exImg1"
           placeholder="Image URL"
           value={exImg1}
           onChange={(e) => setExImg1(e.target.value)}
         />
-        {errors.exImg1 && <p className="errorRed">{errors.exImg1}</p>}
+        {errors?.exImg1 && <p className="errorRed">{errors.exImg1}</p>}
         <input
           name="exImg2"
           placeholder="Image URL"
           value={exImg2}
           onChange={(e) => setExImg2(e.target.value)}
         />
-        {errors.exImg2 && <p className="errorRed">{errors.exImg2}</p>}
+        {errors?.exImg2 && <p className="errorRed">{errors.exImg2}</p>}
         <input
           name="exImg3"
           placeholder="Image URL"
           value={exImg3}
           onChange={(e) => setExImg3(e.target.value)}
         />
-        {errors.exImg3 && <p className="errorRed">{errors.exImg3}</p>}
+        {errors?.exImg3 && <p className="errorRed">{errors.exImg3}</p>}
         <input
           name="exImg4"
           placeholder="Image URL"
           value={exImg4}
           onChange={(e) => setExImg4(e.target.value)}
         />
-        {errors.exImg4 && <p className="errorRed">{errors.exImg4}</p>}
+        {errors?.exImg4 && <p className="errorRed">{errors.exImg4}</p>}
         <span className="greyDivider"></span>
         <button>Create Spot</button>
       </div>

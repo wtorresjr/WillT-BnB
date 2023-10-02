@@ -6,18 +6,14 @@ import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import { getAllUserReviews } from "../../store/reviews";
 import DeleteReviewModal from "./DeleteReviewModal";
 import { findOne } from "../../store/spots";
+import UpdateReviewModal from "./UpdateReviewModal";
 
 const ManageReviews = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state?.session?.user);
   const usersReviews = useSelector((state) => state?.reviews?.Reviews);
-  const [reviewsState, setReviewsState] = useState();
+  const [reviewsState, setReviewsState] = useState(0);
   const [isReviewed, setIsReviewed] = useState(false);
-
-  useEffect(() => {
-    dispatch(getAllUserReviews());
-    dispatch(findOne(usersReviews?.Spot?.id));
-  }, [dispatch, sessionUser, reviewsState]);
 
   const updateCount = () => {
     setReviewsState((prevCount) => prevCount + 1);
@@ -26,6 +22,11 @@ const ManageReviews = () => {
   const hasThisBeenReviewed = (status) => {
     setIsReviewed(status);
   };
+
+  useEffect(() => {
+    dispatch(findOne(usersReviews?.Spot?.id));
+    dispatch(getAllUserReviews(sessionUser?.id));
+  }, [dispatch, sessionUser, reviewsState]);
 
   return (
     <div className="spotsClass" id="manageReviews">
@@ -36,7 +37,11 @@ const ManageReviews = () => {
         usersReviews &&
         usersReviews?.map((review) => {
           return (
-            <div key={review?.id} className="reviewPanel" id="manageReviewsPanel">
+            <div
+              key={review?.id}
+              className="reviewPanel"
+              id="manageReviewsPanel"
+            >
               <div className="reviewInfo">
                 <h4 className="reviewerInfo">{review?.Spot?.name}</h4>
                 <p className="reviewDate">
@@ -48,14 +53,17 @@ const ManageReviews = () => {
                     : null}
                 </p>
                 <p className="reviewText">{review?.review}</p>
-                {/* <NavLink to={`/update-a-spot/${review?.id}`}> */}
-                <button
-                  className="manageBtnClass"
-                  onClick={() => alert("Feature Coming Soon...")}
-                >
-                  Update
+                <button className="manageBtnClass">
+                  <OpenModalMenuItem
+                    itemText="Update"
+                    modalComponent={
+                      <UpdateReviewModal
+                        review={review}
+                        updateCount={updateCount}
+                      />
+                    }
+                  />
                 </button>
-                {/* </NavLink> */}
                 <button className="manageBtnClass">
                   <OpenModalMenuItem
                     itemText="Delete"

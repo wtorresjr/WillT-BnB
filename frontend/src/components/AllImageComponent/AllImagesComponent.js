@@ -2,8 +2,12 @@ import { useParams, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { findOne } from "../../store/spots";
+// import { useModal } from "../../context/Modal";
+// import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+// import { useHistory } from "react-router-dom";
 
 const AllImagesComponent = () => {
+  // const history = useHistory();
   const dispatch = useDispatch();
   const thisSpot = useSelector((state) => state?.spots?.oneSpot);
   const spotImages = useSelector((state) => state?.spots?.oneSpot?.SpotImages);
@@ -30,7 +34,8 @@ const AllImagesComponent = () => {
                 className="allImgsImg"
                 key={image?.id}
                 alt={thisSpot?.name}
-                onClick={() => alert(`clicked image ${image?.id}`)}
+                // onClick={() => alert(`clicked image ${image?.id}`)}
+                onClick={() => window.open(`${image?.url}`, "_blank")}
               />
             );
           })}
