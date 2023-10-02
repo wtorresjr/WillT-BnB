@@ -8,6 +8,7 @@ import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "./DeleteReviewModal";
 import { findOne } from "../../store/spots";
 import CreateReviewModal from "./CreateReviewModal";
+import UpdateReviewModal from "./UpdateReviewModal";
 
 const SpotDetailsReviews = () => {
   const { id } = useParams();
@@ -32,7 +33,7 @@ const SpotDetailsReviews = () => {
         setIsReviewed(false);
       }
     }
-  });
+  }, [dispatch, spotReviews]);
 
   const updateCount = () => {
     setReviewsState((prevCount) => prevCount + 1);
@@ -98,11 +99,17 @@ const SpotDetailsReviews = () => {
               <p className="reviewText">{review?.review}</p>
               {review?.userId === sessionUser?.id && (
                 <>
-                  <button
-                    className="manageBtnClass"
-                    onClick={() => alert("Feature Coming Soon...")}
-                  >
-                    Update
+                  <button className="manageBtnClass">
+                    <OpenModalMenuItem
+                      itemText="Update"
+                      modalComponent={
+                        <UpdateReviewModal
+                          review={review}
+                          updateCount={updateCount}
+                          manageReviews={false}
+                        />
+                      }
+                    />
                   </button>
                   <button className="manageBtnClass">
                     <OpenModalMenuItem
@@ -112,6 +119,7 @@ const SpotDetailsReviews = () => {
                           reviewId={review?.id}
                           updateCount={updateCount}
                           toggleReviewStatus={hasThisBeenReviewed}
+                          manageReviews={false}
                         />
                       }
                     />

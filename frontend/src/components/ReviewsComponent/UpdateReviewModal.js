@@ -2,8 +2,9 @@ import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserReviews, updateUserReview } from "../../store/reviews";
 import { useState, useEffect } from "react";
+import { getReviews } from "../../store/reviews";
 
-const UpdateReviewModal = ({ review, updateCount }) => {
+const UpdateReviewModal = ({ review, updateCount, manageReviews }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [isCreating, setIsCreating] = useState(false);
@@ -15,15 +16,10 @@ const UpdateReviewModal = ({ review, updateCount }) => {
   const [errors, setErrors] = useState({});
   const sessionUser = useSelector((state) => state?.session?.user);
 
-  useEffect(() => {
-    // dispatch(getAllUserReviews(sessionUser?.id));
-    updateCount();
-  }, [dispatch, isCreating, sessionUser]);
-
   const createReview = async () => {
     try {
       dispatch(
-        updateUserReview(review?.id, {
+        await updateUserReview(review?.id, {
           review: newReview,
           stars: +starRating,
         })
@@ -41,12 +37,20 @@ const UpdateReviewModal = ({ review, updateCount }) => {
       }
     }
   };
+  useEffect(() => {
+    if (manageReviews === false) {
+      dispatch(getReviews(review?.spotId));
+    } else {
+      dispatch(getAllUserReviews(sessionUser?.id));
+    }
+    updateCount();
+  }, [dispatch, isCreating, sessionUser]);
 
   let notPickedStar = "fa-regular fa-star fa-2xl";
   let pickedStar = "fa-solid fa-star fa-2xl";
 
   useEffect(() => {
-    newReview.length > 10 ? setIsDisabled(false) : setIsDisabled(true);
+    newReview?.length > 10 ? setIsDisabled(false) : setIsDisabled(true);
   }, [dispatch, newReview, starRating]);
 
   useEffect(() => {

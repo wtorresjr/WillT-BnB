@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 // import { NavLink } from "react-router-dom";
 import "../Spots/allspots.css";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import UpdateReviewModal from "./UpdateReviewModal";
 import { getAllUserReviews } from "../../store/reviews";
 import DeleteReviewModal from "./DeleteReviewModal";
 import { findOne } from "../../store/spots";
-import UpdateReviewModal from "./UpdateReviewModal";
 
 const ManageReviews = () => {
   const dispatch = useDispatch();
@@ -60,6 +60,7 @@ const ManageReviews = () => {
                       <UpdateReviewModal
                         review={review}
                         updateCount={updateCount}
+                        manageReviews={true}
                       />
                     }
                   />
