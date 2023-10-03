@@ -6,7 +6,16 @@ body {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   margin: 0px;
   padding: 0px;
+  /* width:100vw; */
 }
+/* #root {
+display:flex;
+flex-flow:column wrap;
+} */
+
+/* body::-webkit-scrollbar {
+  background-color: transparent;
+} */
 
 .loginPanel button:disabled,
 .signupPanel button:disabled {
@@ -35,7 +44,7 @@ body {
 #createNewSpot {
   text-decoration: none;
   font-weight: bolder;
-  font-size:14px;
+  font-size: 14px;
 }
 
 .greyDivider {

@@ -9,22 +9,24 @@ function Navigation({ isLoaded }) {
 
   return (
     <ul className="navUl">
-      <li>
-        <NavLink exact to="/">
-          <img src="../../willt-bnb-logo.svg" id="logo" alt="website logo"/>
-        </NavLink>
-      </li>
-      <div className="profileActions">
-        {sessionUser && (
-          <NavLink to="/create-a-spot" id="createNewSpot">
-            Create a New Spot
+      <div className="containNav">
+        <li>
+          <NavLink exact to="/">
+            <img src="../../willt-bnb-logo.svg" id="logo" alt="website logo" />
           </NavLink>
-        )}
-        {isLoaded && (
-          <li>
-            <ProfileButton user={sessionUser} />
-          </li>
-        )}
+        </li>
+        <div className="profileActions">
+          {sessionUser && (
+            <NavLink to="/create-a-spot" id="createNewSpot">
+              Create a New Spot
+            </NavLink>
+          )}
+          {isLoaded && (
+            <li>
+              <ProfileButton user={sessionUser} />
+            </li>
+          )}
+        </div>
       </div>
     </ul>
   );
