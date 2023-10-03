@@ -5,7 +5,8 @@
   flex-shrink: 20;
   justify-content: center;
   margin: 0 auto;
-  gap: 20px;
+  gap: 40px;
+  row-gap: 20px;
 }
 
 .manageSpotClass {
