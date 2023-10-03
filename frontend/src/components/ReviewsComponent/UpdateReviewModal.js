@@ -4,7 +4,12 @@ import { getAllUserReviews, updateUserReview } from "../../store/reviews";
 import { useState, useEffect } from "react";
 import { getReviews } from "../../store/reviews";
 
-const UpdateReviewModal = ({ review, updateCount, manageReviews }) => {
+const UpdateReviewModal = ({
+  review,
+  updateCount,
+  manageReviews,
+  handleRefresh,
+}) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [isCreating, setIsCreating] = useState(false);
@@ -25,10 +30,13 @@ const UpdateReviewModal = ({ review, updateCount, manageReviews }) => {
         })
       );
       setIsCreating(true);
-      closeModal();
       updateCount();
+      closeModal();
+      if (!manageReviews) {
+        handleRefresh();
+      }
     } catch (error) {
-      if (error) {
+      if (error && error.error) {
         const theErrors = await error.json();
         setErrors(theErrors);
         console.log(error, "<======== Errors state");

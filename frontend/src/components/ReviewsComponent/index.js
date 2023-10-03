@@ -19,10 +19,16 @@ const SpotDetailsReviews = () => {
   const [reviewsState, setReviewsState] = useState();
   const [isReviewed, setIsReviewed] = useState(false);
 
+  const [refreshRating, setRefreshRating] = useState(0);
+
+  const handleRefreshRating = () => {
+    setRefreshRating((prevVal) => prevVal + 1);
+  };
+
   useEffect(() => {
     dispatch(getReviews(id));
     dispatch(findOne(id));
-  }, [dispatch, id, reviewsState, isReviewed]);
+  }, [dispatch, id, reviewsState, isReviewed, refreshRating]);
 
   useEffect(() => {
     for (let review = 0; review < spotReviews?.length; review++) {
@@ -107,6 +113,7 @@ const SpotDetailsReviews = () => {
                           review={review}
                           updateCount={updateCount}
                           manageReviews={false}
+                          handleRefresh={handleRefreshRating}
                         />
                       }
                     />

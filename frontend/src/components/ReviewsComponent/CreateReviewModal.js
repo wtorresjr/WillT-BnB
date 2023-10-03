@@ -18,7 +18,7 @@ const CreateReviewModal = ({ spotId, updateCount, toggleReviewStatus }) => {
   const currentSpot = useSelector((state) => state?.spots?.oneSpot);
 
   const createReview = async () => {
-    try {
+    try { 
       const newReviewData = await dispatch(
         createNewReview(currentSpot?.id, {
           review: newReview,

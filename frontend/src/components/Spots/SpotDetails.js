@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink } from "react-router-dom";
 import { findOne } from "../../store/spots";
@@ -12,6 +12,7 @@ const SpotDetails = () => {
   const spotReviews = useSelector((state) => state?.reviews?.Reviews);
   const thisSpot = useSelector((state) => state?.spots?.oneSpot);
   const spotImgs = useSelector((state) => state?.spots?.oneSpot?.SpotImages);
+
 
   useEffect(() => {
     dispatch(getReviews(id));
@@ -37,6 +38,7 @@ const SpotDetails = () => {
             <NavLink to={`/all-images/${id}`}>
               {" "}
               <button className="manageBtnClass" id="viewAllImgs">
+                <i className="fas fa-th-large" style={{paddingRight:"10px", color:'red'}}></i>
                 View All Images
               </button>
             </NavLink>

@@ -61,6 +61,7 @@ const ManageReviews = () => {
                         review={review}
                         updateCount={updateCount}
                         manageReviews={true}
+                    
                       />
                     }
                   />
