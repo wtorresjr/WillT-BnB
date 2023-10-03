@@ -148,6 +148,7 @@ button li {
 
 .reviewPanel {
   align-items: center;
+  max-width: 100%;
 }
 
 #manageReviewsPanel {
@@ -156,7 +157,22 @@ button li {
   align-items: center;
 }
 
+.reviewText {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow: auto;
+}
+.reviewTextManageRev {
+  max-width: 80%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow: auto;
+}
+
 .revImgContainer {
+  min-width: 125px;
+  min-height: 125px;
   width: 125px;
   height: 125px;
   overflow: hidden;
@@ -164,7 +180,17 @@ button li {
   justify-content: center;
   align-items: center;
   border-radius: 15px;
+  position: sticky;
+  right: 0px;
   padding: 0 0 0 10px;
+}
+
+.reviewerInfo,
+.reviewInfo {
+  max-width: auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow: auto;
 }
 
 #manageReviews {
