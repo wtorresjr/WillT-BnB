@@ -52,7 +52,7 @@ const ManageReviews = () => {
                       })
                     : null}
                 </p>
-                <p className="reviewText">{review?.review}</p>
+                <p className="reviewTextManageRev">{review?.review}</p>
                 <button className="manageBtnClass">
                   <OpenModalMenuItem
                     itemText="Update"
@@ -61,7 +61,6 @@ const ManageReviews = () => {
                         review={review}
                         updateCount={updateCount}
                         manageReviews={true}
-                    
                       />
                     }
                   />

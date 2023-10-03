@@ -17,12 +17,18 @@ h4 {
 }
 
 .spotDescription {
-  width: 100%;
+  /* max-width: 70%; */
+  /* min-width: 70%; */
   padding: 0 20px 0 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow: auto;
+  /* overflow: -moz-hidden-unscrollable; */
 }
 
 .reserveContainer {
-  width: 30vw;
+  min-width: 30%;
+  /* max-width: 30%; */
   border: 1px solid rgb(185, 185, 185);
   padding: 20px;
   border-radius: 10px;
@@ -33,6 +39,7 @@ h4 {
 
 .underImgs {
   display: flex;
+  /* max-width: 100%; */
   justify-content: space-between;
   /* flex-flow: column; */
   margin: 40px 0 0 0;
