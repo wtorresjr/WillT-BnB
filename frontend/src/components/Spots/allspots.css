@@ -1,10 +1,31 @@
 .spotsClass {
-  padding: 0 85px;
+  padding: 0 85px 200px 85px;
   display: flex;
   flex-flow: row wrap;
   flex-shrink: 20;
   justify-content: center;
+  margin: 0 auto;
   gap: 20px;
+}
+
+.manageSpotClass {
+  padding: 0 85px 200px 85px;
+  display: flex;
+  flex-flow: row wrap;
+  /* flex-shrink: 20; */
+  justify-content: start;
+  /* justify-content: ; */
+  /* width: 100%; */
+  margin: 0 auto;
+  padding: 0 auto;
+  gap: 20px;
+}
+
+.centerManageSpots {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .spotContainer {
@@ -37,7 +58,7 @@
   flex-flow: column;
   justify-content: center;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 20px 200px 20px;
   width: 40%;
 }
 
@@ -142,7 +163,7 @@ button li {
   justify-content: center;
   align-items: center;
   border-radius: 15px;
-  padding:0 0 0 10px;
+  padding: 0 0 0 10px;
 }
 
 #manageReviews {

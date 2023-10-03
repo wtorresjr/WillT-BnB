@@ -89,7 +89,7 @@ const UpdateReviewModal = ({
   return (
     <div className="deleteSpotModal">
       <h3 style={{ margin: "10px 0", textAlign: "center" }}>
-        How was your stay at {review?.Spot?.name}?
+        How was your stay?
       </h3>
       {errors && (
         <p className="errorRed" style={{ textAlign: "center" }}>
